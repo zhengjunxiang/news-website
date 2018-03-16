@@ -12,7 +12,7 @@ const path = require('path');
 const package = require('../package.json');
 
 fs.open('./build/env.js', 'w', function(err, fd) {
-  const buf = 'export default "production";';
+  const buf = 'module.exports = "production";';
   fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
 });
 
@@ -49,7 +49,8 @@ module.exports = merge(webpackBaseConfig, {
     }),
     new CopyWebpackPlugin([
       {
-        from: 'td_icon.ico'
+        from: 'td_icon.ico',
+        to: '../'
       }, {
         from: 'src/styles/fonts',
         to: 'fonts'
@@ -61,7 +62,7 @@ module.exports = merge(webpackBaseConfig, {
     ], {ignore: ['text-editor.vue']}),
     new HtmlWebpackPlugin({
       title: 'iView admin v' + package.version,
-      favicon: './td_icon.ico',
+      // favicon: './td_icon.ico',
       filename: '../index.html',
       template: '!!ejs-loader!./src/template/index.ejs',
       inject: false

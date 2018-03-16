@@ -6,18 +6,37 @@ const merge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config.js');
 const fs = require('fs');
 const package = require('../package.json');
+const config = require('./config')
 
 fs.open('./build/env.js', 'w', function(err, fd) {
-  const buf = 'export default "development";';
+  const buf = 'module.exports = "development";';
   fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
 });
 
+const HOST = process.env.HOST
+const PORT = process.env.PORT && Number(process.env.PORT)
+
 module.exports = merge(webpackBaseConfig, {
-  devtool: '#source-map',
+  devtool: config.dev.devtool,
   output: {
-    publicPath: '/dist/',
+    publicPath: config.dev.assetsPublicPath,
     filename: '[name].js',
     chunkFilename: '[name].chunk.js'
+  },
+  devServer: {
+    clientLogLevel: 'warning',
+    historyApiFallback: true,
+    hot: true,
+    compress: true,
+    host: HOST || config.dev.host,
+    port: PORT || config.dev.port,
+    open: config.dev.autoOpenBrowser,
+    overlay: config.dev.errorOverlay ? { warnings: false, errors: true } : false,
+    publicPath: config.dev.assetsPublicPath,
+    proxy: config.dev.proxyTable,
+    watchOptions: {
+      poll: config.dev.poll,
+    }
   },
   plugins: [
     new ExtractTextPlugin({filename: '[name].css', allChunks: true}),

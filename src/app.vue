@@ -10,6 +10,9 @@ export default {
     return {
       theme: this.$store.state.app.themeColor
     };
+  },
+  mounted() {
+    this.$Message.config({ top: 50, duration: 5 });
   }
 };
 </script>

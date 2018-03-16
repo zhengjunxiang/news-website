@@ -25,7 +25,7 @@ export const page403 = {
     title: '403-权限不足'
   },
   name: 'error-403',
-  component: () => import ('@//views/error-page/403.vue')
+  component: () => import ('@/views/error-page/403.vue')
 };
 
 export const page500 = {
@@ -41,12 +41,6 @@ export const preview = {
   path: '/preview',
   name: 'preview',
   component: () => import ('@/views/form/article-publish/preview.vue')
-};
-
-export const locking = {
-  path: '/locking',
-  name: 'locking',
-  component: () => import ('@/views/main-components/lockscreen/components/locking-page.vue')
 };
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
@@ -246,7 +240,7 @@ export const appRouter = [
 
 // 所有上面定义的路由都要写在下面的routers里
 export const routers = [
-  loginRouter, otherRouter, preview, locking, ...appRouter,
+  loginRouter, otherRouter, preview, ...appRouter,
   page500,
   page403,
   page404
