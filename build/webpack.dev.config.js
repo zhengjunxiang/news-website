@@ -6,9 +6,9 @@ const merge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config.js');
 const fs = require('fs');
 const package = require('../package.json');
-const config = require('./config')
+const config = require('../config/config')
 
-fs.open('./build/env.js', 'w', function(err, fd) {
+fs.open('./config/env.js', 'w', function(err, fd) {
   const buf = 'module.exports = "development";';
   fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
 });
@@ -53,9 +53,9 @@ module.exports = merge(webpackBaseConfig, {
     }),
     new CopyWebpackPlugin([
       {
-        from: 'src/views/main-components/theme-switch/theme'
+        from: 'src/console/views/main-components/theme-switch/theme'
       }, {
-        from: 'src/views/my-components/text-editor/tinymce'
+        from: 'src/console/views/my-components/text-editor/tinymce'
       }
     ], {ignore: ['text-editor.vue']})
   ]

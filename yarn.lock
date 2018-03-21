@@ -4150,7 +4150,7 @@ isstream@~0.1.2:
   version "0.1.2"
   resolved "http://r.cnpmjs.org/isstream/download/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
 
-iview@^2.8.0:
+iview@^2.11.0:
   version "2.11.0"
   resolved "http://r.cnpmjs.org/iview/download/iview-2.11.0.tgz#76fc8f050802544675b6fcf02dbe1dbf89b95867"
   dependencies:

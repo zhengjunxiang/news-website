@@ -11,7 +11,7 @@ const fs = require('fs');
 const path = require('path');
 const package = require('../package.json');
 
-fs.open('./build/env.js', 'w', function(err, fd) {
+fs.open('./config/env.js', 'w', function(err, fd) {
   const buf = 'module.exports = "production";';
   fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
 });
@@ -52,19 +52,19 @@ module.exports = merge(webpackBaseConfig, {
         from: 'td_icon.ico',
         to: '../'
       }, {
-        from: 'src/styles/fonts',
+        from: 'src/console/styles/fonts',
         to: 'fonts'
       }, {
-        from: 'src/views/main-components/theme-switch/theme'
+        from: 'src/console/views/main-components/theme-switch/theme'
       }, {
-        from: 'src/views/my-components/text-editor/tinymce'
+        from: 'src/console/views/my-components/text-editor/tinymce'
       }
     ], {ignore: ['text-editor.vue']}),
     new HtmlWebpackPlugin({
       title: 'iView admin v' + package.version,
       // favicon: './td_icon.ico',
       filename: '../index.html',
-      template: '!!ejs-loader!./src/template/index.ejs',
+      template: '!!ejs-loader!./src/console/template/index.ejs',
       inject: false
     })
   ]
