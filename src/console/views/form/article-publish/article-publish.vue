@@ -12,6 +12,9 @@
         <FormItem label="文章标题">
           <Input v-model="articleTitle" @on-blur="handleArticletitleBlur" icon="android-list" />
         </FormItem>
+        <FormItem label="文章简介">
+          <Input v-model="articleIntro" type="textarea" />
+        </FormItem>
         <div class="article-link-con">
           <transition name="fixed-link">
             <FormItem v-show="showLink" label="固定链接">
@@ -39,34 +42,13 @@
       </p>
       <p class="margin-top-10">
         <Icon type="ios-calendar-outline"></Icon>&nbsp;&nbsp;
-        <span v-if="publishTimeType === 'immediately'">立即发布</span><span v-else>定时：{{ publishTime }}</span>
-        <Button v-show="!editPublishTime" size="small" @click="handleEditPublishTime" type="text">修改</Button>
-        <transition name="publish-time">
-          <div v-show="editPublishTime" class="publish-time-picker-con">
-            <div class="margin-top-10">
-              <DatePicker @on-change="setPublishTime" type="datetime" style="width:200px;" placeholder="选择日期和时间"></DatePicker>
-            </div>
-            <div class="margin-top-10">
-              <Button type="primary" @click="handleSavePublishTime">确认</Button>
-              <Button type="ghost" @click="cancelEditPublishTime">取消</Button>
-            </div>
-          </div>
-        </transition>
+        <span>立即发布</span>
       </p>
       <Row class="margin-top-20 publish-button-con">
         <span class="publish-button"><Button @click="handlePreview">预览</Button></span>
         <span class="publish-button"><Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button></span>
       </Row>
     </Card>
-    <div class="margin-top-10">
-      <Card>
-        <p slot="title">
-          <Icon type="navicon-round"></Icon>
-          分类目录
-        </p>
-        <Tree :data="classificationList" multiple @on-check-change="setClassificationInAll" show-checkbox></Tree>
-      </Card>
-    </div>
     <div class="margin-top-10">
       <Card>
         <p slot="title"><Icon type="ios-pricetags-outline" />标签</p>
@@ -107,6 +89,7 @@ export default {
   data() {
     return {
       articleTitle: '',
+      articleIntro: '',
       showLink: false,
       fixedLink: '',
       articlePath: '',
@@ -115,12 +98,8 @@ export default {
       editPathButtonType: 'ghost',
       editPathButtonText: '编辑',
       publishTime: '',
-      publishTimeType: 'immediately',
-      editPublishTime: false, // 是否正在编辑发布时间
       articleTagSelected: [], // 文章选中的标签
       articleTagList: [], // 所有标签列表
-      classificationList: [],
-      classificationFinalSelected: [], // 最后实际选择的目录
       publishLoading: false,
       addingNewTag: false, // 添加新标签
       newTagName: '' // 新建标签名
@@ -149,23 +128,6 @@ export default {
       this.editPathButtonType = this.editPathButtonType === 'ghost' ? 'success' : 'ghost';
       this.editPathButtonText = this.editPathButtonText === '编辑' ? '完成' : '编辑';
     },
-    handleEditPublishTime() {
-      this.editPublishTime = !this.editPublishTime;
-    },
-    handleSavePublishTime() {
-      this.publishTimeType = 'timing';
-      this.editPublishTime = false;
-    },
-    cancelEditPublishTime() {
-      this.publishTimeType = 'immediately';
-      this.editPublishTime = false;
-    },
-    setPublishTime(datetime) {
-      this.publishTime = datetime;
-    },
-    setClassificationInAll(selectedArray) {
-      this.classificationFinalSelected = selectedArray.map(item => item.title);
-    },
     handleAddNewTag() {
       this.addingNewTag = !this.addingNewTag;
     },
@@ -192,28 +154,28 @@ export default {
     },
     handlePreview() {
       if (this.canPublish()) {
-        if (this.publishTimeType === 'immediately') {
-          let date = new Date();
-          let year = date.getFullYear();
-          let month = date.getMonth() + 1;
-          let day = date.getDate();
-          let hour = date.getHours();
-          let minute = date.getMinutes();
-          let second = date.getSeconds();
-          localStorage.publishTime = year + ' 年 ' + month + ' 月 ' + day + ' 日 -- ' + hour + ' : ' + minute + ' : ' + second;
-        } else {
-          localStorage.publishTime = this.publishTime; // 本地存储发布时间
-        }
+        let date = new Date();
+        let year = date.getFullYear();
+        let month = date.getMonth() + 1;
+        let day = date.getDate();
+        let hour = date.getHours();
+        let minute = date.getMinutes();
+        let second = date.getSeconds();
+        localStorage.publishTime = year + ' 年 ' + month + ' 月 ' + day + ' 日 -- ' + hour + ' : ' + minute + ' : ' + second;
         localStorage.content = tinymce.activeEditor.getContent();
         this.$router.push({ name: 'preview' });
       }
     },
-    handlePublish() {
+    async handlePublish() {
       if (this.canPublish()) {
-        console.log('articleTitle', this.articleTitle)
-        console.log('Content', tinymce.activeEditor.getContent())
-        console.log('articleTagSelected', this.articleTagSelected)
-        console.log('classificationFinalSelected', this.classificationFinalSelected)
+        const data = {
+          title: this.articleTitle,
+          intro: this.articleIntro,
+          content: tinymce.activeEditor.getContent(),
+          tags: this.articleTagSelected
+        }
+        console.log('data', data)
+        // const res = await this.$store.dispatch('addPosts', data)
         this.publishLoading = true;
         setTimeout(() => {
           this.publishLoading = false;
@@ -241,34 +203,6 @@ export default {
       value: 'vue'
     }, {
       value: 'iview'
-    }];
-    this.classificationList = [{
-      title: 'Vue实例',
-      expand: true,
-      children: [{
-        title: '数据与方法',
-        expand: true
-      }, {
-        title: '生命周期',
-        expand: true
-      }]
-    }, {
-      title: 'Class与Style绑定',
-      expand: true,
-      children: [{
-        title: '绑定HTML class',
-        expand: true
-      }, {
-        title: '生命周期',
-        expand: true
-      }]
-    }, {
-      title: '模板语法',
-      expand: true,
-      children: [{
-        title: '插值',
-        expand: true
-      }]
     }];
     tinymce.init({
       selector: '#articleEditor',

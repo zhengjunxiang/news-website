@@ -1,12 +1,11 @@
 const Env = require('./env');
 const { host, port } = require('./ip-port');
-const path = require('path')
 
 let config = {
   env: Env,
   dev: {
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/dist/',
+    assetsPublicPath: '/',
     proxyTable: {
       '/**/*.json': {
         target: { host, protocol: 'http:', port: port.api },
@@ -22,15 +21,13 @@ let config = {
     poll: false, // https://webpack.js.org/configuration/dev-server/#devserver-watchoptions-
     useEslint: true,
     showEslintErrorsInOverlay: false,
-    devtool: '#source-map',
+    devtool: 'cheap-module-eval-source-map',
     cacheBusting: true,
     cssSourceMap: false
   },
   build: {
-    index: path.resolve(__dirname, '../dist/index.html'),
-    assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: '/src/',
     productionSourceMap: false,
     devtool: '#source-map',
     productionGzip: false,

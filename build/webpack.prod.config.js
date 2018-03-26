@@ -10,6 +10,9 @@ const os = require('os');
 const fs = require('fs');
 const path = require('path');
 const package = require('../package.json');
+const config = require('../config/config');
+
+const isConsole = process.env.ENV_TYPE === 'console';
 
 fs.open('./config/env.js', 'w', function(err, fd) {
   const buf = 'module.exports = "production";';
@@ -18,12 +21,13 @@ fs.open('./config/env.js', 'w', function(err, fd) {
 
 module.exports = merge(webpackBaseConfig, {
   output: {
-    publicPath: '/dist/',
+    path: path.resolve(__dirname, `../dist/${isConsole ? 'console/src' : 'client/src'}`),
+    publicPath: config.build.assetsPublicPath,
     filename: '[name].[hash].js',
     chunkFilename: '[name].[hash].chunk.js'
   },
   plugins: [
-    new cleanWebpackPlugin(['dist/*'], {
+    new cleanWebpackPlugin([`dist/${isConsole ? 'console' : 'client'}/*`], {
       root: path.resolve(__dirname, '../')
     }),
     new ExtractTextPlugin({filename: '[name].[hash].css', allChunks: true}),
@@ -62,8 +66,7 @@ module.exports = merge(webpackBaseConfig, {
     ], {ignore: ['text-editor.vue']}),
     new HtmlWebpackPlugin({
       title: 'iView admin v' + package.version,
-      // favicon: './td_icon.ico',
-      filename: '../index.html',
+      filename: path.resolve(__dirname, `../dist/${isConsole ? 'console' : 'client'}/index.html`),
       template: '!!ejs-loader!./src/console/template/index.ejs',
       inject: false
     })

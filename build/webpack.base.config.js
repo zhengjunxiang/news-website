@@ -4,17 +4,18 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HappyPack = require('happypack');
 var happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
+
+const isConsole = process.env.ENV_TYPE === 'console';
+
 function resolve(dir) {
   return path.join(__dirname, dir);
 }
+
 module.exports = {
   entry: {
     main: '@/main',
     'vender-base': '@/vendors/vendors.base.js',
     'vender-exten': '@/vendors/vendors.exten.js'
-  },
-  output: {
-    path: path.resolve(__dirname, '../dist/dist')
   },
   module: {
     rules: [

@@ -1,4 +1,5 @@
 const user = require('./user');
+const posts = require('./posts');
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -6,4 +7,5 @@ module.exports = function(app) {
     next();
   });
   app.use('/user', user);
+  app.use('/posts', posts);
 };

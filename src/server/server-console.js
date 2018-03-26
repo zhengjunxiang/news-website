@@ -12,7 +12,9 @@ const indexRoute = router.get('/', (req, res) => {
   res.status(200).render('index')
 })
 
-app.set('views', path.join(__dirname, '../../dist'))
+const serPort = port.dist.con
+
+app.set('views', path.join(__dirname, '../../dist/console'))
 app.set('view engine', 'html')
 app.engine('html', require('ejs').renderFile)
 
@@ -22,7 +24,7 @@ app.use("*.json$", proxy({
   changeOrigin: true
 }));
 
-app.use('/', express.static(path.join(__dirname, '../../dist')))
+app.use('/', express.static(path.join(__dirname, '../../dist/console')))
 
 app.use(history({
   rewrites: [
@@ -36,7 +38,7 @@ app.use((req, res) => {
   res.status(404).send('File not found!')
 })
 
-app.listen(port.dist, host, () => {
-  console.log('The server is running at ' + host + ":" + port.dist)
+app.listen(serPort, host, () => {
+  console.log('The server is running at ' + host + ":" + serPort)
 })
-opn(`http://${host}:${port.dist}`)
+opn(`http://${host}:${serPort}`)

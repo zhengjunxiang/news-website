@@ -1,3 +1,4 @@
+const path = require('path')
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -8,28 +9,26 @@ const fs = require('fs');
 const package = require('../package.json');
 const config = require('../config/config')
 
+const isConsole = process.env.ENV_TYPE === 'console'
+
 fs.open('./config/env.js', 'w', function(err, fd) {
   const buf = 'module.exports = "development";';
   fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
 });
 
-const HOST = process.env.HOST
-const PORT = process.env.PORT && Number(process.env.PORT)
-
 module.exports = merge(webpackBaseConfig, {
   devtool: config.dev.devtool,
   output: {
     publicPath: config.dev.assetsPublicPath,
-    filename: '[name].js',
-    chunkFilename: '[name].chunk.js'
+    filename: '[name].js'
   },
   devServer: {
     clientLogLevel: 'warning',
     historyApiFallback: true,
     hot: true,
     compress: true,
-    host: HOST || config.dev.host,
-    port: PORT || config.dev.port,
+    host: config.dev.host,
+    port: config.dev.port[`${isConsole ? 'con' : 'cli'}`],
     open: config.dev.autoOpenBrowser,
     overlay: config.dev.errorOverlay ? { warnings: false, errors: true } : false,
     publicPath: config.dev.assetsPublicPath,
@@ -41,15 +40,14 @@ module.exports = merge(webpackBaseConfig, {
   plugins: [
     new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
     new webpack.optimize.CommonsChunkPlugin({
-      name: [
-        'vender-exten', 'vender-base'
-      ],
+      name: [ 'vender-exten', 'vender-base' ],
       minChunks: Infinity
     }),
     new HtmlWebpackPlugin({
       title: 'iView admin v' + package.version,
-      filename: '../index.html',
-      inject: false
+      filename: 'index.html',
+      template: isConsole ? 'src/console/index.html' : 'src/client/index.html',
+      inject: true
     }),
     new CopyWebpackPlugin([
       {
