@@ -8,10 +8,7 @@ var UserSchema = new mongoose.Schema({
   password: String,
   src: String,
   access: { type: Number },
-  meta: {
-    createAt: { type: Date, default: Date.now() },
-    updateAt: { type: Date, default: Date.now() }
-  }
+  createAt: { type: Date, default: Date.now() }
 });
 // 对密码进行加密
 UserSchema.pre('save', function(next) {

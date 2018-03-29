@@ -9,7 +9,6 @@ const webpackBaseConfig = require('./webpack.base.config.js');
 const os = require('os');
 const fs = require('fs');
 const path = require('path');
-const package = require('../package.json');
 const config = require('../config/config');
 
 const isConsole = process.env.ENV_TYPE === 'console';
@@ -53,7 +52,7 @@ module.exports = merge(webpackBaseConfig, {
     }),
     new CopyWebpackPlugin([
       {
-        from: 'td_icon.ico',
+        from: 'ant_icon.ico',
         to: '../'
       }, {
         from: 'src/console/styles/fonts',
@@ -61,11 +60,11 @@ module.exports = merge(webpackBaseConfig, {
       }, {
         from: 'src/console/views/main-components/theme-switch/theme'
       }, {
-        from: 'src/console/views/my-components/text-editor/tinymce'
+        from: 'src/console/views/my-components/tinymce'
       }
     ], {ignore: ['text-editor.vue']}),
     new HtmlWebpackPlugin({
-      title: 'iView admin v' + package.version,
+      title: 'Antpool Blogs',
       filename: path.resolve(__dirname, `../dist/${isConsole ? 'console' : 'client'}/index.html`),
       template: '!!ejs-loader!./src/console/template/index.ejs',
       inject: false

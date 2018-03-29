@@ -6,7 +6,6 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const merge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config.js');
 const fs = require('fs');
-const package = require('../package.json');
 const config = require('../config/config')
 
 const isConsole = process.env.ENV_TYPE === 'console'
@@ -44,7 +43,7 @@ module.exports = merge(webpackBaseConfig, {
       minChunks: Infinity
     }),
     new HtmlWebpackPlugin({
-      title: 'iView admin v' + package.version,
+      title: 'Antpool Blogs',
       filename: 'index.html',
       template: isConsole ? 'src/console/index.html' : 'src/client/index.html',
       inject: true
@@ -53,7 +52,7 @@ module.exports = merge(webpackBaseConfig, {
       {
         from: 'src/console/views/main-components/theme-switch/theme'
       }, {
-        from: 'src/console/views/my-components/text-editor/tinymce'
+        from: 'src/console/views/my-components/tinymce'
       }
     ], {ignore: ['text-editor.vue']})
   ]

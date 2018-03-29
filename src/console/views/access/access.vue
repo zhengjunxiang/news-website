@@ -15,14 +15,14 @@
       <div class="access-user-con access-current-user-con">
         <img :src="avatorPath" alt="">
         <p>当前用户权限值:<b>{{ accessCode }}</b></p>
+        <Button type="primary" @click="handleShowUser">显示已有普通用户</Button>
       </div>
     </Card>
     </Col>
     <Col span="16" class="padding-left-10">
     <Card>
       <p slot="title">
-        <Icon type="android-contacts"></Icon>
-        用户权限
+        <Icon type="android-contacts" /> 用户权限
       </p>
       <div class="access-user-con access-change-access-con">
         <div v-if="accessCode === 0">
@@ -67,11 +67,18 @@
     </Card>
     </Col>
   </Row>
+  <Modal v-model="isShow" width="800px" title="普通用户列表">
+    <Table :data="userData" :columns="columns" stripe />
+    <div slot="footer">
+      <Button type="primary" @click="isShow = false">关闭</Button>
+    </div>
+  </Modal>
 </div>
 </template>
 
 <script>
 import Cookies from 'js-cookie';
+import columns from './columns.js';
 export default {
   name: 'access_index',
   data() {
@@ -86,6 +93,9 @@ export default {
     };
     return {
       accessCode: parseInt(Cookies.get('access')),
+      isShow: false,
+      userData: [],
+      columns: columns(this),
       form: {
         userName: '',
         password: '',
@@ -115,11 +125,25 @@ export default {
     };
   },
   computed: {
-    avatorPath() {
-      return localStorage.avatorImgPath;
-    }
+    avatorPath: () => localStorage.avatorImgPath
   },
   methods: {
+    async getUser() {
+      const res = await this.$store.dispatch('getUser');
+      if (res.mes) this.$Message.success(res.mes)
+      this.userData = res.data
+    },
+    formatDate(date) { return date.split('T')[0] },
+    handleShowUser() {
+      this.isShow = true
+      this.getUser();
+    },
+    resetData() {
+      this.form.userName = '',
+      this.form.password = '',
+      this.form.passwdCheck = '',
+      this.form.access = ''
+    },
     register() {
       this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
@@ -128,18 +152,11 @@ export default {
             access = this.form.access;
           const data = { name, password, access }
           const res = await this.$store.dispatch('register', data)
-          if (res.errno === 0) {
-            this.$Message.success('注册成功')
-          } else {
-            this.$Message.error(res.mes)
-          }
+          if (res.mes) this.$Message.success(res.mes)
+          this.resetData()
         }
       })
     }
   }
 };
 </script>
-
-<style>
-
-</style>

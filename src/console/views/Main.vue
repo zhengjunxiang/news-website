@@ -6,8 +6,8 @@
   <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
     <shrinkable-menu :shrink="shrink" :theme="menuTheme" :before-push="beforePush" :open-names="openedSubmenuArr" :menu-list="menuList">
       <div slot="top" class="logo-con">
-        <img v-show="!shrink" src="../images/logo.jpg" key="max-logo" />
-        <img v-show="shrink" src="../images/logo-min.jpg" key="min-logo" />
+        <img v-show="!shrink" src="../images/logo.png" key="max-logo" style="width: 100%;" />
+        <img v-show="shrink" src="../images/logo-min.png" key="min-logo" />
       </div>
     </shrinkable-menu>
   </div>
@@ -20,40 +20,41 @@
       </div>
       <div class="header-middle-con">
         <div class="main-breadcrumb">
-          <breadcrumb-nav :currentPath="currentPath"></breadcrumb-nav>
+          <breadcrumb-nav :currentPath="currentPath" />
         </div>
       </div>
       <div class="header-avator-con">
-        <full-screen v-model="isFullScreen"></full-screen>
-        <message-tip v-model="mesCount"></message-tip>
-        <theme-switch></theme-switch>
-
+        <full-screen v-model="isFullScreen" />
+        <!-- <message-tip v-model="mesCount" /> -->
+        <theme-switch />
         <div class="user-dropdown-menu-con">
           <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
-            <Dropdown transfer trigger="click" @on-click="handleClickUserDropdown">
+            <Dropdown transfer @on-click="handleClickUserDropdown">
               <a href="javascript:void(0)">
                 <span class="main-user-name">{{ userName }}</span>
-                <Icon type="arrow-down-b"></Icon>
+                <Icon type="arrow-down-b" />
               </a>
               <DropdownMenu slot="list">
                 <DropdownItem name="ownSpace">个人中心</DropdownItem>
                 <DropdownItem name="loginout" divided>退出登录</DropdownItem>
               </DropdownMenu>
             </Dropdown>
-            <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;"></Avatar>
+            <Avatar :src="avatorPath" style="background: #619fe7;margin-left: 10px;" />
           </Row>
         </div>
       </div>
     </div>
     <div class="tags-con">
-      <tags-page-opened :pageTagsList="pageTagsList"></tags-page-opened>
+      <tags-page-opened :pageTagsList="pageTagsList" />
     </div>
   </div>
   <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
     <div class="single-page">
-      <keep-alive :include="cachePage">
-        <router-view></router-view>
-      </keep-alive>
+      <transition name="fade" mode="out-in">
+        <keep-alive :include="cachePage">
+          <router-view />
+        </keep-alive>
+      </transition>
     </div>
   </div>
 </div>
@@ -100,9 +101,6 @@ export default {
     },
     cachePage() {
       return this.$store.state.app.cachePage;
-    },
-    lang() {
-      return this.$store.state.app.lang;
     },
     menuTheme() {
       return this.$store.state.app.menuTheme;
@@ -165,9 +163,6 @@ export default {
       }
       this.checkTag(to.name);
       localStorage.currentPageName = to.name;
-    },
-    lang() {
-      util.setCurrentPath(this, this.$route.name); // 在切换语言时用于刷新面包屑
     }
   },
   mounted() {

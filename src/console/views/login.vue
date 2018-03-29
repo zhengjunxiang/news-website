@@ -67,15 +67,14 @@ export default {
           const name = this.form.userName
           const password = this.form.password
           const data = { name, password }
-          const res = await this.$store.dispatch('login', data)
-          if (res.errno === 0) {
+          try {
+            const res = await this.$store.dispatch('login', data);
+            if(res.mes) this.$Message.success(res.mes);
             Cookies.set('user', name);
             this.$store.commit('setAvator', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg');
             Cookies.set('access', res.data.access === 0 ? 0 : (res.data.access || 1));
             this.$router.push({ name: 'home_index' });
-          } else {
-            this.$Message.error(res.mes)
-          }
+          } catch (err) {}
         }
       });
     },
@@ -85,12 +84,10 @@ export default {
           const name = this.form.userName
           const password = this.form.password
           const data = { name, password, access: 0 }
-          const res = await this.$store.dispatch('register', data)
-          if (res.errno === 0) {
-            this.$Message.success('注册成功')
-          } else {
-            this.$Message.error(res.mes)
-          }
+          try {
+            const res = await this.$store.dispatch('register', data)
+            if(res.mes) this.$Message.success(res.mes);
+          } catch (err) {}
         }
       })
     }

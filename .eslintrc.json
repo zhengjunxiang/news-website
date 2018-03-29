@@ -22,6 +22,7 @@
         "no-fallthrough": 0,
         "no-unreachable": 0,
         "semi": "off",
-        "space-before-function-paren": "off"
+        "space-before-function-paren": "off",
+        "one-var": "off"
     }
 }

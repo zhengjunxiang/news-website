@@ -5,7 +5,6 @@ import {appRouter} from './router/router';
 import store from './store';
 import App from './app.vue';
 import 'iview/dist/styles/iview.css';
-import util from './libs/util';
 
 Vue.use(iView);
 
@@ -24,8 +23,6 @@ const vm = new Vue({
     this.$store.commit('initCachepage');
     // 权限菜单过滤相关
     this.$store.commit('updateMenulist');
-    // iview-admin检查更新
-    util.checkUpdate(this);
   },
   created() {
     let tagsList = [];
