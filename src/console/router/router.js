@@ -89,13 +89,14 @@ export const appRouter = [
     title: '资源管理',
     component: Main,
     children: [
+      // {
+      //   path: 'md-editor',
+      //   icon: 'pound',
+      //   name: 'md-editor',
+      //   title: 'Markdown编辑器',
+      //   component: () => import ('@/views/my-components/markdown-editor/markdown-editor.vue')
+      // },
       {
-        path: 'md-editor',
-        icon: 'pound',
-        name: 'md-editor',
-        title: 'Markdown编辑器',
-        component: () => import ('@/views/my-components/markdown-editor/markdown-editor.vue')
-      }, {
         path: 'image-editor',
         icon: 'crop',
         name: 'image-editor',

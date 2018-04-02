@@ -18,7 +18,7 @@ fs.open('./config/env.js', 'w', function(err, fd) {
 module.exports = merge(webpackBaseConfig, {
   devtool: config.dev.devtool,
   output: {
-    publicPath: config.dev.assetsPublicPath,
+    // publicPath: config.dev.assetsPublicPath,
     filename: '[name].js'
   },
   devServer: {
@@ -50,7 +50,8 @@ module.exports = merge(webpackBaseConfig, {
     }),
     new CopyWebpackPlugin([
       {
-        from: 'src/console/views/main-components/theme-switch/theme'
+        from: 'src/console/views/main-components/theme-switch/theme',
+        to: 'src'
       }, {
         from: 'src/console/views/my-components/tinymce'
       }

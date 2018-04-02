@@ -9,10 +9,13 @@
     <Card>
       <Form :label-width="80">
         <FormItem label="文章标题">
-          <Input v-model="blogTitle" @on-blur="handleArticletitleBlur" icon="android-list" />
+          <Input v-model="blogTitle" :disabled="isEdit" @on-blur="handleTitleBlur" icon="android-list" />
         </FormItem>
         <FormItem label="文章简介">
-          <Input v-model="blogIntro" type="textarea" @on-blur="handleArticleintroBlur" />
+          <Input v-model="blogIntro" type="textarea" @on-blur="handleIntroBlur" />
+        </FormItem>
+        <FormItem label="作者">
+          <Input v-model="author" @on-blur="handleAuthorBlur" icon="ios-person" />
         </FormItem>
       </Form>
       <div class="margin-top-20">
@@ -48,21 +51,27 @@
 
 <script>
 import tinymce from 'tinymce';
+import { mapGetters } from 'vuex';
 import tagsCard from './tags-card'
 import preview from './preview';
 export default {
   name: 'blog-publish',
   components: { preview, tagsCard },
+  computed: {
+    ...mapGetters(['userN'])
+  },
   data() {
     return {
-      blogTitle: '', blogIntro: '', showLink: false,
+      blogTitle: '', blogIntro: '', author: '', showLink: false,
       blogPath: '', editPathButtonType: 'ghost',
       publishTime: '', publishLoading: false,
-      isShowPreview: false
+      isShowPreview: false, isEdit: false
     };
   },
   mounted() {
+    if (this.$route.query.q === 'edit') this.isEdit = true;
     this.blogTitle = localStorage.blogTitle || '';
+    this.author = localStorage.author || this.userN;
     this.blogIntro = localStorage.blogIntro || '';
     this.initTinymce();
   },
@@ -72,12 +81,14 @@ export default {
         const data = {
           title: this.blogTitle,
           intro: this.blogIntro,
+          author: this.author,
           content: tinymce.activeEditor.getContent(),
           tags: this.$refs.tagsCard.onReturnTags()
         }
         this.publishLoading = true;
         try {
-          const res = await this.$store.dispatch('addBlogs', data)
+          const api = this.isEdit ? 'updateBlogs' : 'addBlogs';
+          const res = await this.$store.dispatch(api, data)
           this.publishLoading = false;
           this.$Notice.success({
             title: '保存成功',
@@ -89,7 +100,7 @@ export default {
         }
       }
     },
-    handleArticletitleBlur() {
+    handleTitleBlur() {
       if (this.blogTitle.length !== 0) {
         localStorage.blogTitle = this.blogTitle; // 本地存储文章标题
         let date = new Date();
@@ -99,8 +110,11 @@ export default {
         this.blogPath = window.location.host + '/' + year + '/' + month + '/' + day + '/';
       }
     },
-    handleArticleintroBlur() {
+    handleIntroBlur() {
       localStorage.blogIntro = this.blogIntro; // 本地存储文章简介
+    },
+    handleAuthorBlur() {
+      localStorage.author = this.author; // 本地存储文章简介
     },
     canPublish() {
       if (this.blogTitle.length === 0) {

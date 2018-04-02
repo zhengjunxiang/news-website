@@ -33,6 +33,19 @@ module.exports = {
       }
     });
   },
+  update: (req, res) => {
+    global.logger.info('blogs/update.json');
+    const {title, content, intro, tags} = req.body;
+    Blogs.update(
+      {title: {$in: title}},
+      { content, intro, tags, updateAt: Date.now() },
+      (err, blog) => {
+        if (err) global.logger.error(err);
+        if (blog.ok === 1) res.json({ errno: 0, mes: `博客${title}更新成功` })
+        else res.json({ errno: 1, mes: '博客更新失败' })
+      }
+    )
+  },
   get: (req, res) => {
     global.logger.info('blogs/get.json');
     const _blog = req.query, cond = {};

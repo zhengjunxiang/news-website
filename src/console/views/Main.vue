@@ -66,7 +66,7 @@ import breadcrumbNav from './main-components/breadcrumb-nav.vue';
 import fullScreen from './main-components/fullscreen.vue';
 import messageTip from './main-components/message-tip.vue';
 import themeSwitch from './main-components/theme-switch/theme-switch.vue';
-import Cookies from 'js-cookie';
+import { mapGetters } from 'vuex'
 import util from '@/libs/util.js';
 
 export default {
@@ -87,6 +87,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters([ 'userN' ]),
     menuList() {
       return this.$store.state.app.menuList;
     },
@@ -113,10 +114,10 @@ export default {
     init() {
       let pathArr = util.setCurrentPath(this, this.$route.name);
       this.$store.commit('updateMenulist');
+      this.userName = this.userN;
       if (pathArr.length >= 2) {
         this.$store.commit('addOpenSubmenu', pathArr[1].name);
       }
-      this.userName = Cookies.get('user');
       let messageCount = 3;
       this.messageCount = messageCount.toString();
       this.checkTag(this.$route.name);
@@ -128,31 +129,23 @@ export default {
     handleClickUserDropdown(name) {
       if (name === 'ownSpace') {
         util.openNewPage(this, 'ownspace_index');
-        this.$router.push({
-          name: 'ownspace_index'
-        });
+        this.$router.push({ name: 'ownspace_index' });
       } else if (name === 'loginout') {
         // 退出登录
         this.$store.commit('logout', this);
         this.$store.commit('clearOpenedSubmenu');
-        this.$router.push({
-          name: 'login'
-        });
+        this.$router.push({ name: 'login' });
       }
     },
     checkTag(name) {
       let openpageHasTag = this.pageTagsList.some(item => {
-        if (item.name === name) {
-          return true;
-        }
+        if (item.name === name) return true;
       });
       if (!openpageHasTag) { //  解决关闭当前标签后再点击回退按钮会退到当前页时没有标签的问题
         util.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
       }
     },
-    beforePush() {
-      return true;
-    },
+    beforePush() { return true; },
   },
   watch: {
     '$route' (to) {

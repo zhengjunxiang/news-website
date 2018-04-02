@@ -1,5 +1,6 @@
 require('babel-core/register')
 var express = require('express');
+var path = require('path');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
 var session = require('cookie-session');
@@ -9,6 +10,8 @@ var app = express();
 
 require('./middleware/log/index')
 require('./mongodb')
+
+app.use('/resouce', express.static(path.join(__dirname, 'resouce')))
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

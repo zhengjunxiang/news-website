@@ -1,4 +1,5 @@
 import {otherRouter, appRouter} from '@/router/router';
+import { GetImgs } from '@/api/server.js';
 import Util from '@/libs/util';
 import Cookies from 'js-cookie';
 
@@ -139,6 +140,12 @@ export default {
       }
       state.pageOpenedList.push(tagObj);
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
+    }
+  },
+  actions: {
+    async getImgs({commit}, data) {
+      const res = await GetImgs(data)
+      return res.data
     }
   }
 };

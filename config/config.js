@@ -11,6 +11,11 @@ let config = {
         target: { host, protocol: 'http:', port: port.api },
         secure: false,
         changeOrigin: true
+      },
+      '/resouce': {
+        target: { host, protocol: 'http:', port: port.api },
+        secure: false,
+        changeOrigin: true
       }
     },
     host, // can be overwritten by process.env.HOST

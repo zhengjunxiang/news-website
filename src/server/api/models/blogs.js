@@ -4,6 +4,7 @@ var BlogsSchema = new mongoose.Schema({
   title: { unique: true, type: String },
   content: { type: String },
   intro: { type: String },
+  author: { type: String, default: 'Noname' },
   tags: { type: Array },
   createAt: { type: Date, default: Date.now() },
   updateAt: { type: Date, default: Date.now() }

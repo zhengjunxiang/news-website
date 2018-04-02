@@ -1,5 +1,5 @@
 import {
-  AddBlogs, GetBlogs, DelBlogs,
+  AddBlogs, GetBlogs, DelBlogs, UpdateBlogs,
   AddTags, GetTags, DelTags
 } from '@/api/server.js';
 
@@ -9,6 +9,10 @@ export default {
   actions: {
     async addBlogs({commit}, data) {
       const res = await AddBlogs(data)
+      return res.data
+    },
+    async updateBlogs({commit}, data) {
+      const res = await UpdateBlogs(data)
       return res.data
     },
     async getBlogs({commit}, data) {

@@ -4,68 +4,46 @@
 </style>
 
 <template>
-<div>
-  <div class="margin-top-10">
-    <Col span="8">
+<div class="margin-top-10 padding-left-10">
+  <Card>
+    <p slot="title">
+      <Icon type="ios-analytics" /> 图片上传
+    </p>
+    <div class="height-492px">
+      <Col span="6">
+      <Card style="text-align: center;">
+        <Upload ref="upload" name="upimg" :on-error="handleError"
+          :on-success="handleSuccess" :format="['jpg','jpeg','png', 'gif']" :before-upload="handleBeforeUpload"
+          :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :max-size="2048"
+          multiple type="drag" action="/resouce" style="display: inline-block; width: 100%;">
+          <div style="width: 100%;height:58px;line-height: 68px;">
+            <Icon type="ios-cloud-upload" size="28" style="color: #3399ff" />
+          </div>
+        </Upload>
+        <Modal title="查看图片" v-model="visible">
+          <img :src="imgName" v-if="visible" style="width: 100%">
+          <div slot="footer"></div>
+        </Modal>
+        <span style="color: #666;">点击或拖拽到虚线框</span>
+      </Card>
+      </Col>
+      <Col span="18" class="padding-left-10">
       <Card>
-        <p slot="title">
-          <Icon type="android-hand" />可拖拽上传
-        </p>
-        <div class="height-200px">
-          <Upload multiple type="drag" action="//jsonplaceholder.typicode.com/posts/">
-            <div style="padding: 60px 0;height: 200px;">
-              <Icon type="ios-cloud-upload" size="52" style="color: #3399ff"></Icon>
-              <p>点击或将文件拖拽到这里上传</p>
-            </div>
-          </Upload>
+        <div class="height-460px">
+          <div class="admin-upload-list" v-for="(item, index) in uploadedList" :key="index">
+            <template>
+              <img :src="item.url" />
+              <div class="admin-upload-list-cover">
+                <Icon type="ios-eye-outline" @click.native="handleView(item.url)" />
+                <Icon type="ios-trash-outline" @click.native="handleRemove(item)" />
+              </div>
+            </template>
+          </div>
         </div>
       </Card>
-    </Col>
-    <Col span="16">
-    <div class="padding-left-10">
-      <Card>
-        <p slot="title">
-          <Icon type="ios-analytics" />综合实例
-        </p>
-        <div class="height-492px">
-          <Col span="8">
-          <Card>
-            <Upload ref="upload" :show-upload-list="false" :default-file-list="defaultList"
-              :on-success="handleSuccess" :format="['jpg','jpeg','png']" :max-size="2048"
-              :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :before-upload="handleBeforeUpload"
-              multiple type="drag" action="//jsonplaceholder.typicode.com/posts/" style="display: inline-block;width:58px;">
-              <div style="width: 58px;height:58px;line-height: 58px;">
-                <Icon type="camera" size="20"></Icon>
-              </div>
-            </Upload>
-            <Modal title="查看图片" v-model="visible">
-              <img :src="'https://o5wwk8baw.qnssl.com/' + imgName + '/large'" v-if="visible" style="width: 100%">
-            </Modal>
-          </Card>
-          </Col>
-          <Col span="16" class="padding-left-10">
-          <Card>
-            <div class="height-460px">
-              <div class="admin-upload-list" v-for="item in uploadList" :key="item.url">
-                <template v-if="item.status === 'finished'">
-                  <img :src="item.url">
-                  <div class="admin-upload-list-cover">
-                    <Icon type="ios-eye-outline" @click.native="handleView(item.name)"></Icon>
-                    <Icon type="ios-trash-outline" @click.native="handleRemove(item)"></Icon>
-                  </div>
-                </template>
-                <template v-else>
-                  <Progress v-if="item.showProgress" :percent="item.percentage" hide-info></Progress>
-                </template>
-              </div>
-            </div>
-          </Card>
-          </Col>
-        </div>
-      </Card>
+      </Col>
     </div>
-    </Col>
-  </div>
+  </Card>
 </div>
 </template>
 
@@ -74,17 +52,11 @@ export default {
   name: 'file-upload',
   data() {
     return {
-      defaultList: [{
-          'name': 'a42bdcc1178e62b4694c830f028db5c0',
-          'url': 'https://o5wwk8baw.qnssl.com/a42bdcc1178e62b4694c830f028db5c0/avatar'
-        }, {
-          'name': 'bc7521e033abdd1e92222d733590f104',
-          'url': 'https://o5wwk8baw.qnssl.com/bc7521e033abdd1e92222d733590f104/avatar'
-        }
-      ],
       imgName: '',
       visible: false,
-      uploadList: []
+      getImgsTimer: null,
+      uploadList: [],
+      uploadedList: []
     };
   },
   methods: {
@@ -97,10 +69,22 @@ export default {
       const fileList = this.$refs.upload.fileList;
       this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
     },
-    handleSuccess(res, file) {
-      // 因为上传过程为实例，这里模拟添加 url
-      file.url = 'https://o5wwk8baw.qnssl.com/7eb99afb9d5f317c912f08b5212fd69a/avatar';
-      file.name = '7eb99afb9d5f317c912f08b5212fd69a';
+    handleSuccess(res, file, fileList) {
+      clearTimeout(this.getImgsTimer);
+      this.getImgsTimer = setTimeout(() => {
+        this.handleGetImgs()
+      }, 300)
+    },
+    async handleGetImgs() {
+      const re = await this.$store.dispatch('getImgs')
+      if (re.mes) this.Message.success(re.mes)
+      this.uploadedList = re.data
+    },
+    handleError(error, file, fileList) {
+      this.$Notice.warning({
+        title: '文件上传失败',
+        desc: '文件 ' + fileList.name || '' + ' 上传失败'
+      });
     },
     handleFormatError(file) {
       this.$Notice.warning({
@@ -118,7 +102,8 @@ export default {
       const check = this.uploadList.length < 5;
       if (!check) {
         this.$Notice.warning({
-          title: '最多只能上传 5 张图片。'
+          title: '一次最多只能上传 5 张图片。',
+          desc: '请删除缓存文件'
         });
       }
       return check;
@@ -126,6 +111,7 @@ export default {
   },
   mounted() {
     this.uploadList = this.$refs.upload.fileList;
+    this.handleGetImgs();
   }
 };
 </script>

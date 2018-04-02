@@ -115,7 +115,7 @@ export default {
         localStorage.blogTitle = data.title;
         localStorage.blogContent = data.content;
         localStorage.blogTags = JSON.stringify(data.tags);
-        this.$router.push({name: 'blog-publish'})
+        this.$router.push({name: 'blog-publish', query: {q: 'edit'}})
       }
     }
   }

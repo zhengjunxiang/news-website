@@ -2,8 +2,8 @@
 <div style="display:inline-block;padding:0 6px;">
   <Dropdown @on-click="setTheme">
     <a href="javascript:void(0)">
-      <Icon :style="{marginTop: '-2px', verticalAlign: 'middle'}" color="#495060" :size="18" type="paintbucket"></Icon>
-      <Icon type="arrow-down-b"></Icon>
+      <Icon :style="{marginTop: '-2px', verticalAlign: 'middle'}" color="#495060" :size="18" type="paintbucket" />
+      <Icon type="arrow-down-b" />
     </a>
     <DropdownMenu slot="list">
       <DropdownItem v-for="(item, index) in themeList" :key="index" :name="item.name">
@@ -111,12 +111,7 @@ export default {
           menuTheme: menuTheme
         }]);
       }
-      let stylePath = '';
-      if (config.env.indexOf('dev') > -1) {
-        stylePath = './src/views/main-components/theme-switch/theme/';
-      } else {
-        stylePath = 'dist/';
-      }
+      let stylePath = '/src/';
       if (mainTheme !== 'b') {
         path = stylePath + mainTheme + '.css';
       } else {
@@ -126,12 +121,7 @@ export default {
     }
   },
   created() {
-    let path = '';
-    if (config.env.indexOf('dev') > -1) {
-      path = './src/views/main-components/theme-switch/theme/';
-    } else {
-      path = 'dist/';
-    }
+    let path = '/src/';
     let name = Cookies.get('user');
     if (localStorage.theme) {
       let hasThisUser = JSON.parse(localStorage.theme).some(item => {

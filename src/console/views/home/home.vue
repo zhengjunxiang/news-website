@@ -72,8 +72,8 @@
           </Row>
         </Modal>
         <div class="to-do-list-con">
-          <div v-for="(item, index) in toDoList" :key="'todo-item' + (toDoList.length - index)" class="to-do-item">
-            <to-do-list-item :content="item.title" :createAt="item.createAt" @update="upDateToDoneList" />
+          <div v-for="(item, index) in toDoList" :key="item.title" class="to-do-item">
+            <to-do-list-item :item="item" @update="upDateToDoneList" />
           </div>
         </div>
       </Card>
@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
+import { mapGetters } from 'vuex';
 import dataSourcePie from './components/dataSourcePie.vue';
 import visiteVolume from './components/visiteVolume.vue';
 import inforCard from './components/inforCard.vue';
@@ -125,11 +125,12 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(['userN']),
     avatorPath: () => localStorage.avatorImgPath
   },
   mounted() {
-    this.userName = Cookies.get('user')
-    this.getThings()
+    this.userName = this.userN;
+    this.getThings();
   },
   methods: {
     addNewToDoItem() {
@@ -151,7 +152,7 @@ export default {
     },
     async addNew() {
       if (this.newToDoItemValue.length !== 0) {
-        const data = { title: this.newToDoItemValue }
+        const data = { title: this.newToDoItemValue, creater: this.userName }
         const res = await this.$store.dispatch('addThings', data)
         if (res.mes) this.$Message.success(res.mes)
         this.getThings()

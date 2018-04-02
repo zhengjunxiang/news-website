@@ -2,7 +2,9 @@ import Cookies from 'js-cookie';
 import { LoginUser, RegisterUser, GetUser, DelUser } from '@/api/server.js';
 
 const user = {
-  state: {},
+  state: {
+    userName: Cookies.get('user')
+  },
   mutations: {
     logout(state, vm) {
       Cookies.remove('user');
@@ -38,6 +40,9 @@ const user = {
       const res = await DelUser(data)
       return res.data
     }
+  },
+  getters: {
+    userN: state => state.userName
   }
 };
 

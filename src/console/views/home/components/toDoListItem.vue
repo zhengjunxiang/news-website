@@ -11,8 +11,11 @@
   </Col>
   <Col span="22" class="height-100">
     <Row align="middle" class="height-100">
-      <p class="to-do-list-item-text" @click="handleHasDid" :class="{hasDid: todoitem}">{{ content }}</p>
-      <p class="to-do-list-item-text creatAt" @click="handleHasDid" :class="{hasDid: todoitem}">创建时间：{{ createAt }}</p>
+      <p class="to-do-list-item-text" @click="handleHasDid" :class="{hasDid: todoitem}">{{ item.title }}</p>
+      <p class="to-do-list-item-text creatAt" @click="handleHasDid" :class="{hasDid: todoitem}">
+        <b>{{ item.creater }}</b>
+        创建时间：{{ item.createAt }}
+      </p>
     </Row>
   </Col>
 </Row>
@@ -27,14 +30,12 @@ export default {
     };
   },
   props: {
-    content: String,
-    createAt: String,
-    update: Object
+    item: Object
   },
   methods: {
     handleHasDid() {
       this.todoitem = !this.todoitem;
-      this.$nextTick(() => { this.$emit('update', this.content, this.todoitem )})
+      this.$nextTick(() => { this.$emit('update', this.item.title, this.todoitem )})
     }
   }
 };

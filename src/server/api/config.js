@@ -7,6 +7,7 @@ const auth = {
 
 module.exports = {
   port: port.api,
+  root: __dirname,
   host,
   auth,
   mongodb: {

@@ -3,6 +3,7 @@ const user = require('../controller/user');
 const blogs = require('../controller/blogs');
 const things = require('../controller/things');
 const tags = require('../controller/tags');
+const upload = require('../controller/upload');
 
 module.exports = function(app) {
   app.use(function(req, res, next) {
@@ -16,6 +17,7 @@ module.exports = function(app) {
   router.delete('/user/delete.json', user.delete);
   // blogs
   router.post('/blogs/add.json', blogs.add);
+  router.post('/blogs/update.json', blogs.update);
   router.get('/blogs/get.json', blogs.get);
   router.delete('/blogs/delete.json', blogs.delete);
   // things
@@ -26,6 +28,9 @@ module.exports = function(app) {
   router.post('/tags/add.json', tags.add);
   router.get('/tags/get.json', tags.get);
   router.delete('/tags/delete.json', tags.delete);
+  // upload
+  router.post('/resouce', upload.upImgs);
+  router.get('/resouce', upload.getImgs);
 
   app.use(router);
 };

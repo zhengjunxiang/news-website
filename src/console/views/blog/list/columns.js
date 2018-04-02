@@ -1,7 +1,9 @@
 export default that => [
   {
     title: '标题',
-    key: 'title'
+    key: 'title',
+    width: 160,
+    fixed: 'left'
   }, {
     title: '简介',
     key: 'intro'
@@ -19,6 +21,9 @@ export default that => [
       }));
     }
   }, {
+    title: '作者',
+    key: 'author'
+  }, {
     title: '创建时间',
     key: 'createAt',
     render: (h, params) => {
@@ -32,6 +37,7 @@ export default that => [
     }
   }, {
     title: '操作',
+    width: '160',
     render: (h, params) => {
       return h('div', [
         h('Button', {
