@@ -80,7 +80,7 @@ export default {
     },
     async delTag() {
       if (this.delTagList.length) {
-        const res = await this.$store.dispatch('delTags', {tag: this.delTagList.map(item => item.value)})
+        const res = await this.$store.dispatch('delTags', {tags: this.delTagList.map(item => item.value)})
         if (res.mes) this.$Message.success(res.mes)
         this.cancelDelTag()
         this.initBlogTagList()
