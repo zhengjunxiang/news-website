@@ -10,6 +10,16 @@ const config = require('../config/config')
 
 const isConsole = process.env.ENV_TYPE === 'console'
 
+const copyPlugin = isConsole ? new CopyWebpackPlugin([
+  {
+    from: 'src/console/views/main-components/theme-switch/theme',
+    to: 'src'
+  }, {
+    from: 'src/console/views/my-components/tinymce'
+  }
+], {ignore: ['text-editor.vue']}) :
+new CopyWebpackPlugin([])
+
 fs.open('./config/env.js', 'w', function(err, fd) {
   const buf = 'module.exports = "development";';
   fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
@@ -48,13 +58,6 @@ module.exports = merge(webpackBaseConfig, {
       template: isConsole ? 'src/console/index.html' : 'src/client/index.html',
       inject: true
     }),
-    new CopyWebpackPlugin([
-      {
-        from: 'src/console/views/main-components/theme-switch/theme',
-        to: 'src'
-      }, {
-        from: 'src/console/views/my-components/tinymce'
-      }
-    ], {ignore: ['text-editor.vue']})
+    copyPlugin
   ]
 });

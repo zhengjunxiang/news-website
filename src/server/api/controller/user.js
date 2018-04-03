@@ -33,7 +33,7 @@ module.exports = {
           if (err) global.logger.error(err);
           if (isMatch) {
             req.session.user = user;
-            res.json({ errno: 0, mes: '登录成功', data: {name: name, src: user.src, access: user.access} });
+            res.json({ errno: 0, mes: '登录成功', data: {name: name, avatar: user.avatar, access: user.access} });
           } else {
             res.json({ errno: 1, mes: '密码不正确' });
             global.logger.info('password is not meached');

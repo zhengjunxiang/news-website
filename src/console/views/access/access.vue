@@ -13,7 +13,8 @@
         当前用户
       </p>
       <div class="access-user-con access-current-user-con">
-        <img :src="avatorPath" alt="">
+        <!-- <img :src="avatorPath" alt=""> -->
+        <Avatar class="avator-img" icon="person" :src="avatorPath" style="background: #619fe7;" />
         <p>当前用户权限值:<b>{{ accessCode }}</b></p>
         <Button type="primary" @click="handleShowUser">显示已有普通用户</Button>
       </div>
@@ -31,7 +32,7 @@
             <FormItem prop="userName">
               <Input v-model="form.userName" placeholder="请输入用户名">
                 <span slot="prepend">
-                    <Icon :size="16" type="person"></Icon>
+                  <Icon :size="16" type="person" />
                 </span>
               </Input>
             </FormItem>
@@ -45,7 +46,7 @@
             <FormItem prop="passwdCheck">
               <Input type="password" v-model="form.passwdCheck" placeholder="确认密码">
                 <span slot="prepend">
-                  <Icon :size="14" type="locked"></Icon>
+                  <Icon :size="14" type="locked" />
                 </span>
               </Input>
             </FormItem>
@@ -77,10 +78,14 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
+import { mapGetters } from 'vuex';
 import columns from './columns.js';
 export default {
   name: 'access_index',
+  computed: {
+    ...mapGetters(['accessCode']),
+    avatorPath: () => localStorage.avatorImgPath
+  },
   data() {
     const validatePassCheck = (rule, value, callback) => {
       if (value === '') callback(new Error('请再次输入你的密码'));
@@ -92,7 +97,6 @@ export default {
       else callback();
     };
     return {
-      accessCode: parseInt(Cookies.get('access')),
       isShow: false,
       userData: [],
       columns: columns(this),
@@ -123,9 +127,6 @@ export default {
         }]
       }
     };
-  },
-  computed: {
-    avatorPath: () => localStorage.avatorImgPath
   },
   methods: {
     async getUser() {

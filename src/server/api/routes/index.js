@@ -31,6 +31,7 @@ module.exports = function(app) {
   // upload
   router.post('/resouce', upload.upImgs);
   router.get('/resouce', upload.getImgs);
+  router.delete('/resouce/delete.json', upload.delImg);
 
   app.use(router);
 };

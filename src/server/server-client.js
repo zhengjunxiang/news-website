@@ -24,6 +24,12 @@ app.use("*.json$", proxy({
   changeOrigin: true
 }));
 
+app.use("/resouce", proxy({
+  target: `http://${host}:${port.api}`,
+  secure: false,
+  changeOrigin: true
+}));
+
 app.use('/', express.static(path.join(__dirname, '../../dist/client')))
 
 app.use(history({

@@ -1,5 +1,5 @@
 import {otherRouter, appRouter} from '@/router/router';
-import { GetImgs } from '@/api/server.js';
+import { GetImgs, DelImg } from '@/api/server.js';
 import Util from '@/libs/util';
 import Cookies from 'js-cookie';
 
@@ -128,7 +128,6 @@ export default {
     },
     setCurrentPath(state, pathArr) { state.currentPath = pathArr },
     setCurrentPageName(state, name) { state.currentPageName = name; },
-    setAvator(state, path) { localStorage.avatorImgPath = path; },
     clearOpenedSubmenu(state) { state.openedSubmenuArr.length = 0; },
     setMessageCount(state, count) {
       state.messageCount = count;
@@ -145,6 +144,10 @@ export default {
   actions: {
     async getImgs({commit}, data) {
       const res = await GetImgs(data)
+      return res.data
+    },
+    async delImg({commit}, data) {
+      const res = await DelImg(data)
       return res.data
     }
   }

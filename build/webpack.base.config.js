@@ -76,7 +76,7 @@ module.exports = {
     ],
     alias: {
       'vue': 'vue/dist/vue.esm.js',
-      '@': resolve('../src/console'),
+      '@': isConsole ? resolve('../src/console') : resolve('../src/client'),
       '#': resolve('../config'),
       '~': resolve('../')
     }

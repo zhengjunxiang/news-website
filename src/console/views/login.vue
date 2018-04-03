@@ -70,9 +70,6 @@ export default {
           try {
             const res = await this.$store.dispatch('login', data);
             if(res.mes) this.$Message.success(res.mes);
-            Cookies.set('user', name);
-            this.$store.commit('setAvator', 'https://ss1.bdstatic.com/70cFvXSh_Q1YnxGkpoWK1HF6hhy/it/u=3448484253,3685836170&fm=27&gp=0.jpg');
-            Cookies.set('access', res.data.access === 0 ? 0 : (res.data.access || 1));
             this.$router.push({ name: 'home_index' });
           } catch (err) {}
         }

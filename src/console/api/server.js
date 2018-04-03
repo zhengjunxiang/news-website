@@ -20,9 +20,10 @@ const GetTags = () => API.get('/tags/get.json');
 const DelTags = data => API.delete('/tags/delete.json', {params: data});
 // 获取已经上传的图片
 const GetImgs = () => API.get('/resouce')
+const DelImg = data => API.delete('/resouce/delete.json', {params: data})
 
 export {
-  GetImgs,
+  GetImgs, DelImg,
   LoginUser, RegisterUser, GetUser, DelUser,
   AddBlogs, GetBlogs, DelBlogs, UpdateBlogs,
   AddThings, GetThings, DelThings,

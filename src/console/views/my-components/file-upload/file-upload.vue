@@ -35,8 +35,12 @@
               <img :src="item.url" />
               <div class="admin-upload-list-cover">
                 <Icon type="ios-eye-outline" @click.native="handleView(item.url)" />
-                <Icon type="ios-trash-outline" @click.native="handleRemove(item)" />
+                <Icon type="ios-trash-outline" @click.native="handleRemove(item.name)" />
+                <Icon class="copy-name" :aria-label="item.url" type="ios-copy-outline" />
               </div>
+              <Tooltip :content="item.name" placement="bottom">
+                <span class="copy-name" :aria-label="item.name">{{item.name}}</span>
+              </Tooltip>
             </template>
           </div>
         </div>
@@ -48,6 +52,7 @@
 </template>
 
 <script>
+import ClipboardJS from 'clipboard';
 export default {
   name: 'file-upload',
   data() {
@@ -56,7 +61,8 @@ export default {
       visible: false,
       getImgsTimer: null,
       uploadList: [],
-      uploadedList: []
+      uploadedList: [],
+      clipboardJS: null
     };
   },
   methods: {
@@ -64,10 +70,18 @@ export default {
       this.imgName = name;
       this.visible = true;
     },
-    handleRemove(file) {
-      // 从 upload 实例删除数据
-      const fileList = this.$refs.upload.fileList;
-      this.$refs.upload.fileList.splice(fileList.indexOf(file), 1);
+    handleRemove(name) {
+      this.$Modal.confirm({
+        title: '删除',
+        content: `<h3>确定要删除 ${name} 吗？</h3>`,
+        onOk: async () => {
+          try {
+            const res = await this.$store.dispatch('delImg', {name});
+            if (res.mes) this.$Message.success(res.mes)
+            this.handleGetImgs()
+          } catch (err) {}
+        }
+      });
     },
     handleSuccess(res, file, fileList) {
       clearTimeout(this.getImgsTimer);
@@ -112,6 +126,16 @@ export default {
   mounted() {
     this.uploadList = this.$refs.upload.fileList;
     this.handleGetImgs();
+    this.clipboardJS = new ClipboardJS('.copy-name', {
+      text: trigger => trigger.getAttribute('aria-label')
+    })
+    this.clipboardJS.on('success', (e) => {
+      this.$Message.success(`复制 ${e.text} 成功`)
+      e.clearSelection();
+    });
+  },
+  destroyed() {
+    this.clipboardJS.destroy();
   }
 };
 </script>

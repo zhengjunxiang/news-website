@@ -11,15 +11,15 @@
           <Card>
             <Row type="flex" class="user-infor">
               <Col span="8">
-              <Row class-name="made-child-con-middle" type="flex" align="middle">
-                <img class="avator-img" :src="avatorPath" />
+              <Row class-name="made-child-con-middle" type="flex" align="middle" justify="center">
+                <Avatar class="avator-img" icon="person" :src="avatorPath" style="background: #619fe7;" />
               </Row>
               </Col>
               <Col span="16" style="padding-left:6px;">
               <Row class-name="made-child-con-middle" type="flex" align="middle">
                 <div>
                   <b class="card-user-infor-name">{{userName}}</b>
-                  <p>super admin</p>
+                  <p>{{acce}}</p>
                 </div>
               </Row>
               </Col>
@@ -125,8 +125,13 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['userN']),
-    avatorPath: () => localStorage.avatorImgPath
+    ...mapGetters(['userN', 'accessCode']),
+    avatorPath: () => localStorage.avatorImgPath,
+    acce() {
+      if (this.accessCode === 0) return 'super admin';
+      else if (this.accessCode === 1) return 'admin';
+      else return 'user';
+    }
   },
   mounted() {
     this.userName = this.userN;

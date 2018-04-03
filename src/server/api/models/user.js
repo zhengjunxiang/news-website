@@ -6,9 +6,10 @@ var SALT_WORK_FACTOR = 10;
 var UserSchema = new mongoose.Schema({
   name: { unique: true, type: String },
   password: String,
-  src: String,
+  avatar: { type: String, default: '' },
   access: { type: Number },
-  createAt: { type: Date, default: Date.now() }
+  createAt: { type: Date, default: Date.now() },
+  updateAt: { type: Date, default: Date.now() }
 });
 // 对密码进行加密
 UserSchema.pre('save', function(next) {
@@ -20,7 +21,6 @@ UserSchema.pre('save', function(next) {
     bcrypt.hash(user.password, salt, (err, hash) => {
       if (err) return next(err);
       user.password = hash;
-      user.src = '/static/img/' + Math.ceil(Math.random() * 10) + '.jpg';
       next();
     });
   });
@@ -36,7 +36,7 @@ UserSchema.methods = {
 };
 
 UserSchema.statics = {
-  fetch: (cb) => this.find({}).sort('meta.updateAt').exec(cb),
+  fetch: (cb) => this.find({}).sort('updateAt').exec(cb),
   findById: (id, cb) => this.findOne({_id: id}).exec(cb)
 };
 

@@ -3,7 +3,8 @@ import { LoginUser, RegisterUser, GetUser, DelUser } from '@/api/server.js';
 
 const user = {
   state: {
-    userName: Cookies.get('user')
+    userName: Cookies.get('user') || '',
+    access: parseInt(Cookies.get('access'))
   },
   mutations: {
     logout(state, vm) {
@@ -14,18 +15,23 @@ const user = {
       themeLink.setAttribute('href', '');
       // 清空打开的页面等数据，但是保存主题数据
       let theme = '';
-      if (localStorage.theme) {
-        theme = localStorage.theme;
-      }
+      if (localStorage.theme) theme = localStorage.theme;
       localStorage.clear();
-      if (theme) {
-        localStorage.theme = theme;
-      }
+      if (theme) localStorage.theme = theme;
+    },
+    setNameAndAccess(state, d) {
+      Cookies.set('user', d.name);
+      Cookies.set('access', d.access);
+      localStorage.avatorImgPath = d.avatar || '';
+      state.userName = d.name;
+      state.access = d.access;
     }
   },
   actions: {
     async login({commit}, data) {
-      const res = await LoginUser(data)
+      const res = await LoginUser(data),
+        d = res.data.data;
+      commit('setNameAndAccess', d)
       return res.data
     },
     async register({commit}, data) {
@@ -42,7 +48,8 @@ const user = {
     }
   },
   getters: {
-    userN: state => state.userName
+    userN: state => state.userName,
+    accessCode: state => state.access
   }
 };
 

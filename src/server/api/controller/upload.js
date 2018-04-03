@@ -1,9 +1,8 @@
-var {host, port} = require('../../../../config/ip-port'),
-  formidable = require('formidable'),
+var formidable = require('formidable'),
   {root} = require('../config'),
   fs = require('fs'),
   path = require('path'),
-  url = `http://${host}:${port.api}/resouce`,
+  url = '/resouce',
   UPLOAD_IMG = path.resolve(root, 'resouce');
 
 module.exports = {
@@ -39,6 +38,16 @@ module.exports = {
         const data = files.map(f => ({name: f, url: url + '/' + f}))
         res.json({ errno: 0, mes: '', data })
       };
+    })
+  },
+  delImg: (req, res) => {
+    global.logger.info('resouce/delete.json');
+    var _name = req.query;
+    fs.unlink(`${UPLOAD_IMG}/${_name.name}`, (err, f) => {
+      if (err) {
+        global.logger.error('err', err)
+        res.json({ errno: 1, mes: '删除失败' })
+      } else res.json({ errno: 0, mes: `删除 ${_name.name} 成功` })
     })
   }
 }

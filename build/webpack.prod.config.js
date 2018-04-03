@@ -18,6 +18,27 @@ fs.open('./config/env.js', 'w', function(err, fd) {
   fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
 });
 
+const copyPlugin = isConsole ? new CopyWebpackPlugin([
+  {
+    from: 'ant_icon.ico',
+    to: '../'
+  }, {
+    from: 'src/console/styles/fonts',
+    to: 'fonts'
+  }, {
+    from: 'src/console/views/main-components/theme-switch/theme'
+  }, {
+    from: 'src/console/views/my-components/tinymce'
+  }
+], {ignore: ['text-editor.vue']}) :
+new CopyWebpackPlugin([{
+  from: 'ant_icon.ico',
+  to: '../'
+}, {
+  from: 'src/client/styles/fonts',
+  to: 'fonts'
+}])
+
 module.exports = merge(webpackBaseConfig, {
   output: {
     path: path.resolve(__dirname, `../dist/${isConsole ? 'console/src' : 'client/src'}`),
@@ -50,23 +71,11 @@ module.exports = merge(webpackBaseConfig, {
         drop_debugger: true
       }
     }),
-    new CopyWebpackPlugin([
-      {
-        from: 'ant_icon.ico',
-        to: '../'
-      }, {
-        from: 'src/console/styles/fonts',
-        to: 'fonts'
-      }, {
-        from: 'src/console/views/main-components/theme-switch/theme'
-      }, {
-        from: 'src/console/views/my-components/tinymce'
-      }
-    ], {ignore: ['text-editor.vue']}),
+    copyPlugin,
     new HtmlWebpackPlugin({
       title: 'Antpool Blogs',
       filename: path.resolve(__dirname, `../dist/${isConsole ? 'console' : 'client'}/index.html`),
-      template: '!!ejs-loader!./src/console/template/index.ejs',
+      template: `!!ejs-loader!./src/${isConsole ? 'console' : 'client'}/template/index.ejs`,
       inject: false
     })
   ]
