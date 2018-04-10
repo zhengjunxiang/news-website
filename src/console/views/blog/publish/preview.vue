@@ -15,7 +15,7 @@
               <Icon type="android-alarm-clock"></Icon>&nbsp;发布时间：{{ publishTime }}</p>
             <div class="preview-tags-con">
               <b class="preview-tip"><Icon type="ios-pricetags-outline"></Icon>&nbsp;标签：</b>
-              <Tag v-for="item in tagsList" type="border" color="blue" :key="item">{{ item }}</Tag>
+              <Tag v-for="item in blogTags" type="border" color="blue" :key="item">{{ item }}</Tag>
             </div>
             <div class="preview-content-con" v-html="content"></div>
           </Card>
@@ -33,7 +33,7 @@ export default {
     return {
       isShow: false,
       articleTitle: '',
-      tagsList: '',
+      blogTags: '',
       classificationSelected: [],
       content: '',
       publishTime: ''
@@ -42,11 +42,10 @@ export default {
   methods: {
     onShow() {
       this.isShow = true;
-      console.log('isShow', this.isShow)
     },
     onPreview() {
       this.articleTitle = localStorage.articleTitle;
-      this.tagsList = localStorage.tagsList ? JSON.parse(localStorage.tagsList) : [];
+      this.blogTags = localStorage.blogTags ? JSON.parse(localStorage.blogTags) : [];
       this.content = localStorage.content;
       this.publishTime = localStorage.publishTime;
     }

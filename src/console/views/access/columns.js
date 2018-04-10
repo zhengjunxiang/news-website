@@ -1,4 +1,4 @@
-export default that => [
+export default (that, code) => [
   {
     title: '用户名',
     key: 'name'
@@ -14,7 +14,7 @@ export default that => [
   }, {
     title: '操作',
     render: (h, params) => {
-      return h('Button', {
+      return code === 0 ? h('Button', {
         props: { type: 'error' },
         on: {
           click: () => {
@@ -31,7 +31,7 @@ export default that => [
             });
           }
         }
-      }, '删除')
+      }, '删除') : h()
     }
   }
 ]

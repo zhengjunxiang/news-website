@@ -21,10 +21,10 @@ module.exports = {
   },
   update: (req, res) => {
     global.logger.info('blogs/update.json');
-    const {title, content, intro, tags, author} = req.body;
+    const {title, content, intro, tags, author, cover} = req.body;
     Blogs.update(
       {title: {$in: title}},
-      { content, intro, tags, author, updateAt: Date.now() },
+      { content, intro, tags, author, updateAt: Date.now(), cover },
       (err, blog) => {
         if (err) global.logger.error(err);
         if (blog.ok === 1) res.json({ errno: 0, mes: `博客${title}更新成功` })

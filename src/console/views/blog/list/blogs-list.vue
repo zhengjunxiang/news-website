@@ -1,5 +1,12 @@
 <style lang="less">
 @import '../../../styles/common.less';
+.table-con {
+  position: relative;
+  .ivu-icon {
+    position: absolute; right: 20px; z-index: 99; top: 12px; color: #2d8cf0;
+    cursor: pointer;
+  }
+}
 </style>
 
 <template>
@@ -38,7 +45,8 @@
           <Button type="primary" size="large" @click="exportData(3)"><Icon type="ios-download-outline" /> 自定义数据</Button>
         </div>
       </Col>
-      <Col span="24">
+      <Col span="24" class="table-con">
+        <span @click="refreshTable"><Icon type="refresh" /></span>
         <Table :data="tableData" :columns="columns" stripe ref="table" />
       </Col>
     </Row>
@@ -60,6 +68,9 @@ export default {
   },
   activated() { this.initData() },
   methods: {
+    refreshTable() {
+      this.initData()
+    },
     exportData(type) {
       if (type === 1) this.$refs.table.exportCsv({ filename: '原始数据' })
       else if (type === 2) this.$refs.table.exportCsv({ filename: '排序和过滤后的数据', original: false })

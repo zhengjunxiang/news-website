@@ -1,0 +1,38 @@
+.sidebar {
+  overflow: auto;
+  position: absolute;
+  background: #f9f9f9;
+  left: 0;
+  height: 100%;
+  width: 300px;
+  &-toggle {
+    display: none;
+  }
+  .widget {
+    line-height: 1.6em;
+    word-wrap: break-word;
+    font-size: 0.9em;
+    color: #777;
+    border-radius: 3px;
+  }
+  .widget a {
+    text-decoration: none;
+    color: #777;
+  }
+  .widget-wrap {
+    padding: 30px 30px 20px;
+  }
+
+  .widget-list ul li, .widget-list ol li {
+    padding: 10px 0;
+    font-size: 15px;
+    border-bottom: 1px solid #e4e4e4;
+  }
+
+  .widget-title {
+    font-size: 15px;
+    font-weight: 400;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+}

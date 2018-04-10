@@ -1,0 +1,200 @@
+.app-container {
+  background: #f0f0f0;
+
+  .main-body {
+    margin-top: -60px;
+    background-color: #fff;
+    &-inner {
+      position: relative;
+      box-sizing: border-box;
+      box-shadow: rgba(0,0,0,0.098) 0 1px 1px 0;
+      padding-left: 300px;
+      overflow: hidden;
+
+      .main {
+        padding-bottom: 60px;
+        float: right;
+        width: 100%;
+        box-sizing: border-box;
+        min-height: 600px;
+      }
+    }
+  }
+
+  .archive-list-count,
+  .category-list-count,
+  .tag-list-count {
+    padding-left: 5px;
+    color: #aaa;
+    font-size: 0.85em;
+  }
+
+  .archive-list-count:before,
+  .category-list-count:before,
+  .tag-list-count:before {
+    content: "(";
+  }
+
+  .archive-list-count:after,
+  .category-list-count:after,
+  .tag-list-count:after {
+    content: ")";
+  }
+}
+
+.sidebar-toggle {
+  width: 100%;
+}
+
+@media only screen and (max-width: 479px) {
+  #header {
+    padding-bottom: 0px !important;
+  }
+  .header {
+    .logo-wrap {
+      width: 100%;
+      .logo {
+        margin: 0 auto;
+      }
+    }
+    .subtitle-wrap {
+      display: block !important;
+      width: 100%;
+      margin-left: 0px !important;
+    }
+    .header-inner.show {
+      // height: auto !important;
+      .main-nav {
+        display: block;
+      }
+      .sub-nav {
+        display: block;
+      }
+    }
+    .header-inner {
+      padding: 0px !important;
+      transition: height 0.2s ease-in;
+      .main-nav-toggle {
+        background: rgba(0,0,0,0.1);
+        height: 45px;
+        color: #fff;
+        display: block !important;
+      }
+      .fa-bars:before {
+        content: "\F0C9";
+        float: right;
+      }
+      .main-nav {
+        float: none !important;
+        display: none;
+        .main-nav-list-item {
+          border-bottom: 1px solid #444;
+          display: block;
+          float: none;
+          box-shadow: none;
+          box-sizing: border-box;
+        }
+      }
+      .sub-nav {
+        display: none;
+        position: static !important;
+        input {
+          width: 80% !important;
+        }
+      }
+    }
+  }
+  .container {
+    .main-body {
+      margin-top: 0px;
+    }
+    .main-body-header {
+      padding: 12px 15px !important;
+    }
+    .main-body-inner {
+      padding-left: 0px;
+      .archive-year-wrap {
+        padding: 13px 15px 12px;
+      }
+      .article-row {
+        padding: 0 0 0 15px;
+        border: none;
+        .article-summary {
+          width: 100%;
+          &-inner {
+            margin: 15px 15px 15px 0;
+          }
+        }
+      }
+    }
+    padding: 0px !important;
+    .sidebar {
+      position: static;
+      margin: 0px;
+      width: 100%;
+      background: #f0f0f0;
+      &-top, .widget-wrap {
+        padding: 15px !important;
+      }
+    }
+  }
+  .footer {
+    margin-top: 0px !important;
+  }
+}
+
+@media only screen and (max-width: 959px) and (min-width: 480px) {
+  #header {
+    padding-bottom: 50px !important;
+  }
+  .container .sidebar {
+    width: 50px;
+    transition: width 0.2s ease-in 0.2s;
+    overflow: hidden;
+    .widgets-container {
+      opacity: 0;
+      transition: opacity 0.2s ease-in;
+    }
+  }
+  .container .sidebar.show {
+    .widgets-container {
+      opacity: 1;
+      transition: opacity 0.2s ease-in;
+    }
+    .sidebar-toggle .toggle:before {
+      content: '\F100';
+    }
+    width: 300px;
+    transition: width 0.2s ease-in;
+  }
+  .main-body {
+    margin-top: -50px !important;
+  }
+  .main-body-header {
+    padding: 12px 30px !important;
+  }
+  .main-body-inner {
+    padding-left: 50px !important;
+    transition: padding-left 0.2s ease-in;
+    background-position: -290px 0 !important;
+    .sidebar .sidebar-toggle {
+      display: block;
+      padding: 6px;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      height: 50px;
+      background: #006bde;
+      transition: all 0.2s ease-in;
+      box-sizing: border-box;
+      .toggle {
+        line-height: 36px;
+        font-size: 38px;
+        width: 38px;
+        font-family: fontawesome;
+        &:before {
+          content: '\f101';
+        }
+      }
+    }
+  }
+}

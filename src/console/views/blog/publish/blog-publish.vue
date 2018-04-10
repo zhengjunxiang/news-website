@@ -14,6 +14,9 @@
         <FormItem label="文章简介">
           <Input v-model="blogIntro" type="textarea" @on-blur="handleIntroBlur" />
         </FormItem>
+        <FormItem label="封面图">
+          <Input v-model="cover" @on-blur="handleCoverBlur" icon="ios-photos" />
+        </FormItem>
         <FormItem label="作者">
           <Input v-model="author" @on-blur="handleAuthorBlur" icon="ios-person" />
         </FormItem>
@@ -62,7 +65,7 @@ export default {
   },
   data() {
     return {
-      blogTitle: '', blogIntro: '', author: '', showLink: false,
+      blogTitle: '', blogIntro: '', author: '', cover: '', showLink: false,
       blogPath: '', editPathButtonType: 'ghost',
       publishTime: '', publishLoading: false,
       isShowPreview: false, isEdit: false
@@ -73,6 +76,7 @@ export default {
     this.blogTitle = localStorage.blogTitle || '';
     this.author = localStorage.author || this.userN;
     this.blogIntro = localStorage.blogIntro || '';
+    this.cover = localStorage.cover || '';
     this.initTinymce();
   },
   methods: {
@@ -82,6 +86,7 @@ export default {
           title: this.blogTitle,
           intro: this.blogIntro,
           author: this.author,
+          cover: this.cover,
           content: tinymce.activeEditor.getContent(),
           tags: this.$refs.tagsCard.onReturnTags()
         }
@@ -115,6 +120,9 @@ export default {
     },
     handleAuthorBlur() {
       localStorage.author = this.author; // 本地存储文章简介
+    },
+    handleCoverBlur() {
+      localStorage.cover = this.cover; // 本地存储封面图片
     },
     canPublish() {
       if (this.blogTitle.length === 0) {

@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var TagsSchema = new mongoose.Schema({
-  value: { type: String },
+  value: { unique: true, type: String },
   createAt: { type: Date, default: Date.now() }
 });
 

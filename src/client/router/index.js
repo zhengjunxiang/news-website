@@ -3,6 +3,8 @@ import iView from 'iview';
 import Util from '../libs/util';
 import VueRouter from 'vue-router';
 import Home from '@/views/home/home.vue';
+import TagsList from '@/views/tags-list/tags-list.vue';
+import About from '@/views/about/about.vue';
 
 Vue.use(VueRouter);
 
@@ -14,6 +16,14 @@ const RouterConfig = {
       path: '/',
       name: 'home',
       component: Home
+    }, {
+      path: '/tags-list',
+      name: 'tags-list',
+      component: TagsList
+    }, {
+      path: '/about',
+      name: 'about',
+      component: About
     }, {
       path: '*',
       redirect: { name: 'home' }

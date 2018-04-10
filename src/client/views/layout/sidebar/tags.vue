@@ -1,0 +1,34 @@
+<template>
+<div class="widget-wrap widget-list">
+  <h3 class="widget-title">标签</h3>
+  <ul class="tag-list">
+    <li class="tag-list-item" v-for="tag in tags">
+      <a class="tag-list-link" href="/tags/docker/">{{tag.value}}</a>
+      <span class="tag-list-count">{{tag.blogs.length}}</span>
+    </li>
+  </ul>
+</div>
+</template>
+<script>
+import {mapGetters} from 'vuex'
+export default {
+  name: "tags",
+  computed: {
+    ...mapGetters(['tags'])
+  },
+  data: () => ({
+
+  })
+}
+</script>
+<style lang="less" scoped>
+.tag-list-item {
+    padding: 10px 0;
+    font-size: 15px;
+    border-bottom: 1px solid #e4e4e4;
+    a {
+        color: #777;
+        text-decoration: none;
+    }
+}
+</style>

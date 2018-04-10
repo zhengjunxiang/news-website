@@ -7,3 +7,4 @@ node_modules
 \.settings/
 config/env.js
 dist
+src/server/api/resouce

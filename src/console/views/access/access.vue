@@ -13,7 +13,6 @@
         当前用户
       </p>
       <div class="access-user-con access-current-user-con">
-        <!-- <img :src="avatorPath" alt=""> -->
         <Avatar class="avator-img" icon="person" :src="avatorPath" style="background: #619fe7;" />
         <p>当前用户权限值:<b>{{ accessCode }}</b></p>
         <Button type="primary" @click="handleShowUser">显示已有普通用户</Button>
@@ -99,7 +98,7 @@ export default {
     return {
       isShow: false,
       userData: [],
-      columns: columns(this),
+      columns: [],
       form: {
         userName: '',
         password: '',
@@ -127,6 +126,9 @@ export default {
         }]
       }
     };
+  },
+  mounted() {
+    this.columns = columns(this, this.accessCode)
   },
   methods: {
     async getUser() {
