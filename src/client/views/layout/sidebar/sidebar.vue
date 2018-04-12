@@ -9,7 +9,7 @@
       <h3 class="widget-title">标签云</h3>
       <div  class="widget tagcloud">
         <a v-for="(tag, ind) in tags" :href="`/tags/${tag.value}/`">
-          <Tag type="border">{{tag.value}}</Tag>
+          {{tag.value}}
         </a>
       </div>
     </div>

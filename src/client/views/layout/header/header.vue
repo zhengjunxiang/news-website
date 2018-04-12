@@ -5,10 +5,10 @@
       <div class="container-inner">
         <div class="header-title">
           <h1 class="logo-wrap">
-            <a href="/" class="logo"></a>
+            <a href="https://www.antpool.com/home.htm" class="logo"></a>
           </h1>
           <h2 class="subtitle-wrap">
-            <p class="subtitle">欢迎来到蚂蚁矿池博客</p>
+            <p class="subtitle" @click="showAlert">欢迎来到蚂蚁矿池博客</p>
           </h2>
         </div>
         <div :class="{'header-inner': true, show: isShowNav}">
@@ -26,7 +26,7 @@
           </ul>
           <nav class="sub-nav">
             <div class="search-form-wrap">
-              <Icon type="search margin-right-10"></Icon>
+              <i class="fa fa-search"></i>
               <input type="text" class="search-form-input" placeholder="Search..." />
             </div>
           </nav>
@@ -37,6 +37,7 @@
 </div>
 </template>
 <script>
+import vue from 'vue'
 export default {
   name: "antheader",
   data: () => ({
@@ -45,6 +46,12 @@ export default {
   methods: {
     toggleNav() {
       this.isShowNav = !this.isShowNav
+    },
+    showAlert() {
+      this.$Alert.info({
+        mes: 'is me zdfnsgaegrwhgerhbedgdfasd',
+        dur: 5
+      })
     }
   }
 }

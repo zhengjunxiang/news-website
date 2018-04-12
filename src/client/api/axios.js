@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Message } from 'iview';
+import Vue from 'vue';
 const baseURL = '';
 
 const instance = axios.create({timeout: 10000});
@@ -13,13 +13,13 @@ instance.interceptors.request.use(config => {
 // 对返回的内容做统一处理
 instance.interceptors.response.use(response => {
   if (response.status === 200) {
-    if (response.data.errno !== 0) Message.error({ content: response.data.mes, duration: 3 })
+    if (response.data.errno !== 0) Vue.$Alert.error({ mes: response.data.mes })
     else return response
   };
   return Promise.reject(response);
 }, error => {
-  if (error) Message.error({ content: error, duration: 5 });
-  else Message.error({ content: '出了点问题，暂时加载不出来，请联系技术支持。', duration: 5 });
+  if (error) Vue.$Alert.error({ mes: error, dur: 5 });
+  else Vue.$Alert.error({ mes: '出了点问题，暂时加载不出来，请联系技术支持。', dur: 5 });
   return Promise.reject(error);
 });
 

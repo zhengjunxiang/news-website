@@ -1,15 +1,19 @@
 import {
   GetBlogs, GetTags
 } from '@/api/server.js';
+import { Message } from 'iview';
 
 export default {
   state: {
     blogs: [],
+    blog: {},
     tags: []
   },
   mutations: {
     setBlogs: (state, data) => {
-      state.blogs = data.data
+      if (data.mes) Message.info(data.mes)
+      if (data.data.length === 1) state.blog = data.data[0]
+      else state.blogs = data.data
     },
     setTags: (state, data) => {
       state.tags = data.data.map(tag => ({value: tag.value, blogs: []}))
@@ -45,6 +49,7 @@ export default {
   },
   getters: {
     blogs: state => state.blogs,
+    blog: state => state.blog,
     tags: state => state.tags
   }
 };

@@ -5,6 +5,7 @@ import VueRouter from 'vue-router';
 import Home from '@/views/home/home.vue';
 import TagsList from '@/views/tags-list/tags-list.vue';
 import About from '@/views/about/about.vue';
+import Blog from '@/views/blog/index.vue';
 
 Vue.use(VueRouter);
 
@@ -24,6 +25,10 @@ const RouterConfig = {
       path: '/about',
       name: 'about',
       component: About
+    }, {
+      path: '/blog/:title',
+      name: 'blog',
+      component: Blog
     }, {
       path: '*',
       redirect: { name: 'home' }

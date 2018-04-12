@@ -23,7 +23,7 @@
               </a>
               <div class="article-meta">
                 <div class="category">
-                  <a class="article-category-link" href="/categories/后台/">后台</a><i class="icon fa fa-angle-right"></i><a class="article-category-link" href="/categories/后台/部署/">部署</a>
+                  <a class="article-tag-link" href="/categories/后台/">后台</a><i class="icon fa fa-angle-right"></i><a class="article-tag-link" href="/categories/后台/部署/">部署</a>
                 </div>
                 <div class="date"><time datetime="2018-02-11T09:04:27.000Z" itemprop="datePublished">2018-02-11</time></div>
               </div>
@@ -42,7 +42,7 @@
               </a>
               <div class="article-meta">
                 <div class="category">
-                  <a class="article-category-link" href="/categories/前端/">前端</a>
+                  <a class="article-tag-link" href="/categories/前端/">前端</a>
                 </div>
                 <div class="date"><time datetime="2018-02-10T09:04:27.000Z" itemprop="datePublished">2018-02-10</time></div>
               </div>
@@ -63,7 +63,7 @@
               </a>
               <div class="article-meta">
                 <div class="category">
-                  <a class="article-category-link" href="/categories/语言/">语言</a>
+                  <a class="article-tag-link" href="/categories/语言/">语言</a>
                 </div>
                 <div class="date"><time datetime="2018-02-05T09:04:27.000Z" itemprop="datePublished">2018-02-05</time></div>
               </div>

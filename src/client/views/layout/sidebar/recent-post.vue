@@ -11,12 +11,12 @@
           </div>
           <div class="item-inner">
             <p class="item-category">
-              <a class="article-category-link" v-for="(tag, ind) in blog.tags" :href="`/tags/${tag}/`" v-if="ind < 2">
-                <Tag type="border" color="blue">{{tag}}</Tag>
+              <a class="article-tag-link" v-for="(tag, ind) in blog.tags" :href="`/tags/${tag}/`" v-if="ind < 2">
+                {{tag}}
               </a>
             </p>
             <p class="item-title"><a href="/2018/02/11/third/" class="title">{{blog.title}}</a></p>
-            <p class="item-date"><time datetime="2018-02-11T09:04:27.000Z" itemprop="datePublished">{{setDate(blog.updateAt)}}</time></p>
+            <p class="item-date"><time :datetime="blog.updateAt" itemprop="datePublished">{{setDate(blog.updateAt)}}</time></p>
           </div>
         </li>
       </ul>
@@ -72,12 +72,7 @@ export default {
         }
       }
       .item-category {
-        text-transform: uppercase;
         width: 100%;
-        overflow: auto;
-        .icon {
-          margin-right: 5px;
-        }
       }
       .item-title {
         a {

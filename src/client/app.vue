@@ -28,13 +28,13 @@ export default {
   components: {AntHeader, AntFooter, Sidebar},
   mounted() {
     this.$store.dispatch('getTagsAndBlogs')
-    this.$Message.config({ top: 50, duration: 5 })
-    this.$Notice.config({ top: 50, duration: 5 })
   }
 };
 </script>
 
 <style lang='less'>
 @import './styles/resize.less';
+@import "./styles/common.less";
+@import './libs/components/share/css/share.less';
 @import './app.less';
 </style>

@@ -34,9 +34,8 @@ module.exports = {
   },
   get: (req, res) => {
     global.logger.info('blogs/get.json');
-    const _blog = req.query, cond = {};
-    if (_blog.title) cond.title = _blog.title
-    Blogs.find(cond, function(err, blogs) {
+    const _blog = req.query;
+    Blogs.find(_blog, function(err, blogs) {
       if (err) global.logger.error(err);
       else res.json({ errno: 0, mse: '', data: blogs });
     });

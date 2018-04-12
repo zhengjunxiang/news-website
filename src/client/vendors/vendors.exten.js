@@ -1,3 +1,3 @@
 /* eslint-disable */
-import axios from 'axios';
-import Cookies from 'js-cookie';
+import '@/libs/components/share/js/qrcode.js'
+import '@/libs/components/share/js/social-share.js'

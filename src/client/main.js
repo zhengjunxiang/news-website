@@ -1,11 +1,10 @@
 import Vue from 'vue';
-import iView from 'iview';
 import router from './router/index';
 import store from './store';
 import App from './app.vue';
-import 'iview/dist/styles/iview.css';
+import Alert from '@/libs/components/alert/alert.js';
 
-Vue.use(iView);
+Vue.use(Alert)
 
 const vm = new Vue({
   el: '#app',
