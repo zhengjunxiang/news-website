@@ -5,10 +5,10 @@
       <div class="container-inner">
         <div class="header-title">
           <h1 class="logo-wrap">
-            <a href="https://www.antpool.com/home.htm" class="logo"></a>
+            <a href="https://www.antpool.com/home.htm" target="_black" class="logo"></a>
           </h1>
           <h2 class="subtitle-wrap">
-            <p class="subtitle" @click="showAlert">欢迎来到蚂蚁矿池博客</p>
+            <p class="subtitle">欢迎来到蚂蚁矿池博客</p>
           </h2>
         </div>
         <div :class="{'header-inner': true, show: isShowNav}">
@@ -17,8 +17,8 @@
             <li class="main-nav-list-item" name="home">
               <router-link to="/">首页</router-link>
             </li>
-            <li class="main-nav-list-item" name="tags-list">
-              <router-link to="/tags-list" exact>标签归类</router-link>
+            <li class="main-nav-list-item" name="tags">
+              <router-link to="/tags/all">标签归类</router-link>
             </li>
             <li class="main-nav-list-item" name="about">
               <router-link to="/about" exact>关于</router-link>
@@ -27,7 +27,7 @@
           <nav class="sub-nav">
             <div class="search-form-wrap">
               <i class="fa fa-search"></i>
-              <input type="text" class="search-form-input" placeholder="Search..." />
+              <input type="text" v-model="select" class="search-form-input" placeholder="Search..." @keyup="onSelect" />
             </div>
           </nav>
         </div>
@@ -37,21 +37,33 @@
 </div>
 </template>
 <script>
-import vue from 'vue'
+import {mapGetters} from 'vuex'
 export default {
   name: "antheader",
-  data: () => ({
-    isShowNav: false
-  }),
+  data() {
+    return {
+      isShowNav: false,
+      select: ''
+    }
+  },
+  computed: {
+    ...mapGetters(['blogs']),
+    selected() {
+      return this.blogs.filter(blog => {
+        if (this.select) return new RegExp(this.select, 'gi').test(blog.title)
+        return false
+      })
+    }
+  },
   methods: {
     toggleNav() {
       this.isShowNav = !this.isShowNav
     },
-    showAlert() {
-      this.$Alert.info({
-        mes: 'is me zdfnsgaegrwhgerhbedgdfasd',
-        dur: 5
-      })
+    onSelect() {
+      this.$emit('getEelected', this.selected)
+    },
+    onResetSelect() {
+      this.select = ''
     }
   }
 }

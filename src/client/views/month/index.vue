@@ -3,16 +3,16 @@
 <template>
 <div>
   <div class="main-body-header">
-    <h1 class="header"><em class="page-title-link" data-url="home">首页</em></h1>
+    <h1 class="header"><em class="page-title-link" data-url="home">归档</em></h1>
   </div>
   <div class="main-body-content">
-    <section class="archives-wrap" v-for="year in blogsY" :key="year.year">
+    <section class="archives-wrap" v-for="month in blogs" :key="month.month">
       <div class="archive-year-wrap">
-        <span class="archive-year"><i class="icon fa fa-calendar-o"></i>{{year.year}}</span>
+        <span class="archive-year"><i class="icon fa fa-calendar-o"></i>{{month.month}}-{{$route.params.year}}</span>
       </div>
       <div class="archives">
         <div class="article-row">
-          <article class="article article-summary" v-for="(blog, ind) in year.blogs" :key="ind">
+          <article class="article article-summary" v-for="(blog, ind) in month.blogs" :key="ind">
             <div class="article-summary-inner">
                 <router-link :to="`/blog/${blog.title}`" class="thumbnail">
                   <span :style="`background-image:url(${blog.cover})`" class="thumbnail-image" v-if="blog.cover" />
@@ -44,9 +44,15 @@
 <script>
 import {mapGetters} from 'vuex'
 export default {
-  name: 'home',
+  name: 'month',
   computed: {
-    ...mapGetters(['blogsY'])
+    ...mapGetters(['blogsM']),
+    blogs() {
+      const year = this.$route.params.year,
+        month = this.$route.params.month,
+        blogYear = this.blogsM.filter(y => y.year === year)[0];
+      return blogYear && blogYear.blogs.filter(m => m.month === month)
+    }
   },
   methods: {
     setDate: date => date.split('T')[0]

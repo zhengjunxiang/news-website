@@ -139,10 +139,7 @@ export default {
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
-        let hour = date.getHours();
-        let minute = date.getMinutes();
-        let second = date.getSeconds();
-        localStorage.publishTime = year + ' 年 ' + month + ' 月 ' + day + ' 日 -- ' + hour + ' : ' + minute + ' : ' + second;
+        localStorage.publishTime = year + '-' + month + '-' + day;
         localStorage.content = tinymce.activeEditor.getContent();
         this.$nextTick(() => { this.$refs.preview.onPreview() })
       }
@@ -158,12 +155,13 @@ export default {
         menubar: 'edit insert view format table tools',
         theme: 'modern',
         plugins: [
+          'wordcount',
           'advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools',
           'searchreplace visualblocks visualchars code fullscreen fullpage',
           'insertdatetime media nonbreaking save table contextmenu directionality',
           'emoticons paste textcolor colorpicker textpattern imagetools codesample'
         ],
-        toolbar1: ' newnote print fullscreen preview | undo redo | insert | styleselect | forecolor backcolor bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image emoticons media codesample',
+        toolbar: 'styleselect | forecolor backcolor bold italic | fontsizeselect | bullist numlist outdent indent | link image media codesample | newnote print preview | undo redo',
         autosave_interval: '20s',
         image_advtab: true,
         table_default_styles: {

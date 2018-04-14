@@ -3,7 +3,7 @@
   <h3 class="widget-title">标签</h3>
   <ul class="tag-list">
     <li class="tag-list-item" v-for="tag in tags">
-      <a class="tag-list-link" href="/tags/docker/">{{tag.value}}</a>
+      <router-link :to="`/tags/${tag.value}`">{{tag.value}}</router-link>
       <span class="tag-list-count">{{tag.blogs.length}}</span>
     </li>
   </ul>
@@ -15,10 +15,7 @@ export default {
   name: "tags",
   computed: {
     ...mapGetters(['tags'])
-  },
-  data: () => ({
-
-  })
+  }
 }
 </script>
 <style lang="less" scoped>

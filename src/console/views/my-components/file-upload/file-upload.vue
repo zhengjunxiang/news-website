@@ -4,34 +4,31 @@
 </style>
 
 <template>
-<div class="margin-top-10 padding-left-10">
-  <Card>
-    <p slot="title">
-      <Icon type="ios-analytics" /> 图片上传
-    </p>
-    <div class="height-492px">
-      <Col span="6">
-      <Card style="text-align: center;">
-        <Upload ref="upload" name="upimg" :on-error="handleError"
-          :on-success="handleSuccess" :format="['jpg','jpeg','png', 'gif']" :before-upload="handleBeforeUpload"
-          :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :max-size="2048"
-          multiple type="drag" action="/resouce" style="display: inline-block; width: 100%;">
-          <div style="width: 100%;height:58px;line-height: 68px;">
-            <Icon type="ios-cloud-upload" size="28" style="color: #3399ff" />
-          </div>
-        </Upload>
-        <Modal title="查看图片" v-model="visible">
-          <img :src="imgName" v-if="visible" style="width: 100%">
-          <div slot="footer"></div>
-        </Modal>
-        <span style="color: #666;">点击或拖拽到虚线框</span>
-      </Card>
-      </Col>
-      <Col span="18" class="padding-left-10">
-      <Card>
-        <div class="height-460px">
-          <div class="admin-upload-list" v-for="(item, index) in uploadedList" :key="index">
-            <template>
+<Card>
+  <p slot="title">
+    <Icon type="ios-analytics" /> 图片上传
+  </p>
+  <div class="height-492px">
+    <Col span="6">
+    <Card style="text-align: center;">
+      <Upload ref="upload" name="upimg" :on-error="handleError" :on-success="handleSuccess" :format="['jpg','jpeg','png', 'gif']" :before-upload="handleBeforeUpload" :on-format-error="handleFormatError" :on-exceeded-size="handleMaxSize" :max-size="2048" multiple
+        type="drag" action="/resouce" style="display: inline-block; width: 100%;">
+        <div style="width: 100%;height:58px;line-height: 68px;">
+          <Icon type="ios-cloud-upload" size="28" style="color: #3399ff" />
+        </div>
+      </Upload>
+      <Modal title="查看图片" v-model="visible">
+        <img :src="imgName" v-if="visible" style="width: 100%">
+        <div slot="footer"></div>
+      </Modal>
+      <span style="color: #666;">点击或拖拽到虚线框</span>
+    </Card>
+    </Col>
+    <Col span="18" class="padding-left-10">
+    <Card>
+      <div class="height-460px">
+        <div class="admin-upload-list" v-for="(item, index) in uploadedList" :key="index">
+          <template>
               <img :src="item.url" />
               <div class="admin-upload-list-cover">
                 <Icon type="ios-eye-outline" @click.native="handleView(item.url)" />
@@ -42,13 +39,12 @@
                 <span class="copy-name" :aria-label="item.name">{{item.name}}</span>
               </Tooltip>
             </template>
-          </div>
         </div>
-      </Card>
-      </Col>
-    </div>
-  </Card>
-</div>
+      </div>
+    </Card>
+    </Col>
+  </div>
+</Card>
 </template>
 
 <script>
@@ -76,7 +72,9 @@ export default {
         content: `<h3>确定要删除 ${name} 吗？</h3>`,
         onOk: async () => {
           try {
-            const res = await this.$store.dispatch('delImg', {name});
+            const res = await this.$store.dispatch('delImg', {
+              name
+            });
             if (res.mes) this.$Message.success(res.mes)
             this.handleGetImgs()
           } catch (err) {}

@@ -8,3 +8,4 @@ node_modules
 config/env.js
 dist
 src/server/api/resouce
+application.log

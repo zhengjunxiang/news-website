@@ -3,9 +3,10 @@ import iView from 'iview';
 import Util from '../libs/util';
 import VueRouter from 'vue-router';
 import Home from '@/views/home/home.vue';
-import TagsList from '@/views/tags-list/tags-list.vue';
+import Tags from '@/views/tags/tags.vue';
 import About from '@/views/about/about.vue';
 import Blog from '@/views/blog/index.vue';
+import Month from '@/views/month/index.vue';
 
 Vue.use(VueRouter);
 
@@ -18,17 +19,21 @@ const RouterConfig = {
       name: 'home',
       component: Home
     }, {
-      path: '/tags-list',
-      name: 'tags-list',
-      component: TagsList
-    }, {
-      path: '/about',
-      name: 'about',
-      component: About
+      path: '/tags/:tag',
+      name: 'tags',
+      component: Tags
     }, {
       path: '/blog/:title',
       name: 'blog',
       component: Blog
+    }, {
+      path: '/:year/:month',
+      name: 'month',
+      component: Month
+    }, {
+      path: '/about',
+      name: 'about',
+      component: About
     }, {
       path: '*',
       redirect: { name: 'home' }
@@ -46,7 +51,6 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach((to) => {
   iView.LoadingBar.finish();
-  window.scrollTo(0, 0);
 });
 
 export default router;

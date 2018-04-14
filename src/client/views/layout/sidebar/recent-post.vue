@@ -3,20 +3,23 @@
     <div class="widget-title">最新文章</div>
     <div class="widget-inner">
       <ul class="recent-post">
-        <li v-for="(blog, ind) in blogs" v-if="ind < 5">
+        <li v-for="(blog, ind) in recentBlogs" :key="ind">
           <div class="item-thumbnail">
-            <a href="#" class="thumbnail">
-              <span :style="`background-image:url(${blog.cover})`" class="thumbnail-image"></span>
-            </a>
+            <router-link :to="`/blog/${blog.title}`" class="thumbnail">
+              <span :style="`background-image:url(${blog.cover})`" class="thumbnail-image" v-if="blog.cover" />
+              <i class="fa fa-picture-o" aria-hidden="true" v-else />
+            </router-link>
           </div>
           <div class="item-inner">
             <p class="item-category">
-              <a class="article-tag-link" v-for="(tag, ind) in blog.tags" :href="`/tags/${tag}/`" v-if="ind < 2">
+              <router-link class="article-tag-link" v-for="(tag, ind) in blog.tags" :to="`/tags/${tag}`" :key="ind">
                 {{tag}}
-              </a>
+              </router-link>
             </p>
-            <p class="item-title"><a href="/2018/02/11/third/" class="title">{{blog.title}}</a></p>
-            <p class="item-date"><time :datetime="blog.updateAt" itemprop="datePublished">{{setDate(blog.updateAt)}}</time></p>
+            <p class="item-title">
+              <router-link :to="`/blog/${blog.title}`">{{blog.title}}</router-link>
+            </p>
+            <p class="item-date"><time :datetime="blog.createAt" itemprop="datePublished">{{setDate(blog.createAt)}}</time></p>
           </div>
         </li>
       </ul>
@@ -28,66 +31,16 @@ import {mapGetters} from 'vuex'
 export default {
   name: "widget",
   computed: {
-    ...mapGetters(['blogs'])
-  },
-  data: () => ({
-
-  }),
-  methods: {
-    setDate(date) {
-      return date.split('T')[0]
+    ...mapGetters(['blogs']),
+    recentBlogs() {
+        return this.blogs.slice(0,5)
     }
+  },
+  methods: {
+    setDate: date => date.split('T')[0] || ''
   }
 }
 </script>
 <style lang="less" scoped>
-.widget {
-  &-inner {
-    line-height: 1.6em;
-    word-wrap: break-word;
-    font-size: 0.9em;
-    color: #777;
-    border-radius: 3px;
-    li {
-      padding: 10px 0 10px 85px;
-      border-bottom: 1px solid #ddd;
-      overflow: hidden;
-      .item-thumbnail {
-        margin-left: -85px;
-        float: left;
-        .thumbnail {
-          width: 70px;
-          height: 70px;
-          display: block;
-          position: relative;
-          overflow: hidden;
-          &-image {
-            width: 100%;
-            height: 100%;
-            display: block;
-            position: absolute;
-            background-size: cover;
-            background-position: center;
-          }
-        }
-      }
-      .item-category {
-        width: 100%;
-      }
-      .item-title {
-        a {
-          color: #444;
-          transition: all 0.2s ease;
-        }
-        margin: 4px 0;
-        font-size: 15px;
-      }
-      .item-date {
-        color: #999;
-        font-size: 13px;
-        text-transform: uppercase;
-      }
-    }
-  }
-}
+@import './recent-post.less';
 </style>

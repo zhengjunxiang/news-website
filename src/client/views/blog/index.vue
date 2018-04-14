@@ -1,34 +1,37 @@
 <template>
 <div id="blog">
   <div class="main-body-header">
-    <h1 class="header">
-      <a v-for="(tag, ind) in blog.tags" :href="`/tags/${tag}/`" style="margin-right: 5px;">
-        {{tag}}
-      </a>
-    </h1>
+    <h3 class="header">
+      <span v-for="(tag, ind) in blog.tags" class="tags-list">{{tag}}</span>
+    </h3>
   </div>
   <div class="main-body-content">
     <article class="article article-single article-type-post" itemprop="blogPost">
       <div class="article-inner">
         <header class="article-header">
-          <h1 class="article-title" itemprop="name">
+          <h2 class="article-title" itemprop="name">
             {{blog.title}}
-          </h1>
+          </h2>
         </header>
         <div class="article-meta">
           <div class="article-date">
-            <time :datetime="blog.updateAt" itemprop="datePublished">{{setDate(blog.updateAt)}}</time>
+            <span>
+              <i class="fa fa-plus" aria-hidden="true" />
+              <time :datetime="blog.createAt" itemprop="datePublished">{{setDate(blog.createAt)}}</time>
+            </span>
+            <span v-if="setDate(blog.createAt) !== setDate(blog.updateAt)">
+              <i class="fa fa-pencil" aria-hidden="true" />
+              <time :datetime="blog.updateAt" itemprop="datePublished">{{setDate(blog.updateAt)}}</time>
+            </span>
           </div>
-          <div class="article-author">{{blog.author}}</div>
+          <div class="article-author"><i class="fa fa-user" aria-hidden="true"></i>{{blog.author}}</div>
         </div>
         <div class="article-entry" itemprop="articleBody" v-html="blog.content" />
         <footer class="article-footer">
           <div class="article-share-link" @click="handleClickShare">
             <i class="fa fa-share"></i>Share
           </div>
-          <div :class="{}">
-            <div :class="['social-share', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
-          </div>
+          <div :class="['social-share', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
         </footer>
       </div>
     </article>
@@ -49,8 +52,19 @@ export default {
   },
   activated() {
     const title = this.$route.params.title;
-    if (title) this.$store.dispatch('getBlogs', {title})
-    window.socialShare('.social-share')
+    if (title) {
+      this.$store.dispatch('getBlogs', {title})
+      window.socialShare('.social-share')
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      const title = to.params.title;
+      if (title) {
+        this.$store.dispatch('getBlogs', {title})
+        window.socialShare('.social-share')
+      }
+    }
   },
   methods: {
     setDate: date => {
@@ -63,6 +77,3 @@ export default {
   }
 }
 </script>
-<style lang="less">
-@import './index.less';
-</style>

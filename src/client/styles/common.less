@@ -1,9 +1,10 @@
 @import './font-awesome/css/font-awesome.min.css';
+
 .article-tag-link {
   color: #006bde;
   border: 1px solid #006bde;
   font-size: 12px;
-  padding: 5px 5px;
+  padding: 5px;
   line-height: 12px;
   border-radius: 5px;
   display: inline-block;
@@ -17,12 +18,23 @@
 .container {
   position: relative;
   padding: 0 20px;
+
   &-inner {
     max-width: 1120px;
     min-width: 320px;
     width: 100%;
     margin: 0 auto;
   }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 
 i.icon {
@@ -36,6 +48,6 @@ i.icon {
   padding: 10px 0;
   width: 210px;
   height: 70px;
-  background: url(./images/logo.png) 0px 10px no-repeat;
+  background: url("./images/logo.png") 0 10px no-repeat;
   background-size: 210px 50px;
 }
