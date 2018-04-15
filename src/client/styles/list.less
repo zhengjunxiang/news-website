@@ -8,13 +8,16 @@
   font-weight: 600;
   text-transform: uppercase;
   line-height: 24px;
+
   .tags-list {
     margin-right: 5px;
     color: #999;
   }
+
   .archives-wrap {
     overflow: hidden;
   }
+
   em {
     text-transform: uppercase;
     color: #666;
@@ -43,6 +46,7 @@
 
 .archives {
   column-gap: 10px;
+  overflow: hidden;
 
   .article-row {
     width: 100%;
@@ -162,42 +166,22 @@
   }
 }
 
-.app-container {
-  background: #f0f0f0;
-  .main-body {
-    margin-top: -60px;
-    background-color: #fff;
-    &-inner {
-      position: relative;
-      box-sizing: border-box;
-      box-shadow: rgba(0,0,0,0.098) 0 1px 1px 0;
-      padding-left: 300px;
-      overflow: hidden;
+.archive-list-count,
+.category-list-count,
+.tag-list-count {
+  padding-left: 5px;
+  color: #aaa;
+  font-size: 0.85em;
+}
 
-      .main {
-        padding-bottom: 60px;
-        float: right;
-        width: 100%;
-        box-sizing: border-box;
-        min-height: 600px;
-      }
-    }
-  }
-  .archive-list-count,
-  .category-list-count,
-  .tag-list-count {
-    padding-left: 5px;
-    color: #aaa;
-    font-size: 0.85em;
-  }
-   .archive-list-count:before,
-   .category-list-count:before,
-   .tag-list-count:before {
-     content: "(";
-    }
-   .archive-list-count:after,
-   .category-list-count:after,
-   .tag-list-count:after {
-     content: ")";
-   }
+.archive-list-count:before,
+.category-list-count:before,
+.tag-list-count:before {
+  content: "(";
+}
+
+.archive-list-count:after,
+.category-list-count:after,
+.tag-list-count:after {
+  content: ")";
 }

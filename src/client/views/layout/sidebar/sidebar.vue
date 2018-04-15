@@ -2,6 +2,7 @@
 <div :class="{sidebar: true, show: showSb}">
   <a class="sidebar-toggle" title="Expand Sidebar" @click="toggleSidebar"><i class="toggle icon"></i></a>
   <SidebarTop />
+  <BlogNav />
   <div class="widgets-container">
     <RecentPost />
     <Archives />
@@ -34,9 +35,10 @@ import SidebarTop from './sidebar-top.vue'
 import RecentPost from './recent-post.vue'
 import Tags from './tags.vue'
 import Archives from './archives.vue'
+import BlogNav from './blog-nav.vue'
 export default {
   name: "sidebar",
-  components: { SidebarTop, RecentPost, Tags, Archives },
+  components: { SidebarTop, RecentPost, Tags, Archives, BlogNav },
   computed: {
     ...mapGetters(['tags'])
   },

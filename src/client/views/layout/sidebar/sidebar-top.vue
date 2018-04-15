@@ -54,9 +54,13 @@ export default {
       .social-tooltip {
         position: relative;
         i.icon {
+          color: rgba(255,255,255,0.8);
+          transition: all ease .5s;
           width: 24px;
           font-size: 24px;
-          color: rgba(255,255,255,.7);
+        }
+        i.icon:hover {
+          color: rgba(255,255,255,1);
         }
       }
     }

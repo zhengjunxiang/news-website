@@ -7,6 +7,8 @@ export default {
   state: {
     blogs: [],
     blog: {},
+    newBlog: '',
+    oldBlog: '',
     tags: [],
     blogsSortByYear: [],
     blogsSortByMonth: []
@@ -14,8 +16,18 @@ export default {
   mutations: {
     setBlogs: (state, data) => {
       if (data.mes) Message.info(data.mes)
-      if (data.data.length === 1) state.blog = data.data[0]
-      else state.blogs = data.data
+      if (data.data.length === 1) {
+        if (state.blogs.length === 0) state.blogs = data.data
+        state.blog = data.data[0];
+        setTimeout(() => {
+          state.blogs.map((blog, ind) => {
+            if (state.blog.title === blog.title) {
+              state.newBlog = state.blogs[ind + 1] ? state.blogs[ind + 1].title : ''
+              state.oldBlog = state.blogs[ind - 1] ? state.blogs[ind - 1].title : ''
+            }
+          })
+        }, 60)
+      } else state.blogs = data.data
     },
     setTags: (state, data) => {
       state.tags = data.data.map(tag => ({value: tag.value, blogs: []}))
@@ -83,6 +95,8 @@ export default {
     blog: state => state.blog,
     tags: state => state.tags,
     blogsY: state => state.blogsSortByYear,
-    blogsM: state => state.blogsSortByMonth
+    blogsM: state => state.blogsSortByMonth,
+    newBlog: state => state.newBlog,
+    oldBlog: state => state.oldBlog
   }
 };
