@@ -1,4 +1,8 @@
 .sidebar {
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+  }
   background: #f9f9f9;
   float: left;
   margin-left: -300px;
@@ -10,6 +14,11 @@
   }
   .sidebar-top {
     border-bottom: 1px solid #ddd;
+  }
+  .widget,.tag-list-item:hover {
+    a:hover,a:hover::before,.tag-list-count {
+      color: #333;
+    }
   }
   .widget {
     line-height: 1.6em;

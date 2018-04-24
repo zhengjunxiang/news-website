@@ -1,5 +1,4 @@
 <style lang="less">
-@import '../../../styles/common.less';
 @import './image-editor.less';
 </style>
 
@@ -25,7 +24,7 @@
             <p><b>deg:</b>{{ cropdata.deg }}</p>
             <p><b>scaleX:</b>{{ cropdata.scaleX }}</p>
             <p><b>scaleY:</b>{{ cropdata.scaleY }}</p>
-            <Modal v-model="option.showCropedImage">
+            <Modal v-model="option.showCropedImage" @on-ok="ok">
               <p slot="header">预览裁剪之后的图片</p>
               <img :src="option.cropedImg" alt="" v-if="option.showCropedImage" style="width: 100%;">
             </Modal>
@@ -37,7 +36,7 @@
             <div class="margin-top-10" style="text-align: center;">
               <div style="margin-bottom: 6px;">
                 <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" @change="handleChange" id="fileinput" class="fileinput" />
-                <label class="filelabel" for="fileinput"><Icon type="image"></Icon>&nbsp;选择图片</label>
+                <label class="filelabel" for="fileinput"><Icon type="image" />&nbsp;选择图片</label>
                 <span><Button @click="handlecrop" type="primary" icon="crop">裁剪</Button></span>
               </div>
               <ButtonGroup>
@@ -70,20 +69,25 @@ export default {
         cropedImg: ''
       },
       cropdata: {
-        x: '',
-        y: '',
-        w: '',
-        h: '',
-        deg: '',
-        scaleX: '',
-        scaleY: ''
-      }
+        x: '', y: '', w: '', h: '',
+        deg: '', scaleX: '', scaleY: ''
+      },
+      imageName: ''
     };
   },
   methods: {
+    ok() {
+      let a = document.createElement('a');
+      a.href = this.option.cropedImg;
+      a.download = this.imageName ? this.imageName : 'null';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    },
     handleChange(e) {
       let file = e.target.files[0];
       let reader = new FileReader();
+      this.imageName = file.name;
       reader.onload = () => {
         this.cropper.replace(reader.result);
         reader.onload = null;

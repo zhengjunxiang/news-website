@@ -4,8 +4,6 @@ import {
 } from '@/api/server.js';
 
 export default {
-  state: {},
-  mutations: {},
   actions: {
     async addBlogs({commit}, data) {
       const res = await AddBlogs(data)

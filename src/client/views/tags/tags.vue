@@ -6,13 +6,13 @@
     <h1 class="header"><em class="page-title-link" data-url="home">标签归类</em></h1>
   </div>
   <div class="main-body-content">
-    <section class="archives-wrap" v-for="tag in tagC" :key="tag.value">
+    <section class="archives-wrap" v-for="tag in tags" :key="tag.value">
       <div class="archive-year-wrap">
         <span class="archive-year"><i class="icon fa fa-tags"></i>{{tag.value}}</span>
       </div>
       <div class="archives">
         <div class="article-row">
-          <article class="article article-summary" v-for="(blog, ind) in tag.blogs" :key="ind">
+          <article class="article article-summary" v-for="(blog, ind) in tag.blogs.slice(0, 10)" :key="ind">
             <div class="article-summary-inner">
                 <router-link :to="`/blog/${blog.title}`" class="thumbnail">
                   <span :style="`background-image:url(${blog.cover})`" class="thumbnail-image" v-if="blog.cover" />
@@ -46,12 +46,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'tags',
   computed: {
-    ...mapGetters(['tags']),
-    tagC() {
-      const tag = this.$route.params.tag;
-      if (tag === 'all') return this.tags;
-      else return this.tags.filter(tag => tag.value === this.$route.params.tag)
-    }
+    ...mapGetters(['tags'])
   },
   methods: {
     setDate: date => date.split('T')[0]

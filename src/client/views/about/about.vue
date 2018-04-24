@@ -12,15 +12,12 @@
           <div class="article-date">
             <span>
               <i class="fa fa-pencil" aria-hidden="true" />
-              <time datetime="2018-4-16" itemprop="datePublished">2018-4-16</time>
+              <time :datetime="setDate(data.updateAt)" itemprop="datePublished">{{setDate(data.updateAt)}}</time>
             </span>
           </div>
           <div class="article-author"><i class="fa fa-users" aria-hidden="true"></i>Antpool</div>
         </div>
-        <!-- <div class="article-entry" itemprop="articleBody" v-html="" /> -->
-        <div class="article-entry" itemprop="articleBody">
-          <p>我们是蚂蚁矿池团队！！</p>
-        </div>
+        <div class="article-entry" itemprop="articleBody" v-html="data.content" />
         <footer class="article-footer">
           <div class="article-share-link" @click="handleClickShare">
             <i class="fa fa-share"></i>Share
@@ -37,15 +34,14 @@
 export default {
   name: 'about',
   data() {
-    return {
-      show: false
-    }
+    return { show: false, data: '' }
+  },
+  async mounted() {
+    const res = await this.$store.dispatch('getAboutUs');
+    this.data = res.data[0];
   },
   methods: {
-    setDate: date => {
-      if (date) return date.split('T')[0]
-      return ''
-    },
+    setDate: date => date ? date.split('T')[0] : '',
     handleClickShare() {
       this.show = !this.show;
     }

@@ -5,9 +5,6 @@ export default that => [
     width: 160,
     fixed: 'left'
   }, {
-    title: '简介',
-    key: 'intro'
-  }, {
     title: '标签',
     key: 'tags',
     render: (h, params) => {

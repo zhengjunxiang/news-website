@@ -3,16 +3,16 @@
 <template>
 <div>
   <div class="main-body-header">
-    <h1 class="header"><em class="page-title-link" data-url="home">归档</em></h1>
+    <h1 class="header">
+      <i class="icon fa fa-calendar-o"></i> {{$route.params.month}}-{{$route.params.year}}
+      <em class="page-title-link" data-url="home">归档</em>
+    </h1>
   </div>
   <div class="main-body-content">
-    <section class="archives-wrap" v-for="month in blogs" :key="month.month">
-      <div class="archive-year-wrap">
-        <span class="archive-year"><i class="icon fa fa-calendar-o"></i>{{month.month}}-{{$route.params.year}}</span>
-      </div>
+    <section class="archives-wrap">
       <div class="archives">
         <div class="article-row">
-          <article class="article article-summary" v-for="(blog, ind) in month.blogs" :key="ind">
+          <article class="article article-summary" v-for="(blog, ind) in curBlogs" :key="ind">
             <div class="article-summary-inner">
                 <router-link :to="`/blog/${blog.title}`" class="thumbnail">
                   <span :style="`background-image:url(${blog.cover})`" class="thumbnail-image" v-if="blog.cover" />
@@ -39,23 +39,36 @@
       </div>
     </section>
   </div>
+  <page-nav :datas="blogs" :size="pageSize" @on-change="onClickPage" />
 </div>
 </template>
 <script>
 import {mapGetters} from 'vuex'
 export default {
   name: 'month',
+  data() {
+    return {
+      pageSize: 10,
+      curP: 1
+    }
+  },
   computed: {
     ...mapGetters(['blogsM']),
     blogs() {
-      const year = this.$route.params.year,
-        month = this.$route.params.month,
-        blogYear = this.blogsM.filter(y => y.year === year)[0];
-      return blogYear && blogYear.blogs.filter(m => m.month === month)
+      const y = this.blogsM.filter(y => y.year === this.$route.params.year);
+      let m = [];
+      if (y[0]) m = y[0].blogs.filter(m => m.month === this.$route.params.month);
+      return m[0] ? [...m[0].blogs] : [];
+    },
+    curBlogs() {
+      return this.blogs.slice((this.curP-1)*this.pageSize, this.curP*this.pageSize)
     }
   },
   methods: {
-    setDate: date => date.split('T')[0]
+    setDate: date => date.split('T')[0],
+    onClickPage(page) {
+      this.curP = page
+    }
   }
 };
 </script>

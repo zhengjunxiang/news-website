@@ -5,6 +5,14 @@
     font-size: 0.9em;
     color: #777;
     border-radius: 3px;
+    li:hover {
+      .thumbnail {
+        opacity: 0.7 !important;
+      }
+      .item-title a {
+        color: #006bde;
+      }
+    }
     li {
       padding: 10px 0 10px 85px;
       border-bottom: 1px solid #ddd;
@@ -13,6 +21,8 @@
         margin-left: -85px;
         float: left;
         .thumbnail {
+          opacity: 1;
+          transition: opacity ease .3s;
           width: 70px;
           height: 70px;
           display: block;

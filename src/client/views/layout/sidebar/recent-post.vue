@@ -12,7 +12,7 @@
           </div>
           <div class="item-inner">
             <p class="item-category">
-              <router-link class="article-tag-link" v-for="(tag, ind) in blog.tags" :to="`/tags/${tag}`" :key="ind">
+              <router-link class="article-tag-link" v-for="(tag, ind) in blog.tags.slice(0, 2)" :to="`/tags/${tag}`" :key="ind">
                 {{tag}}
               </router-link>
             </p>

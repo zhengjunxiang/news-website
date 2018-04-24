@@ -1,4 +1,8 @@
 .main-body-header {
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+  }
   background: #fff;
   position: relative;
   padding: 18px 30px 17px;
@@ -57,6 +61,15 @@
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
+  }
+
+  .article-summary:hover  {
+    .thumbnail-image {
+      opacity: 0.7 !important;
+    }
+    .article-title a {
+      color: #006bde;
+    }
   }
 
   .article-summary {
@@ -120,7 +133,6 @@
     }
 
     .article-meta {
-      height: 1.4em;
       overflow: hidden;
       font-size: 0.9em;
       color: #666;
@@ -132,14 +144,12 @@
     }
 
     .article-title {
-      margin-bottom: 5px;
+      margin: 5px 0;
       font-size: 1.2em;
       font-weight: 400;
       line-height: 1.5em;
       word-wrap: break-word;
       letter-spacing: -1px;
-      color: #555;
-
       a {
         transition: color 0.3s ease-in;
         color: #444;
@@ -147,6 +157,7 @@
     }
 
     .article-excerpt {
+      margin-top: 10px;
       position: relative;
       line-height: 1.4em;
       font-size: 14px;

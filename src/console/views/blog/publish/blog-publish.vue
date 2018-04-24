@@ -1,5 +1,4 @@
 <style lang="less">
-@import '../../../styles/common.less';
 @import './blog-publish.less';
 </style>
 
@@ -66,9 +65,8 @@ export default {
   data() {
     return {
       blogTitle: '', blogIntro: '', author: '', cover: '', showLink: false,
-      blogPath: '', editPathButtonType: 'ghost',
-      publishTime: '', publishLoading: false,
-      isShowPreview: false, isEdit: false
+      editPathButtonType: 'ghost', publishTime: '',
+      publishLoading: false, isShowPreview: false, isEdit: false
     };
   },
   mounted() {
@@ -87,22 +85,19 @@ export default {
           intro: this.blogIntro,
           author: this.author,
           cover: this.cover,
-          content: tinymce.activeEditor.getContent(),
+          content: tinymce.activeEditor.getContent({format: 'raw'}),
           tags: this.$refs.tagsCard.onReturnTags()
         }
         this.publishLoading = true;
-        try {
-          const api = this.isEdit ? 'updateBlogs' : 'addBlogs';
-          const res = await this.$store.dispatch(api, data)
-          this.publishLoading = false;
-          this.$Notice.success({
-            title: '保存成功',
-            desc: '文章《' + this.blogTitle + '》保存成功',
-            duration: 3
-          });
-        } catch (err) {
-          this.publishLoading = false;
-        }
+        const api = this.isEdit ? 'updateBlogs' : 'addBlogs';
+        const res = await this.$store.dispatch(api, data)
+        this.publishLoading = false;
+        this.$Notice.success({
+          title: '保存成功',
+          desc: '文章《' + this.blogTitle + '》保存成功',
+          duration: 3
+        });
+        this.publishLoading = false;
       }
     },
     handleTitleBlur() {
@@ -112,7 +107,6 @@ export default {
         let year = date.getFullYear();
         let month = date.getMonth() + 1;
         let day = date.getDate();
-        this.blogPath = window.location.host + '/' + year + '/' + month + '/' + day + '/';
       }
     },
     handleIntroBlur() {
@@ -128,9 +122,7 @@ export default {
       if (this.blogTitle.length === 0) {
         this.$Message.error('请输入文章标题');
         return false;
-      } else {
-        return true;
-      }
+      } else return true;
     },
     handlePreview() {
       if (this.canPublish()) {
@@ -140,7 +132,7 @@ export default {
         let month = date.getMonth() + 1;
         let day = date.getDate();
         localStorage.publishTime = year + '-' + month + '-' + day;
-        localStorage.content = tinymce.activeEditor.getContent();
+        localStorage.content = tinymce.activeEditor.getContent({format: 'raw'});
         this.$nextTick(() => { this.$refs.preview.onPreview() })
       }
     },
@@ -156,12 +148,12 @@ export default {
         theme: 'modern',
         plugins: [
           'wordcount',
-          'advlist autolink lists link image charmap print preview hr anchor pagebreak imagetools',
-          'searchreplace visualblocks visualchars code fullscreen fullpage',
+          'advlist autolink lists link image charmap print hr anchor pagebreak imagetools',
+          'searchreplace visualblocks visualchars codesample',
           'insertdatetime media nonbreaking save table contextmenu directionality',
-          'emoticons paste textcolor colorpicker textpattern imagetools codesample'
+          'paste textcolor textpattern imagetools'
         ],
-        toolbar: 'styleselect | forecolor backcolor bold italic | fontsizeselect | bullist numlist outdent indent | link image media codesample | newnote print preview | undo redo',
+        toolbar: 'styleselect | forecolor backcolor bold italic | fontsizeselect | bullist numlist outdent indent | link image media codesample | newnote print | undo redo',
         autosave_interval: '20s',
         image_advtab: true,
         table_default_styles: {
@@ -174,7 +166,7 @@ export default {
             if (localStorage.blogContent) tinymce.get('blogEditor').setContent(localStorage.blogContent);
           });
           editor.on('keydown', function(e) {
-            localStorage.blogContent = tinymce.get('blogEditor').getContent();
+            localStorage.blogContent = tinymce.activeEditor.getContent({format: 'raw'});
           });
         }
       });

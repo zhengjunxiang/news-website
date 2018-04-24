@@ -1,13 +1,31 @@
 var User = require('../models/user');
+var bcrypt = require('bcryptjs');
+var SALT_WORK_FACTOR = 10;
 
 module.exports = {
   get: (req, res) => {
     global.logger.info('user/get.json');
-    const _user = req.query, cond = {access: {'$gt': 0}};
-    if (_user.name) cond.name = _user.name
+    const cond = {access: {'$gt': 0}};
     User.find(cond, function(err, user) {
       if (err) global.logger.error(err);
-      else res.json({ errno: 0, mse: '', data: user });
+      else {
+        const users = user.map(u => {
+          u.password = ''
+          return u;
+        });
+        res.json({ errno: 0, mse: '', data: users });
+      }
+    });
+  },
+  getUser(req, res) {
+    global.logger.info('user/getUser.json');
+    const {name} = req.query;
+    User.findOne({name}, function(err, user) {
+      if (err) global.logger.error(err)
+      else {
+        user.password = '';
+        res.json({ errno: 0, mse: '', data: user });
+      }
     });
   },
   delete: (req, res) => {
@@ -72,5 +90,47 @@ module.exports = {
         }
       }
     });
+  },
+  updateMessage(req, res) {
+    global.logger.info('user/updateMessage.json');
+    const {userName, department, name} = req.body;
+    User.update(
+      {name: {$in: name}},
+      { userName, department },
+      (err, blog) => {
+        if (err) global.logger.error(err);
+        if (blog.ok === 1) res.json({ errno: 0, mes: '信息更新成功' })
+        else res.json({ errno: 1, mes: '信息更新失败' })
+      }
+    )
+  },
+  updatePassW(req, res) {
+    global.logger.info('user/updatePassW.json');
+    const {oldPass, newPass, name} = req.body;
+    User.findOne({name}, function(err, user) {
+      if (err) global.logger.error(err);
+      else {
+        bcrypt.compare(oldPass, user.password, (err, isMatch) => {
+          if (err) return global.logger.error(err);
+          if (isMatch) {
+            bcrypt.genSalt(SALT_WORK_FACTOR, (err, salt) => {
+              if (err) global.logger.error(err);
+              bcrypt.hash(newPass, salt, (err, hash) => {
+                if (err) global.logger.error(err);
+                User.update(
+                  { name: {$in: name} },
+                  { password: hash },
+                  (err, user) => {
+                    if (err) global.logger.error(err);
+                    if (user.ok === 1) res.json({ errno: 0, mes: '密码更新成功' })
+                    else res.json({ errno: 1, mes: '密码更新失败' })
+                  }
+                )
+              })
+            })
+          } else res.json({ errno: 1, mes: '旧密码错误' })
+        })
+      }
+    })
   }
 }

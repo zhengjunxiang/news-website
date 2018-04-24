@@ -8,11 +8,13 @@
   <div class="main-body-content">
     <section class="archives-wrap" v-for="year in blogsY" :key="year.year">
       <div class="archive-year-wrap">
-        <span class="archive-year"><i class="icon fa fa-calendar-o"></i>{{year.year}}</span>
+        <router-link :to="`/${year.year}`">
+          <span class="archive-year"><i class="icon fa fa-calendar-o"></i>{{year.year}}</span>
+        </router-link>
       </div>
       <div class="archives">
         <div class="article-row">
-          <article class="article article-summary" v-for="(blog, ind) in year.blogs" :key="ind">
+          <article class="article article-summary" v-for="(blog, ind) in year.blogs.slice(0, 10)" :key="ind">
             <div class="article-summary-inner">
                 <router-link :to="`/blog/${blog.title}`" class="thumbnail">
                   <span :style="`background-image:url(${blog.cover})`" class="thumbnail-image" v-if="blog.cover" />
@@ -49,7 +51,7 @@ export default {
     ...mapGetters(['blogsY'])
   },
   methods: {
-    setDate: date => date.split('T')[0]
+    setDate: date => date ? date.split('T')[0] : ''
   }
 };
 </script>

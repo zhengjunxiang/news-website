@@ -13,15 +13,18 @@
         </div>
         <div :class="{'header-inner': true, show: isShowNav}">
           <a class="main-nav-toggle nav-icon fa fa-bars" @click="toggleNav" />
-          <ul class="main-nav" :active-name="$route.name">
-            <li class="main-nav-list-item" name="home">
+          <ul class="main-nav">
+            <li class="main-nav-list-item">
               <router-link to="/">首页</router-link>
             </li>
-            <li class="main-nav-list-item" name="tags">
-              <router-link to="/tags/all">标签归类</router-link>
+            <li class="main-nav-list-item">
+              <router-link to="/tags">标签归类</router-link>
             </li>
-            <li class="main-nav-list-item" name="about">
-              <router-link to="/about" exact>关于</router-link>
+            <li class="main-nav-list-item">
+              <router-link :to="{ name: 'companion'}">合作伙伴</router-link>
+            </li>
+            <li class="main-nav-list-item">
+              <router-link :to="{ name: 'about'}">关于</router-link>
             </li>
           </ul>
           <nav class="sub-nav">
@@ -50,7 +53,7 @@ export default {
     ...mapGetters(['blogs']),
     selected() {
       return this.blogs.filter(blog => {
-        if (this.select) return new RegExp(this.select, 'gi').test(blog.title)
+        if (this.select) return new RegExp(this.select, 'gi').test(blog.title) || new RegExp(this.select, 'gi').test(blog.author)
         return false
       })
     }

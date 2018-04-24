@@ -4,9 +4,12 @@ import Util from '../libs/util';
 import VueRouter from 'vue-router';
 import Home from '@/views/home/home.vue';
 import Tags from '@/views/tags/tags.vue';
+import Tag from '@/views/tag/tag.vue';
 import About from '@/views/about/about.vue';
 import Blog from '@/views/blog/index.vue';
 import Month from '@/views/month/index.vue';
+import Year from '@/views/year/index.vue';
+import Companion from '@/views/companion/index.vue';
 
 Vue.use(VueRouter);
 
@@ -19,9 +22,21 @@ const RouterConfig = {
       name: 'home',
       component: Home
     }, {
-      path: '/tags/:tag',
+      path: '/tags',
       name: 'tags',
       component: Tags
+    }, {
+      path: '/companion',
+      name: 'companion',
+      component: Companion
+    }, {
+      path: '/about',
+      name: 'about',
+      component: About
+    }, {
+      path: '/tags/:tag',
+      name: 'tag',
+      component: Tag
     }, {
       path: '/blog/:title',
       name: 'blog',
@@ -31,9 +46,9 @@ const RouterConfig = {
       name: 'month',
       component: Month
     }, {
-      path: '/about',
-      name: 'about',
-      component: About
+      path: '/:year',
+      name: 'year',
+      component: Year
     }, {
       path: '*',
       redirect: { name: 'home' }

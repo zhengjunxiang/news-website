@@ -1,5 +1,4 @@
 <style lang="less">
-@import '../../../styles/common.less';
 .table-con {
   position: relative;
   .ivu-icon {
@@ -47,7 +46,7 @@
       </Col>
       <Col span="24" class="table-con">
         <span @click="refreshTable"><Icon type="refresh" /></span>
-        <Table :data="tableData" :columns="columns" stripe ref="table" />
+        <Table :data="tableData" :columns="columns" stripe ref="table" :loading="loading" />
       </Col>
     </Row>
   </Card>
@@ -63,10 +62,10 @@ export default {
     return {
       rowNum: 1, colNum: 1, selectMinRow: 1, selectMaxRow: 1, selectMinCol: 1,
       selectMaxCol: 1, csvFileName: '', excelFileName: '', tableData: [],
-      imageName: '', columns: columns(this)
+      imageName: '', columns: columns(this), loading: false
     };
   },
-  activated() { this.initData() },
+  mounted() { this.initData() },
   methods: {
     refreshTable() {
       this.initData()
@@ -84,8 +83,10 @@ export default {
     },
     exportExcel() { table2excel.transform(this.$refs.table, 'hrefToExportTable', this.excelFileName) },
     async initData() {
+      this.loading = true;
       this.colNum = this.selectMaxCol = this.columns.length;
       const res = await this.$store.dispatch('getBlogs');
+      this.loading = false;
       this.tableData = res.data;
       this.rowNum = this.selectMaxRow = res.data.length;
     },

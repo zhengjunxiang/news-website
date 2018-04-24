@@ -1,5 +1,4 @@
 import {otherRouter, appRouter} from '@/router/router';
-import { GetImgs, DelImg } from '@/api/server.js';
 import Util from '@/libs/util';
 import Cookies from 'js-cookie';
 
@@ -23,7 +22,7 @@ export default {
     routers: [ otherRouter, ...appRouter ],
     tagsList: [ ...otherRouter.children ],
     messageCount: 0,
-    dontCache: ['blog-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
+    dontCache: ['blog-publish', 'about-us-index'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
   },
   mutations: {
     setTagsList(state, list) { state.tagsList.push(...list); },
@@ -139,16 +138,6 @@ export default {
       }
       state.pageOpenedList.push(tagObj);
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
-    }
-  },
-  actions: {
-    async getImgs({commit}, data) {
-      const res = await GetImgs(data)
-      return res.data
-    },
-    async delImg({commit}, data) {
-      const res = await DelImg(data)
-      return res.data
     }
   }
 };

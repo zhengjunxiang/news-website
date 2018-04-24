@@ -1,5 +1,4 @@
 <style lang="less">
-@import '../../styles/common.less';
 @import './access.less';
 </style>
 
@@ -80,7 +79,7 @@
 import { mapGetters } from 'vuex';
 import columns from './columns.js';
 export default {
-  name: 'access_index',
+  name: 'access-index',
   computed: {
     ...mapGetters(['accessCode']),
     avatorPath: () => localStorage.avatorImgPath

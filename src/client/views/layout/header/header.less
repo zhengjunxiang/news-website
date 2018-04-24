@@ -3,6 +3,10 @@
   background: #26272b;
 }
 .header {
+  h1, h2, h3, h4, h5, h6, p {
+    margin: 0;
+    padding: 0;
+  }
   &-outer {
     height: 100%;
     position: relative;
@@ -49,6 +53,12 @@
       line-height: 50px;
       background: #33363b;
       float: left;
+      &-list-item:hover, &-list-item .router-link-exact-active {
+        background: #26272b;
+        a {
+          color: #fff;
+        }
+      }
       &-list-item {
         float: left;
         font-size: 16px;

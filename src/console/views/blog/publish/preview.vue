@@ -1,6 +1,6 @@
 <style lang="less">
-@import '../../../styles/common.less';
 @import './preview.less';
+@import '../../my-components/tinymce/plugins/codesample/css/prism.css';
 </style>
 
 <template>
@@ -34,7 +34,6 @@ export default {
       isShow: false,
       articleTitle: '',
       blogTags: '',
-      classificationSelected: [],
       content: '',
       publishTime: ''
     };

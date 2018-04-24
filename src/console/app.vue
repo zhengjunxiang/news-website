@@ -19,6 +19,7 @@ export default {
 </script>
 
 <style>
+@import './styles/common.less';
 html,
 body {
   width: 100%;

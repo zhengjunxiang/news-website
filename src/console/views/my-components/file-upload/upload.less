@@ -1,18 +1,19 @@
 .admin-upload-list {
-  display: inline-block;
+  position: relative;
   width: 60px;
   max-height: 110px;
   text-align: center;
   border: 1px solid transparent;
   border-radius: 4px;
   background: #fff;
-  position: relative;
+  float: left;
   box-shadow: 0 1px 1px rgba(0,0,0,.2);
   margin-right: 8px;
 }
 
 .admin-upload-list img {
   width: 100%;
+  border-radius: 3px;
   height: 60px;
 }
 
@@ -40,7 +41,7 @@
 
 .admin-upload-list-cover {
   display: none;
-  line-height: 60px;
+  padding: 5px;
   position: absolute;
   height: 60px;
   top: 0;
@@ -49,6 +50,24 @@
   background: rgba(0,0,0,.6);
 }
 
+.upload-list-cover {
+  display: none;
+  padding: 5px;
+  position: absolute;
+  top: 40px;
+  left: 0;
+  right: 0;
+  background: rgba(0,0,0,.6);
+}
+
+.upload-list-cover i {
+  color: #fff;
+  font-size: 20px;
+  cursor: pointer;
+  margin: 0 2px;
+}
+
+.folder-box:hover .upload-list-cover,
 .admin-upload-list:hover .admin-upload-list-cover {
   display: block;
 }
@@ -58,4 +77,38 @@
   font-size: 20px;
   cursor: pointer;
   margin: 0 2px;
+}
+.folder-box {
+  font-size: 50px;
+  color: #666;
+  position: relative;
+  width: 60px;
+  max-height: 110px;
+  text-align: center;
+  float: left;
+  margin-right: 8px;
+  line-height: 12px;
+}
+.folder-box:hover {
+  color: #2d8cf0;
+}
+.folder-box .ivu-icon {
+  cursor: pointer;
+  position: relative;
+  z-index: 999;
+}
+.folder-box .ivu-tooltip {
+  font-size: 12px;
+  color: #666;
+}
+.bread-nav {
+  color: #666;
+  font-size: 16px;
+}
+.bread-nav .link {
+  cursor: pointer;
+}
+.bread-nav .link:hover .text {
+  font-weight: bold;
+  color: #1e8aed;
 }

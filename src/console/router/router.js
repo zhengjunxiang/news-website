@@ -47,17 +47,7 @@ export const otherRouter = {
       name: 'ownspace_index',
       component: () => import ('@/views/own-space/own-space.vue')
     },
-    // {
-    //   path: 'order/:order_id',
-    //   title: '订单详情',
-    //   name: 'order-info',
-    //   component: () => import ('@/views/advanced-router/component/order-info.vue')
-    // }, { // 用于展示动态路由
-    //   path: 'shopping',
-    //   title: '购物详情',
-    //   name: 'shopping',
-    //   component: () => import ('@/views/advanced-router/component/shopping-info.vue')
-    // }, { // 用于展示带参路由
+    // { // 用于展示带参路由
     //   path: 'message',
     //   title: '消息中心',
     //   name: 'message_index',
@@ -78,7 +68,7 @@ export const appRouter = [
       {
         path: 'index',
         title: '权限管理',
-        name: 'access_index',
+        name: 'access-index',
         component: () => import ('@/views/access/access.vue')
       }
     ]
@@ -89,13 +79,6 @@ export const appRouter = [
     title: '资源管理',
     component: Main,
     children: [
-      // {
-      //   path: 'md-editor',
-      //   icon: 'pound',
-      //   name: 'md-editor',
-      //   title: 'Markdown编辑器',
-      //   component: () => import ('@/views/my-components/markdown-editor/markdown-editor.vue')
-      // },
       {
         path: 'image-editor',
         icon: 'crop',
@@ -106,7 +89,7 @@ export const appRouter = [
         path: 'file-upload',
         icon: 'android-upload',
         name: 'file-upload',
-        title: '文件上传',
+        title: '图片上传',
         component: () => import ('@/views/my-components/file-upload/file-upload.vue')
       }
     ]
@@ -131,43 +114,35 @@ export const appRouter = [
         component: () => import ('@/views/blog/list/blogs-list.vue')
       }
     ]
-  },
-  // {
-  //   path: '/advanced-router',
-  //   icon: 'ios-infinite',
-  //   name: 'advanced-router',
-  //   title: '高级路由',
-  //   component: Main,
-  //   children: [
-  //     {
-  //       path: 'mutative-router',
-  //       title: '动态路由',
-  //       name: 'mutative-router',
-  //       icon: 'link',
-  //       component: () => import ('@/views/advanced-router/mutative-router.vue')
-  //     }, {
-  //       path: 'argument-page',
-  //       title: '带参页面',
-  //       name: 'argument-page',
-  //       icon: 'android-send',
-  //       component: () => import ('@/views/advanced-router/argument-page.vue')
-  //     }
-  //   ]
-  // }, {
-  //   path: '/error-page',
-  //   icon: 'android-sad',
-  //   title: '错误页面',
-  //   name: 'errorpage',
-  //   component: Main,
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       title: '错误页面',
-  //       name: 'errorpage_index',
-  //       component: () => import ('@/views/error-page/error-page.vue')
-  //     }
-  //   ]
-  // }
+  }, {
+    path: '/companion',
+    icon: 'person-stalker',
+    name: 'companion',
+    title: '合作伙伴',
+    component: Main,
+    children: [
+      {
+        path: 'companion-index',
+        title: '合作伙伴',
+        name: 'companion-index',
+        component: () => import ('@/views/companion/companion.vue')
+      }
+    ]
+  }, {
+    path: '/about-us',
+    icon: 'android-contacts',
+    name: 'about-us',
+    title: '关于我们',
+    component: Main,
+    children: [
+      {
+        path: 'index',
+        title: '关于我们',
+        name: 'about-us-index',
+        component: () => import ('@/views/about-us/about-us.vue')
+      }
+    ]
+  }
 ];
 
 // 所有上面定义的路由都要写在下面的routers里

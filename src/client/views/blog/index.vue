@@ -43,37 +43,34 @@ import {mapGetters} from 'vuex'
 export default {
   name: "blog",
   data() {
-    return {
-      show: false
-    }
+    return { show: false }
   },
   computed: {
     ...mapGetters(['blog'])
   },
-  activated() {
+  mounted() {
     const title = this.$route.params.title;
     if (title) {
-      this.$store.dispatch('getBlogs', {title})
+      this.$store.commit('setCurrentTitle', title)
       window.socialShare('.social-share')
     }
   },
   watch: {
     '$route' (to, from) {
-      const title = to.params.title;
-      if (title) {
-        this.$store.dispatch('getBlogs', {title})
+      if (to.params.title) {
+        this.$store.commit('setBlog', to.params.title)
         window.socialShare('.social-share')
       }
     }
   },
   methods: {
-    setDate: date => {
-      if (date) return date.split('T')[0]
-      return ''
-    },
+    setDate: date => date ? date.split('T')[0] : '',
     handleClickShare() {
       this.show = !this.show;
     }
   }
 }
 </script>
+<style lang="less">
+@import '../../styles/prism.css';
+</style>
