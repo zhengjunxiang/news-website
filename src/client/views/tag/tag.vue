@@ -3,7 +3,7 @@
 <template>
 <div>
   <div class="main-body-header">
-    <h1 class="header"><em class="page-title-link" data-url="home">标签归类</em></h1>
+    <h1 class="header"><em class="page-title-link" data-url="home">{{$t('content.tagsSort')}}</em></h1>
   </div>
   <div class="main-body-content">
     <section class="archives-wrap">
@@ -47,10 +47,7 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'tags',
   data() {
-    return {
-      pageSize: 10,
-      curP: 1
-    }
+    return { pageSize: 10, curP: 1 }
   },
   computed: {
     ...mapGetters(['tags']),
@@ -64,9 +61,7 @@ export default {
   },
   methods: {
     setDate: date => date.split('T')[0],
-    onClickPage(page) {
-      this.curP = page
-    }
+    onClickPage(page) { this.curP = page }
   }
 };
 </script>

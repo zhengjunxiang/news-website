@@ -7,6 +7,35 @@
     margin: 0;
     padding: 0;
   }
+  .change-lan-box {
+    background: #33363b;
+    top: 90px;
+    right: 20px;
+    position: absolute;
+    display: block;
+    padding: 0 20px;
+    line-height: 50px;
+    text-align: left;
+    color: rgba(255,255,255,0.7);
+    .lan-box {
+      background: #33363b;
+      overflow: hidden;
+      z-index: 999;
+      right: 0px;
+      position: absolute;
+      color: rgba(255,255,255,0.7);
+      li {
+        height: 0;
+        transition: all ease 0.2s;
+        padding: 0 20px;
+      }
+    }
+  }
+  .change-lan-box.show {
+    li {
+      height: 50px;
+    }
+  }
   &-outer {
     height: 100%;
     position: relative;

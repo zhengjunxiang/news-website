@@ -9,13 +9,18 @@
       <Form ref="userForm" :model="userForm" :label-width="100" label-position="right" :rules="inforValidate">
         <FormItem label="用户姓名：" prop="userName">
           <div style="display:inline-block;width:300px;">
-            <Input v-model="userForm.userName"></Input>
+            <Input v-model="userForm.userName" />
           </div>
         </FormItem>
         </FormItem>
         <FormItem label="部门：">
           <div style="display:inline-block;width:300px;">
-            <Input v-model="userForm.department"></Input>
+            <Input v-model="userForm.department" />
+          </div>
+        </FormItem>
+        <FormItem label="头像">
+          <div style="display:inline-block;width:300px;">
+            <Input v-model="userForm.avatar" placeholder="url" />
           </div>
         </FormItem>
         <FormItem label="登录密码：">
@@ -58,7 +63,7 @@ export default {
       else callback();
     };
     return {
-      userForm: { userName: '', department: '' },
+      userForm: { userName: '', department: '',  avatar: ''},
       save_loading: false,
       editPasswordModal: false, // 修改密码模态框显示
       savePassLoading: false,
@@ -95,7 +100,7 @@ export default {
       this.editPasswordModal = true;
     },
     cancelEditUserInfor() {
-      this.userForm = { userName: '', department: '' };
+      this.userForm = { userName: '', department: '', avatar: '' };
       this.$store.commit('removeTag', 'ownspace_index');
       localStorage.pageOpenedList = JSON.stringify(this.$store.state.app.pageOpenedList);
       let lastPageName = this.$store.state.app.pageOpenedList[1].name || this.$store.state.app.pageOpenedList[0].name;
@@ -105,9 +110,9 @@ export default {
       this.$refs['userForm'].validate(async (valid) => {
         if (valid) {
           this.save_loading = true;
-          const { userName, department } = this.userForm;
+          const { userName, department, avatar } = this.userForm;
           try {
-            const res = await this.$store.dispatch('updateMes', {userName, department, name: this.userN})
+            const res = await this.$store.dispatch('updateMes', {userName, department, name: this.userN, avatar})
             if (res.mes) this.$Message.success(res.mes)
             this.save_loading = false;
           } catch (err) { this.save_loading = false }
@@ -124,9 +129,11 @@ export default {
           this.savePassLoading = true;
           const { oldPass, newPass } = this.editPasswordForm;
           try {
-            const res = await this.$store.dispatch('updatePassW', {oldPass, newPass, name: this.userN})
-            if (res.mes) this.$Message.success(res.mes)
+            const re = await this.$store.dispatch('updatePassW', {oldPass, newPass, name: this.userN})
+            if (re.mes) this.$Message.success(re.mes)
             this.savePassLoading = false;
+            const res = await this.$store.dispatch('loginOut');
+            if (res.mes) this.$Message.success(res.mes);
             this.cancelEditPass();
             this.$store.commit('logout')
             this.$store.commit('clearOpenedSubmenu');

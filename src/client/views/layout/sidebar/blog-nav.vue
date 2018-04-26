@@ -1,13 +1,13 @@
 <template>
 <div class="nav-box" v-show="isShow">
-  <router-link :to="`/blog/${newBlog}`" class="nav-link-wrap" v-show="newBlog">
-    <strong class="nav-caption">下一篇</strong>
-    <p class="nav-title">{{newBlog}}</p>
+  <router-link :to="`/blog/${oldBlog}`" class="nav-link-wrap" v-show="oldBlog">
+    <strong class="nav-caption">{{$t('siderBar.newer')}}</strong>
+    <p class="nav-title">{{oldBlog}}</p>
     <i class="icon fa fa-chevron-right" />
   </router-link>
-  <router-link :to="`/blog/${oldBlog}`" class="nav-link-wrap" v-show="oldBlog">
-    <strong class="nav-caption">上一篇</strong>
-    <p class="nav-title">{{oldBlog}}</p>
+  <router-link :to="`/blog/${newBlog}`" class="nav-link-wrap" v-show="newBlog">
+    <strong class="nav-caption">{{$t('siderBar.older')}}</strong>
+    <p class="nav-title">{{newBlog}}</p>
     <i class="icon fa fa-chevron-left" />
   </router-link>
 </div>

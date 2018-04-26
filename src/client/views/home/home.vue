@@ -3,7 +3,7 @@
 <template>
 <div>
   <div class="main-body-header">
-    <h1 class="header"><em class="page-title-link" data-url="home">首页</em></h1>
+    <h1 class="header"><em class="page-title-link" data-url="home">{{$t('content.home')}}</em></h1>
   </div>
   <div class="main-body-content">
     <section class="archives-wrap" v-for="year in blogsY" :key="year.year">

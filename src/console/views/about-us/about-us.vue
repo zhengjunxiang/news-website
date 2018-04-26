@@ -62,7 +62,7 @@
 import tinymce from 'tinymce';
 import preview from './preview';
 export default {
-  name: 'about-us',
+  name: 'about-us-index',
   components: { preview },
   data() {
     return {
@@ -72,14 +72,22 @@ export default {
   },
   mounted() {
     this.init();
+  },
+  activated() {
     this.initTinymce();
+  },
+  deactivated() {
+    tinymce.get('usEditor').destroy();
   },
   methods: {
     canelPublish() { this.isEdit = false },
-    handleEdit() { this.isEdit = true },
+    handleEdit() {
+      this.isEdit = true;
+    },
     formatDate(date) { return date ? date.split('T')[0] : '' },
     async init() {
       const res = await this.$store.dispatch('getAboutUs');
+      localStorage.aboutUsContent = res.data[0].content
       this.aboutUsData = res.data[0];
     },
     async handlePublish() {

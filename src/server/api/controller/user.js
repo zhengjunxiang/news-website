@@ -1,4 +1,5 @@
 var User = require('../models/user');
+var conf = require('../config');
 var bcrypt = require('bcryptjs');
 var SALT_WORK_FACTOR = 10;
 
@@ -30,6 +31,10 @@ module.exports = {
   },
   delete: (req, res) => {
     global.logger.info('User/delete.json');
+    if (req.session.user.access !== 0) {
+      res.json({ errno: 1, mes: '没有权限' })
+      return;
+    }
     var _user = req.query;
     User.remove({name: _user.name, access: {'$gt': 0}}, function(err, User) {
       if (err) global.logger.error(err);
@@ -39,10 +44,8 @@ module.exports = {
   },
   signin: (req, res) => {
     global.logger.info('user/signin.json');
-    var _user = req.body;
-    var name = _user.name;
-    var password = _user.password;
-    User.findOne({name: name}, function(err, user) {
+    var {name, password} = req.body;
+    User.findOne({name}, function(err, user) {
       if (err) global.logger.error(err);
       if (!user) {
         res.json({ errno: 1, mes: '用户不存在' });
@@ -50,8 +53,14 @@ module.exports = {
         user.comparePassword(password, function(err, isMatch) {
           if (err) global.logger.error(err);
           if (isMatch) {
-            req.session.user = user;
-            res.json({ errno: 0, mes: '登录成功', data: {name: name, avatar: user.avatar, access: user.access} });
+            const { name, avatar, access } = user;
+            req.session.regenerate(err => {
+              if (err) global.logger.error(err);
+              return null;
+            })
+            req.session.like = 1
+            req.session.user = { name, access };
+            res.json({ errno: 0, mes: '登录成功', data: {name, avatar, access} });
           } else {
             res.json({ errno: 1, mes: '密码不正确' });
             global.logger.info('password is not meached');
@@ -77,11 +86,15 @@ module.exports = {
               let user = new User(_user);
               user.save((err, user) => {
                 if (err) global.logger.error(err);
-                else res.json({ errno: 0, mes: '注册成功' });
+                else res.json({ errno: 0, mes: '注册超级管理员成功' });
               });
             }
           })
         } else {
+          if (!req.session.user || req.session.user.access !== 0) {
+            res.json({ errno: 1, mes: '没有权限' })
+            return;
+          }
           let user = new User(_user);
           user.save((err, user) => {
             if (err) global.logger.error(err);
@@ -93,10 +106,10 @@ module.exports = {
   },
   updateMessage(req, res) {
     global.logger.info('user/updateMessage.json');
-    const {userName, department, name} = req.body;
+    const {userName, department, name, avatar} = req.body;
     User.update(
       {name: {$in: name}},
-      { userName, department },
+      { userName, department, avatar },
       (err, blog) => {
         if (err) global.logger.error(err);
         if (blog.ok === 1) res.json({ errno: 0, mes: '信息更新成功' })
@@ -130,6 +143,17 @@ module.exports = {
             })
           } else res.json({ errno: 1, mes: '旧密码错误' })
         })
+      }
+    })
+  },
+  loginOut(req, res) {
+    global.logger.info('user/loginOut.json');
+    req.session.destroy(err => {
+      if (err) {
+        res.json({ errno: 1, mes: '登出失败' })
+      } else {
+        res.clearCookie(conf.identityKey);
+        res.json({ errno: 0, mes: '登出成功' })
       }
     })
   }

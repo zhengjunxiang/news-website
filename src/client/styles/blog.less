@@ -5,7 +5,6 @@
     padding: 18px 30px 17px;
     border-bottom: 1px solid #eee;
     color: #666;
-    font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
     line-height: 24px;
@@ -19,6 +18,7 @@
     padding: 30px 30px 20px;
 
     .article-title {
+      margin-top: 0px;
       text-align: center;
       text-decoration: none;
       font-size: 28px;
@@ -34,6 +34,9 @@
       color: #999;
       overflow: hidden;
       border-bottom: 1px solid #ccc;
+      .article-date > span {
+        margin-right: 10px;
+      }
       div {
         line-height: 1.6em;
         float: left;
@@ -72,7 +75,38 @@
     border-top: 1px solid #ddd;
     padding-top: 1.6em;
     height: 20px;
-    position: relative;
+    .vue-star-box {
+      text-align: center;
+      height: 100px;
+      .VueStar {
+        font-size: 18px;
+        color: #999;
+        display: inline-block;
+        position: static;
+        .VueStar__icon {
+          cursor: pointer;
+        }
+      }
+    }
+    .star-number-box {
+      text-align: center;
+      margin-top: -25px;
+      .star-number {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+      }
+      .like {
+        color: #eb5020;
+      }
+      .unlike {
+        color: #666;
+      }
+    }
+
+    .social-share-box {
+      position: relative;
+    }
     .article-share-link {
       color: #666;
       cursor: pointer;
@@ -87,7 +121,7 @@
       opacity: 0;
       background: #fff;
       right: 0px;
-      top: 50px;
+      top: 30px;
       position: absolute;
     }
     .show.social-share {

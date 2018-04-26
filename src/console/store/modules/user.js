@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import { LoginUser, RegisterUser, GetUser, DelUser, UpdateMes, UpdatePassW, GetUserOne } from '@/api/server.js';
+import { LoginUser, RegisterUser, GetUser, DelUser, UpdateMes, UpdatePassW, GetUserOne, LoginOut } from '@/api/server.js';
 
 const user = {
   state: {
@@ -56,6 +56,10 @@ const user = {
     },
     async getUserOne({commit}, data) {
       const res = await GetUserOne(data)
+      return res.data
+    },
+    async loginOut({commit}, data) {
+      const res = await LoginOut(data)
       return res.data
     }
   },

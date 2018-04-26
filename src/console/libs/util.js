@@ -1,6 +1,6 @@
 let util = {};
 util.title = function(title) {
-  window.document.title = title || 'Antpool Blogs'
+  window.document.title = title || 'Antpool\'s News'
 };
 
 util.inOf = function(arr, targetArr) {

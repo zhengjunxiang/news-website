@@ -2,7 +2,7 @@
 <div id="blog">
   <div class="main-body-header">
     <h1 class="header">
-      <em class="page-title-link" data-url="home">关于我们</em>
+      <em class="page-title-link" data-url="home">{{$t('content.aboutUs')}}</em>
     </h1>
   </div>
   <div class="main-body-content">

@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar-top">
-    <p>关注 :</p>
+    <p>{{$t('siderBar.follow')}}</p>
     <ul class="social-links">
       <li>
         <a class="social-tooltip" title="twitter" href="https://twitter.com/AntPoolBITMAIN" target="_blank">
@@ -22,10 +22,7 @@
 </template>
 <script>
 export default {
-  name: "sidebar-top",
-  data: () => ({
-
-  })
+  name: "sidebar-top"
 }
 </script>
 <style lang="less" scoped>

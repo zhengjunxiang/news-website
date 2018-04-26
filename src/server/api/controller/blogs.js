@@ -21,6 +21,10 @@ module.exports = {
   },
   update: (req, res) => {
     global.logger.info('blogs/update.json');
+    if (req.session.user.access > 1) {
+      res.json({ errno: 1, mes: '没有权限' })
+      return;
+    }
     const {title, content, intro, tags, author, cover} = req.body;
     Blogs.update(
       {title: {$in: title}},
@@ -32,6 +36,38 @@ module.exports = {
       }
     )
   },
+  like(req, res) {
+    global.logger.info('blogs/like.json');
+    var {title} = req.body;
+    Blogs.update(
+      {title: {$in: title}},
+      {$inc: { like: 1 }},
+      (err, blog) => {
+        if (err) global.logger.error(err);
+        if (blog.ok === 1) {
+          res.json({ errno: 0, mes: '' })
+          if (req.session.like) req.session.like = 1
+          else req.session.like = 1
+        } else res.json({ errno: 1, mes: '点赞失败' })
+      }
+    );
+  },
+  unlike(req, res) {
+    global.logger.info('blogs/unlike.json');
+    var {title} = req.body;
+    Blogs.update(
+      {title: {$in: title}},
+      {$inc: { unlike: 1 }},
+      (err, blog) => {
+        if (err) global.logger.error(err);
+        if (blog.ok === 1) {
+          res.json({ errno: 0, mes: '' })
+          if (req.session.unlike) req.session.unlike += 1
+          else req.session.unlike = 1
+        } else res.json({ errno: 1, mes: '点赞失败' })
+      }
+    );
+  },
   get: (req, res) => {
     global.logger.info('blogs/get.json');
     const _blog = req.query;
@@ -42,6 +78,10 @@ module.exports = {
   },
   delete: (req, res) => {
     global.logger.info('blogs/delete.json');
+    if (req.session.user.access !== 0) {
+      res.json({ errno: 1, mes: '没有权限' })
+      return;
+    }
     var _blog = req.query;
     Blogs.remove({title: _blog.title}, function(err, blogs) {
       if (err) global.logger.error(err);

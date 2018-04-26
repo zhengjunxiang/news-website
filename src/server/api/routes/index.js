@@ -1,4 +1,5 @@
 const router = require('express').Router();
+const passRoutes = require('../middleware/passRoutes/index')
 const user = require('../controller/user');
 const blogs = require('../controller/blogs');
 const things = require('../controller/things');
@@ -8,10 +9,7 @@ const companion = require('../controller/companion');
 const aboutUs = require('../controller/about-us');
 
 module.exports = function(app) {
-  app.use(function(req, res, next) {
-    app.locals.user = req.session.user;
-    next();
-  });
+  app.use(passRoutes);
   // user
   router.get('/user/get.json', user.get);
   router.post('/user/signin.json', user.signin);
@@ -20,11 +18,14 @@ module.exports = function(app) {
   router.post('/user/updateMessage.json', user.updateMessage);
   router.post('/user/updatePassW.json', user.updatePassW);
   router.get('/user/getUser.json', user.getUser);
+  router.get('/user/loginOut.json', user.loginOut);
   // blogs
   router.post('/blogs/add.json', blogs.add);
   router.post('/blogs/update.json', blogs.update);
   router.get('/blogs/get.json', blogs.get);
   router.delete('/blogs/delete.json', blogs.delete);
+  router.put('/blogs/like.json', blogs.like);
+  router.put('/blogs/unlike.json', blogs.unlike);
   // things
   router.post('/things/add.json', things.add);
   router.get('/things/get.json', things.get);
@@ -40,7 +41,7 @@ module.exports = function(app) {
   router.put('/resouce/rename.json', upload.rename);
   router.post('/resouce/mkdir.json', upload.mkdir);
   router.delete('/resouce/delDir.json', upload.delDir);
-  // blogs
+  // companion
   router.post('/companion/add.json', companion.add);
   router.post('/companion/update.json', companion.update);
   router.get('/companion/get.json', companion.get);

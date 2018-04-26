@@ -8,6 +8,7 @@ const GetUserOne = data => API.get('/user/getUser.json', {params: data});
 const DelUser = data => API.delete('/user/delete.json', {params: data});
 const UpdateMes = data => API.post('/user/updateMessage.json', data);
 const UpdatePassW = data => API.post('/user/updatePassW.json', data);
+const LoginOut = () => API.get('/user/loginOut.json');
 // 博客
 const AddBlogs = data => API.post('/blogs/add.json', data);
 const UpdateBlogs = data => API.post('/blogs/update.json', data);
@@ -38,7 +39,7 @@ const GetAboutUs = data => API.get('/aboutUs/get.json', {params: data});
 
 export {
   GetImgs, DelImg, Rename, Mkdir, DelDir,
-  LoginUser, RegisterUser, GetUser, DelUser, UpdateMes, UpdatePassW, GetUserOne,
+  LoginUser, RegisterUser, GetUser, DelUser, UpdateMes, UpdatePassW, GetUserOne, LoginOut,
   AddBlogs, GetBlogs, DelBlogs, UpdateBlogs,
   AddThings, GetThings, DelThings,
   AddTags, GetTags, DelTags,

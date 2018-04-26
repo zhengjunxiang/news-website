@@ -1,6 +1,6 @@
 <template>
 <div class="widget-wrap widget-list">
-  <h3 class="widget-title">归档</h3>
+  <h3 class="widget-title">{{$t('siderBar.archive')}}</h3>
   <ul class="tag-list">
     <li class="tag-list-item" v-for="year in blogsM" >
       <span v-for="month in year.blogs">

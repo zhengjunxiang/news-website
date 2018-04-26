@@ -8,13 +8,13 @@
     <Archives />
     <Tags />
     <div class="widget-wrap">
-      <h3 class="widget-title">标签云</h3>
+      <h3 class="widget-title">{{$t('siderBar.tagCloud')}}</h3>
       <div  class="widget tagcloud">
         <router-link v-for="(tag, ind) in tags" :to="`/tags/${tag.value}/`" :key="ind">{{tag.value}}</router-link>
       </div>
     </div>
     <div class="widget-wrap widget-list">
-      <h3 class="widget-title">链接</h3>
+      <h3 class="widget-title">{{$t('siderBar.links')}}</h3>
       <div class="widget">
         <ul>
           <li>

@@ -4,8 +4,8 @@
 <div>
   <div class="main-body-header">
     <h1 class="header">
-      <i class="icon fa fa-calendar-o"></i> {{$route.params.month}}-{{$route.params.year}}
-      <em class="page-title-link" data-url="home">归档</em>
+      <i class="icon fa fa-calendar-o"></i> <em class="page-title-link" data-url="home">{{$t('content.archive')}}</em>: {{$route.params.month}}/{{$route.params.year}}
+
     </h1>
   </div>
   <div class="main-body-content">

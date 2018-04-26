@@ -1,5 +1,5 @@
 import {
-  GetBlogs, GetTags, GetCompanion, GetAboutUs
+  GetBlogs, GetTags, GetCompanion, GetAboutUs, LikeBlog, UnlikeBlog
 } from '@/api/server.js';
 import { Message } from 'iview';
 
@@ -15,8 +15,8 @@ export default {
     blogsSortByMonth: []
   },
   mutations: {
-    setCurrentTitle: (state, data) => {
-      if (data) state.currentTitle = data
+    setCurrentTitle: (state, title) => {
+      if (title) state.currentTitle = title
     },
     setBlogs: (state, data) => {
       if (data.mes) Message.info(data.mes)
@@ -34,6 +34,12 @@ export default {
           }
         })
       }, 60)
+    },
+    addLike(state, title) {
+      state.blogs.forEach(b => { if (b.title === title) return (b.like += 1) })
+    },
+    addUnlike(state, title) {
+      state.blogs.forEach(b => { if (b.title === title) return (b.unlike += 1) })
     },
     setTagsBlogs: (state, data) => {
       state.tags = data.data.map(tag => ({value: tag.value, blogs: []}))
@@ -90,6 +96,14 @@ export default {
     },
     async getAboutUs({commit}) {
       const res = await GetAboutUs()
+      return res.data
+    },
+    async likeBlog({commit}, data) {
+      const res = await LikeBlog(data)
+      return res.data
+    },
+    async unlikeBlog({commit}, data) {
+      const res = await UnlikeBlog(data)
       return res.data
     },
     getTagsAndBlogs({commit, dispatch, state}, data) {

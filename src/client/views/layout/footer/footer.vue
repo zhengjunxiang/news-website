@@ -6,7 +6,7 @@
           <h2 class="logo-wrap">
             <a href="https://www.antpool.com" target="_black" class="logo"></a>
           </h2>
-          <p>© 2018 蚂蚁矿池</p>
+          <p>© 2018 {{$t('footer.ant')}}</p>
         </div>
       </div>
     </div>

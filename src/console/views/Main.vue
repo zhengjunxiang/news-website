@@ -115,9 +115,7 @@ export default {
       let pathArr = util.setCurrentPath(this, this.$route.name);
       this.$store.commit('updateMenulist');
       this.userName = this.userN;
-      if (pathArr.length >= 2) {
-        this.$store.commit('addOpenSubmenu', pathArr[1].name);
-      }
+      if (pathArr.length >= 2) this.$store.commit('addOpenSubmenu', pathArr[1].name);
       let messageCount = 3;
       this.messageCount = messageCount.toString();
       this.checkTag(this.$route.name);
@@ -126,13 +124,14 @@ export default {
     toggleClick() {
       this.shrink = !this.shrink;
     },
-    handleClickUserDropdown(name) {
+    async handleClickUserDropdown(name) {
       if (name === 'ownSpace') {
         util.openNewPage(this, 'ownspace_index');
         this.$router.push({ name: 'ownspace_index' });
       } else if (name === 'loginout') {
-        // 退出登录
-        this.$store.commit('logout', this);
+        const res = await this.$store.dispatch('loginOut');
+        if (res.mes) this.$Message.success(res.mes);
+        this.$store.commit('logout');
         this.$store.commit('clearOpenedSubmenu');
         this.$router.push({ name: 'login' });
       }
@@ -145,25 +144,18 @@ export default {
         util.openNewPage(this, name, this.$route.params || {}, this.$route.query || {});
       }
     },
-    beforePush() { return true; },
+    beforePush() { return true }
   },
   watch: {
     '$route' (to) {
       this.$store.commit('setCurrentPageName', to.name);
       let pathArr = util.setCurrentPath(this, to.name);
-      if (pathArr.length > 2) {
-        this.$store.commit('addOpenSubmenu', pathArr[1].name);
-      }
+      if (pathArr.length > 2) this.$store.commit('addOpenSubmenu', pathArr[1].name);
       this.checkTag(to.name);
       localStorage.currentPageName = to.name;
     }
   },
-  mounted() {
-    this.init();
-  },
-  created() {
-    // 显示打开的页面的列表
-    this.$store.commit('setOpenedList');
-  }
+  mounted() { this.init() },
+  created() { this.$store.commit('setOpenedList') }
 };
 </script>

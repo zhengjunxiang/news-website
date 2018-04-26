@@ -7,7 +7,7 @@ export default {
       fn = (options, type) => {
         let propsData = {};
         if (type) propsData.type = type;
-        if (typeof options === 'string') propsData.message = options;
+        if (typeof options === 'string') propsData.mes = options;
         else propsData = Object.assign(propsData, options);
         const alertInstance = new AlertConstructor({
           el: document.createElement('div'), propsData

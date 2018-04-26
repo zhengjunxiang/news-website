@@ -2,7 +2,7 @@
   <div>
     <div class="main-body-header">
       <h1 class="header">
-        <em class="page-title-link" data-url="home">合作伙伴</em>
+        <em class="page-title-link" data-url="home">{{$t('content.companion')}}</em>
       </h1>
     </div>
     <div class="main-body-content">

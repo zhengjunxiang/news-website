@@ -22,7 +22,7 @@ export default {
     routers: [ otherRouter, ...appRouter ],
     tagsList: [ ...otherRouter.children ],
     messageCount: 0,
-    dontCache: ['blog-publish', 'about-us-index'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
+    dontCache: ['blog-publish'] // 在这里定义你不想要缓存的页面的name属性值(参见路由配置router.js)
   },
   mutations: {
     setTagsList(state, list) { state.tagsList.push(...list); },

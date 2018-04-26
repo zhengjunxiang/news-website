@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Message } from 'iview';
+import vm from '../main';
 const baseURL = '';
 
 const instance = axios.create({timeout: 10000});
@@ -11,10 +12,16 @@ instance.interceptors.request.use(config => {
 }, error => Promise.reject(error));
 
 // 对返回的内容做统一处理
-instance.interceptors.response.use(response => {
+instance.interceptors.response.use(async response => {
   if (response.status === 200) {
-    if (response.data.errno !== 0) Message.error({ content: response.data.mes, duration: 3 })
-    else return response
+    if (response.data.errno !== 0) {
+      Message.error({ content: response.data.mes, duration: 3 })
+      if (response.data.errno === 2) {
+        vm.$store.commit('logout');
+        vm.$store.commit('clearOpenedSubmenu');
+        vm.$router.push({ name: 'login' });
+      }
+    } else return response
   };
   return Promise.reject(response);
 }, error => {

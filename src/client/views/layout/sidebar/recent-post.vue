@@ -1,6 +1,6 @@
 <template>
   <div class="widget-wrap">
-    <div class="widget-title">最新文章</div>
+    <div class="widget-title">{{$t('siderBar.recent')}}</div>
     <div class="widget-inner">
       <ul class="recent-post">
         <li v-for="(blog, ind) in recentBlogs" :key="ind">

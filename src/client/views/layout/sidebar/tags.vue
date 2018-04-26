@@ -1,6 +1,6 @@
 <template>
 <div class="widget-wrap widget-list">
-  <h3 class="widget-title">标签</h3>
+  <h3 class="widget-title">{{$t('siderBar.tags')}}</h3>
   <ul class="tag-list">
     <li class="tag-list-item" v-for="tag in tags">
       <router-link :to="`/tags/${tag.value}`">{{tag.value}}</router-link>

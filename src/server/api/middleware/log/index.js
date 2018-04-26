@@ -14,6 +14,7 @@ log4js.configure({
     default: {
       appenders: [ 'out', 'app' ],
       level: 'debug'
+      // level: 'off'
     }
   }
 });

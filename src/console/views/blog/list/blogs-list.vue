@@ -1,9 +1,17 @@
 <style lang="less">
 .table-con {
   position: relative;
-  .ivu-icon {
+  .refresh-box .ivu-icon {
     position: absolute; right: 20px; z-index: 99; top: 12px; color: #2d8cf0;
     cursor: pointer;
+  }
+  .page-box {
+    margin-top: 10px;
+    overflow: hidden;
+    text-align: center;
+    .ivu-page {
+      display: inline-block;
+    }
   }
 }
 </style>
@@ -45,8 +53,11 @@
         </div>
       </Col>
       <Col span="24" class="table-con">
-        <span @click="refreshTable"><Icon type="refresh" /></span>
-        <Table :data="tableData" :columns="columns" stripe ref="table" :loading="loading" />
+        <span @click="refreshTable" class="refresh-box"><Icon type="refresh" /></span>
+        <Table :data="currentData" :columns="columns" stripe ref="table" :loading="loading" />
+        <div class="page-box">
+          <Page :total="tableData.length" show-total @on-change="onPageChange" :current="curPage" :page-size="pageSize"  />
+        </div>
       </Col>
     </Row>
   </Card>
@@ -62,11 +73,19 @@ export default {
     return {
       rowNum: 1, colNum: 1, selectMinRow: 1, selectMaxRow: 1, selectMinCol: 1,
       selectMaxCol: 1, csvFileName: '', excelFileName: '', tableData: [],
-      imageName: '', columns: columns(this), loading: false
+      imageName: '', columns: columns(this), loading: false, pageSize: 10, curPage: 1
     };
   },
   mounted() { this.initData() },
+  computed: {
+    currentData() {
+      return this.tableData.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize) || []
+    }
+  },
   methods: {
+    onPageChange(page) {
+      this.curPage = page
+    },
     refreshTable() {
       this.initData()
     },
@@ -76,8 +95,8 @@ export default {
       else if (type === 3) {
         this.$refs.table.exportCsv({
           filename: this.csvFileName,
-          columns: this.columnsCsv.filter((col, index) => index >= this.selectMinCol - 1 && index <= this.selectMaxCol - 1),
-          data: this.csvData.filter((data, index) => index >= this.selectMinRow - 1 && index <= this.selectMaxRow - 1)
+          columns: this.columns.filter((col, index) => index >= this.selectMinCol - 1 && index <= this.selectMaxCol - 1),
+          data: this.currentData.filter((data, index) => index >= this.selectMinRow - 1 && index <= this.selectMaxRow - 1)
         });
       }
     },
@@ -87,8 +106,9 @@ export default {
       this.colNum = this.selectMaxCol = this.columns.length;
       const res = await this.$store.dispatch('getBlogs');
       this.loading = false;
+      this.total = res.data.length;
       this.tableData = res.data;
-      this.rowNum = this.selectMaxRow = res.data.length;
+      this.rowNum = this.selectMaxRow = res.data.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize).length;
     },
     formatDate(date) { return date.split('T')[0] },
     exportImage() {
@@ -126,6 +146,7 @@ export default {
         localStorage.blogIntro = data.intro;
         localStorage.blogTitle = data.title;
         localStorage.blogContent = data.content;
+        localStorage.cover = data.cover;
         localStorage.blogTags = JSON.stringify(data.tags);
         this.$router.push({name: 'blog-publish', query: {q: 'edit'}})
       }

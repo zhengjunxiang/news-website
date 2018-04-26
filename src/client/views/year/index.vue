@@ -5,7 +5,7 @@
   <div class="main-body-header">
     <h1 class="header">
       <i class="icon fa fa-calendar-o"></i>
-      <em class="page-title-link" data-url="home"> {{$route.params.year}} 归档</em>
+      <em class="page-title-link" data-url="home">{{$t('content.archive')}}: {{$route.params.year}} </em>
     </h1>
   </div>
   <div class="main-body-content">

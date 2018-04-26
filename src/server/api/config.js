@@ -1,15 +1,10 @@
 var { host, port } = require('../../../config/ip-port');
 
-const auth = {
-  admin_secret: 'admin-token',
-  tokenKey: 'Token-Auth'
-}
-
 module.exports = {
+  identityKey: 'news',
   port: port.api,
   root: __dirname,
   host,
-  auth,
   mongodb: {
     username: 'cd',
     pwd: 123456,

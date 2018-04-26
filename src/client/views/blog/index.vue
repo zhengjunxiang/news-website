@@ -28,10 +28,24 @@
         </div>
         <div class="article-entry" itemprop="articleBody" v-html="blog.content" />
         <footer class="article-footer">
-          <div class="article-share-link" @click="handleClickShare">
-            <i class="fa fa-share"></i>Share
+          <div class="vue-star-box">
+            <vue-star ref="like" animate="animated rubberBand" color="#F05654" :isActive="isActive" :disable="disable">
+              <a slot="icon" class="fa fa-heart" @click="handleStar"></a>
+            </vue-star>
+            <vue-star animate="animated rubberBand" color="#333" :isActive="isActiveUn" :disable="disableUn">
+              <a slot="icon" class="fa fa-thumbs-down" @click="handleDown"></a>
+            </vue-star>
           </div>
-          <div :class="['social-share', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
+          <div class="star-number-box">
+            <span class="star-number like">{{blog.like}}</span>
+            <span class="star-number unlike">{{blog.unlike}}</span>
+          </div>
+          <div class="social-share-box">
+            <div class="article-share-link" @click="handleClickShare">
+              <i class="fa fa-share"></i>Share
+            </div>
+            <div :class="['social-share', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
+          </div>
         </footer>
       </div>
     </article>
@@ -40,30 +54,93 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
+import tLocalStorage from 'time-localstorage'
 export default {
   name: "blog",
   data() {
-    return { show: false }
+    return {
+      show: false,
+      isActive: false,
+      disable: false,
+      isActiveUn: false,
+      disableUn: false
+    }
   },
   computed: {
     ...mapGetters(['blog'])
   },
   mounted() {
-    const title = this.$route.params.title;
+    const title = this.$route.params.title
     if (title) {
       this.$store.commit('setCurrentTitle', title)
+      this.$store.commit('setBlog', title)
       window.socialShare('.social-share')
     }
+    this.initStar()
   },
   watch: {
     '$route' (to, from) {
       if (to.params.title) {
         this.$store.commit('setBlog', to.params.title)
         window.socialShare('.social-share')
+        this.initStar()
       }
     }
   },
   methods: {
+    initStar() {
+      const title = this.$route.params.title,
+        storage = tLocalStorage.get('likeTitle'),
+        storageUn = tLocalStorage.get('unlikeTitle');
+      let isExist = false,
+       isExistUn = false;
+      if (storage) {
+        storage.forEach(s => {
+          if (s === title) return isExist = true;
+        })
+      }
+      if (storageUn) {
+        storageUn.forEach(s => {
+          if (s === title) return isExistUn = true;
+        })
+      }
+      this.isActive = isExist;
+      this.disable = isExist;
+      this.isActiveUn = isExistUn;
+      this.disableUn = isExistUn;
+    },
+    async handleStar() {
+      if (this.disable) {
+        this.$Alert('已经点过了')
+      } else {
+        const res = await this.$store.dispatch('likeBlog', {title: this.$route.params.title});
+        this.$store.commit('addLike', this.$route.params.title);
+        const LocalS = tLocalStorage.get('likeTitle');
+        this.disable = true
+        this.isActive = true
+        if (LocalS) {
+          tLocalStorage.set('likeTitle', [...LocalS, this.$route.params.title], 60*60*12)
+        } else {
+          tLocalStorage.set('likeTitle', [this.$route.params.title], 60*60*12)
+        }
+      }
+    },
+    async handleDown() {
+      if (this.disableUn) {
+        this.$Alert('已经点过了')
+      } else {
+        const res = await this.$store.dispatch('unlikeBlog', {title: this.$route.params.title})
+        this.$store.commit('addUnlike', this.$route.params.title)
+        const LocalS = tLocalStorage.get('unlikeTitle');
+        this.disableUn = true
+        this.isActiveUn = true
+        if (LocalS) {
+          tLocalStorage.set('unlikeTitle', [...LocalS, this.$route.params.title], 60*60*12)
+        } else {
+          tLocalStorage.set('unlikeTitle', [this.$route.params.title], 60*60*12)
+        }
+      }
+    },
     setDate: date => date ? date.split('T')[0] : '',
     handleClickShare() {
       this.show = !this.show;
