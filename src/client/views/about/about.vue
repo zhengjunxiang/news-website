@@ -34,7 +34,7 @@
 export default {
   name: 'about',
   data() {
-    return { show: false, data: '' }
+    return { show: false, data: {} }
   },
   async mounted() {
     const res = await this.$store.dispatch('getAboutUs');

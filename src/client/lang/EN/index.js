@@ -3,7 +3,7 @@ export default {
     tro: 'Welcome to AntPool\'s News',
     home: 'Home',
     tags: 'Tags',
-    companion: 'Companion',
+    partners: 'Partners',
     about: 'About'
   },
   siderBar: {
@@ -19,7 +19,7 @@ export default {
   content: {
     home: 'Home',
     aboutUs: 'About Us',
-    companion: 'Companion',
+    partners: 'Partners',
     archive: 'Archive',
     tagsSort: 'Tags'
   },

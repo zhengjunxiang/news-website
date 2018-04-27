@@ -9,7 +9,7 @@ import About from '@/views/about/about.vue';
 import Blog from '@/views/blog/index.vue';
 import Month from '@/views/month/index.vue';
 import Year from '@/views/year/index.vue';
-import Companion from '@/views/companion/index.vue';
+import Partners from '@/views/partners/index.vue';
 
 Vue.use(VueRouter);
 
@@ -26,9 +26,9 @@ const RouterConfig = {
       name: 'tags',
       component: Tags
     }, {
-      path: '/companion',
-      name: 'companion',
-      component: Companion
+      path: '/partners',
+      name: 'partners',
+      component: Partners
     }, {
       path: '/about',
       name: 'about',

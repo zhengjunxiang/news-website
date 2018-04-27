@@ -6,9 +6,9 @@ module.exports = {
   root: __dirname,
   host,
   mongodb: {
-    username: 'cd',
-    pwd: 123456,
+    username: 'zhengjx',
+    pwd: 'z8820228',
     address: 'localhost:27017',
-    db: 'antpoolblog'
+    db: 'admin'
   }
 }

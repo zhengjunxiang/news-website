@@ -3,7 +3,7 @@ export default {
     tro: '欢迎来到蚂蚁矿池新世界',
     home: '首页',
     tags: '标签归类',
-    companion: '合作伙伴',
+    partners: '合作伙伴',
     about: '关于'
   },
   siderBar: {
@@ -19,7 +19,7 @@ export default {
   content: {
     home: '首页',
     aboutUs: '关于我们',
-    companion: '合作伙伴',
+    partners: '合作伙伴',
     archive: '档案',
     tagsSort: '标签归类'
   },

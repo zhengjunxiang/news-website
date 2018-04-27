@@ -2,13 +2,13 @@
   <div>
     <div class="main-body-header">
       <h1 class="header">
-        <em class="page-title-link" data-url="home">{{$t('content.companion')}}</em>
+        <em class="page-title-link" data-url="home">{{$t('content.partners')}}</em>
       </h1>
     </div>
     <div class="main-body-content">
-      <div class="companion-con">
-        <div class="companion-box" v-for="(com, ind) in companion" :key="ind">
-          <h3 class="companion-title">{{com.title}}</h3>
+      <div class="partners-con">
+        <div class="partners-box" v-for="(com, ind) in partners" :key="ind">
+          <h3 class="partners-title">{{com.title}}</h3>
           <div class="logo-box">
             <a :href="com.link" target="_black" v-if="com.link">
               <img :src="com.cover">
@@ -25,27 +25,27 @@
 </template>
 <script>
 export default {
-  name: "companion",
+  name: "partners",
   async mounted() {
     const res = await this.$store.dispatch('getCompanion');
     if(res.mes) this.$Message.success(res.mes);
-    this.companion = res.data;
+    this.partners = res.data;
   },
   data: () => ({
-    companion: []
+    partners: []
   })
 }
 </script>
 <style lang="less" scoped>
-.companion-con {
+.partners-con {
   padding: 15px;
 }
-.companion-box {
+.partners-box {
   margin-bottom: 15px;
   overflow: hidden;
   padding-bottom: 15px;
   border-bottom: 1px solid #ddd;
-  .companion-title {
+  .partners-title {
     padding-bottom: 10px;
     font-size: 22px;
     font-weight: 500;

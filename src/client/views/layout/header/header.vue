@@ -28,7 +28,7 @@
               <router-link to="/tags">{{ $t("header.tags") }}</router-link>
             </li>
             <li class="main-nav-list-item">
-              <router-link :to="{ name: 'companion'}">{{ $t("header.companion") }}</router-link>
+              <router-link :to="{ name: 'partners'}">{{ $t("header.partners") }}</router-link>
             </li>
             <li class="main-nav-list-item">
               <router-link :to="{ name: 'about'}">{{ $t("header.about") }}</router-link>

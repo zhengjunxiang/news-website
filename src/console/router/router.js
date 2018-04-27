@@ -97,35 +97,35 @@ export const appRouter = [
     path: '/blog',
     icon: 'ios-book',
     name: 'blog',
-    title: '博客',
+    title: '发布',
     component: Main,
     children: [
       {
         path: 'publish',
-        title: '博客发布',
+        title: '新闻发布',
         name: 'blog-publish',
         icon: 'compose',
         component: () => import ('@/views/blog/publish/blog-publish.vue')
       }, {
         path: 'list',
-        title: '博客列表',
+        title: '新闻列表',
         name: 'blog-list',
         icon: 'ios-list',
         component: () => import ('@/views/blog/list/blogs-list.vue')
       }
     ]
   }, {
-    path: '/companion',
+    path: '/partners',
     icon: 'person-stalker',
-    name: 'companion',
+    name: 'partners',
     title: '合作伙伴',
     component: Main,
     children: [
       {
-        path: 'companion-index',
+        path: 'partners-index',
         title: '合作伙伴',
-        name: 'companion-index',
-        component: () => import ('@/views/companion/companion.vue')
+        name: 'partners-index',
+        component: () => import ('@/views/partners/partners.vue')
       }
     ]
   }, {

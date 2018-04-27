@@ -3,7 +3,7 @@
   <Row class="margin-top-10">
     <Button type="primary" icon="plus-round" v-show="!isShow" @click="isShow=true">添加合作伙伴</Button>
     <Card v-show="isShow">
-      <p slot="title">添加伙伴</p>
+      <p slot="title">{{isUpdateIng ? '编辑' : '添加'}}</p>
       <Form ref="formCustom" :model="formCustom" :rules="ruleCustom" :label-width="80">
         <FormItem label="标题" prop="title">
           <Input v-model="formCustom.title" :readonly="isUpdateIng" />
@@ -51,7 +51,7 @@
 
 <script>
 export default {
-  name: 'companion-index',
+  name: 'partners-index',
   data() {
     return {
       formCustom: { title: '', cover: '', link: '', content: '' },
