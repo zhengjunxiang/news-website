@@ -7,16 +7,16 @@
     </div>
     <div class="main-body-content">
       <div class="partners-con">
-        <div class="partners-box" v-for="(com, ind) in partners" :key="ind">
-          <h3 class="partners-title">{{com.title}}</h3>
+        <div class="partners-box" v-for="(par, ind) in curPars" :key="ind">
+          <h3 class="partners-title">{{par.title}}</h3>
           <div class="logo-box">
-            <a :href="com.link" target="_black" v-if="com.link">
-              <img :src="com.cover">
+            <a :href="par.link" target="_black" v-if="par.link">
+              <img :src="par.cover">
             </a>
-            <img :src="com.cover" v-else>
+            <img :src="par.cover" v-else>
           </div>
           <div class="content-box">
-            {{com.content}}
+            {{par.content}}
           </div>
         </div>
       </div>
@@ -24,16 +24,23 @@
   </div>
 </template>
 <script>
+import {mapGetters} from 'vuex';
 export default {
   name: "partners",
+  data() {
+    return { partners: [] }
+  },
+  computed: {
+    ...mapGetters(['lan']),
+    curPars() {
+      return this.partners.filter(par => par.lan === this.lan)
+    }
+  },
   async mounted() {
-    const res = await this.$store.dispatch('getCompanion');
+    const res = await this.$store.dispatch('getPartners');
     if(res.mes) this.$Message.success(res.mes);
     this.partners = res.data;
-  },
-  data: () => ({
-    partners: []
-  })
+  }
 }
 </script>
 <style lang="less" scoped>

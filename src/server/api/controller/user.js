@@ -21,12 +21,9 @@ module.exports = {
   getUser(req, res) {
     global.logger.info('user/getUser.json');
     const {name} = req.query;
-    User.findOne({name}, function(err, user) {
+    User.findOne({name}, {password: 0}, function(err, user) {
       if (err) global.logger.error(err)
-      else {
-        user.password = '';
-        res.json({ errno: 0, mse: '', data: user });
-      }
+      else res.json({ errno: 0, mse: '', data: user });
     });
   },
   delete: (req, res) => {
@@ -110,9 +107,9 @@ module.exports = {
     User.update(
       {name: {$in: name}},
       { userName, department, avatar },
-      (err, blog) => {
+      (err, ne) => {
         if (err) global.logger.error(err);
-        if (blog.ok === 1) res.json({ errno: 0, mes: '信息更新成功' })
+        if (ne.ok === 1) res.json({ errno: 0, mes: '信息更新成功' })
         else res.json({ errno: 1, mes: '信息更新失败' })
       }
     )

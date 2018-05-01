@@ -51,7 +51,7 @@
   <div class="single-page-con" :style="{left: shrink?'60px':'200px'}">
     <div class="single-page">
       <transition name="fade" mode="out-in">
-        <keep-alive :include="cachePage">
+        <keep-alive>
           <router-view />
         </keep-alive>
       </transition>
@@ -99,9 +99,6 @@ export default {
     },
     avatorPath() {
       return localStorage.avatorImgPath;
-    },
-    cachePage() {
-      return this.$store.state.app.cachePage;
     },
     menuTheme() {
       return this.$store.state.app.menuTheme;

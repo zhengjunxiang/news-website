@@ -4,13 +4,14 @@ export default {
     home: '首页',
     tags: '标签归类',
     partners: '合作伙伴',
+    events: '活动',
     about: '关于'
   },
   siderBar: {
     newer: '下一篇',
     older: '上一篇',
     archive: '档案',
-    recent: '最新文章',
+    recent: '最新发布',
     follow: '关注 :',
     tagCloud: '标签云',
     links: '链接',
@@ -20,6 +21,7 @@ export default {
     home: '首页',
     aboutUs: '关于我们',
     partners: '合作伙伴',
+    events: '活动',
     archive: '档案',
     tagsSort: '标签归类'
   },

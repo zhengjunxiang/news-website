@@ -3,6 +3,7 @@ export default {
     tro: 'Welcome to AntPool\'s News',
     home: 'Home',
     tags: 'Tags',
+    events: 'Events',
     partners: 'Partners',
     about: 'About'
   },
@@ -20,6 +21,7 @@ export default {
     home: 'Home',
     aboutUs: 'About Us',
     partners: 'Partners',
+    events: 'Events',
     archive: 'Archive',
     tagsSort: 'Tags'
   },

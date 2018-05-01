@@ -2,7 +2,7 @@ import axios from 'axios';
 import Vue from 'vue';
 const baseURL = '';
 
-const instance = axios.create({timeout: 10000});
+const instance = axios.create({timeout: 30000});
 
 // 请求统一处理
 instance.interceptors.request.use(config => {

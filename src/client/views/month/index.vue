@@ -12,34 +12,34 @@
     <section class="archives-wrap">
       <div class="archives">
         <div class="article-row">
-          <article class="article article-summary" v-for="(blog, ind) in curBlogs" :key="ind">
+          <article class="article article-summary" v-for="(ne, ind) in curNews" :key="ind">
             <div class="article-summary-inner">
-                <router-link :to="`/blog/${blog.title}`" class="thumbnail">
-                  <span :style="`background-image:url(${blog.cover})`" class="thumbnail-image" v-if="blog.cover" />
+                <router-link :to="`/new/${ne.title}`" class="thumbnail">
+                  <span :style="`background-image:url(${ne.cover})`" class="thumbnail-image" v-if="ne.cover" />
                   <i class="fa fa-picture-o" aria-hidden="true" v-else />
                 </router-link>
               <div class="article-meta">
                 <div class="date">
-                  <time :datetime="blog.createAt" itemprop="datePublished">{{setDate(blog.createAt)}}</time>
-                  <span style="margin-left: 10px;">{{blog.author}}</span>
+                  <time :datetime="ne.createAt" itemprop="datePublished">{{setDate(ne.createAt)}}</time>
+                  <span style="margin-left: 10px;">{{ne.author}}</span>
                 </div>
               </div>
               <h2 class="article-title" itemprop="name">
-                <router-link :to="`/blog/${blog.title}`">{{blog.title}}</router-link>
+                <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
               </h2>
               <div>
-                <router-link class="article-tag-link" v-for="(tag, ind) in blog.tags" :to="`/tags/${tag}`" :key="ind">
+                <router-link class="article-tag-link" v-for="(tag, ind) in ne.tags" :to="`/tags/${tag}`" :key="ind">
                   {{tag}}
                 </router-link>
               </div>
-              <p class="article-excerpt">{{blog.intro}}</p>
+              <p class="article-excerpt">{{ne.intro}}</p>
             </div>
           </article>
         </div>
       </div>
     </section>
   </div>
-  <page-nav :datas="blogs" :size="pageSize" @on-change="onClickPage" />
+  <page-nav :datas="news" :size="pageSize" @on-change="onClickPage" />
 </div>
 </template>
 <script>
@@ -53,15 +53,15 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['blogsM']),
-    blogs() {
-      const y = this.blogsM.filter(y => y.year === this.$route.params.year);
+    ...mapGetters(['newsM']),
+    news() {
+      const y = this.newsM.filter(y => y.year === this.$route.params.year);
       let m = [];
-      if (y[0]) m = y[0].blogs.filter(m => m.month === this.$route.params.month);
-      return m[0] ? [...m[0].blogs] : [];
+      if (y[0]) m = y[0].news.filter(m => m.month === this.$route.params.month);
+      return m[0] ? [...m[0].news] : [];
     },
-    curBlogs() {
-      return this.blogs.slice((this.curP-1)*this.pageSize, this.curP*this.pageSize)
+    curNews() {
+      return this.news.slice((this.curP-1)*this.pageSize, this.curP*this.pageSize)
     }
   },
   methods: {

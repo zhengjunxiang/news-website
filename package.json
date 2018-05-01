@@ -1,7 +1,7 @@
 {
-  "name": "AntpoolBlog",
+  "name": "AntpoolNew",
   "version": "0.1.0",
-  "description": "Antpool Blog",
+  "description": "Antpool New",
   "main": "main.js",
   "scripts": {
     "init": "webpack --progress --config build/webpack.dev.config.js",
@@ -10,10 +10,11 @@
     "build:con": "cross-env ENV_TYPE=console webpack --progress --hide-modules --config build/webpack.prod.config.js",
     "build:cli": "cross-env ENV_TYPE=client webpack --progress --hide-modules --config build/webpack.prod.config.js",
     "server": "nodemon ./src/server/api/app.js -w ./src/server/api/",
+    "server:pub": "cross-env ENV_TYPE=publish node ./src/server/api/app.js",
     "server:con": "nodemon ./src/server/server-console.js -w ./src/server/server-console.js",
     "server:cli": "nodemon ./src/server/server-client.js -w ./src/server/server-client.js",
-    "public:con": "npm run build:con && npm run server:con",
-    "public:cli": "npm run build:cli && npm run server:cli",
+    "public:con": "node ./src/server/server-console.js",
+    "public:cli": "node ./src/server/server-client.js",
     "lint": "eslint --fix --ext .js,.vue src",
     "test": "npm run lint"
   },

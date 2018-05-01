@@ -1,5 +1,7 @@
 var log4js = require('log4js');
 
+const isPublish = process.env.ENV_TYPE === 'publish';
+
 log4js.configure({
   appenders: {
     out: {
@@ -13,8 +15,7 @@ log4js.configure({
   categories: {
     default: {
       appenders: [ 'out', 'app' ],
-      level: 'debug'
-      // level: 'off'
+      level: isPublish ? 'error' : 'debug'
     }
   }
 });

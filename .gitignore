@@ -5,8 +5,7 @@ node_modules
 .history
 .DS_Store
 \.settings/
-config/env.js
 dist
-src/server/api/resouce
+src/server/api/resouce/**
 application.log
 sessions

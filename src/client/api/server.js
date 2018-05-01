@@ -1,12 +1,13 @@
 import API from './axios';
 
-const GetBlogs = data => API.get('/blogs/get.json', {params: data});
-const LikeBlog = data => API.put('/blogs/like.json', data);
-const UnlikeBlog = data => API.put('/blogs/unlike.json', data);
+const GetNews = data => API.get('/news/get.json', {params: data});
+const LikeNew = data => API.put('/news/like.json', data);
+const UnlikeNew = data => API.put('/news/unlike.json', data);
 const GetTags = () => API.get('/tags/get.json');
-const GetCompanion = () => API.get('/companion/get.json');
-const GetAboutUs = () => API.get('/aboutUs/get.json');
+const GetPartners = () => API.get('/partners/get.json');
+const GetAbout = () => API.get('/about/get.json');
+const GetEvents = data => API.get('/events/get.json', {params: data});
 
 export {
-  GetBlogs, GetTags, GetCompanion, GetAboutUs, LikeBlog, UnlikeBlog
+  GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents
 };

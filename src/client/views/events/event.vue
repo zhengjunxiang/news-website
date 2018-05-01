@@ -1,0 +1,84 @@
+<template>
+<div id="new">
+  <div class="main-body-content">
+    <article class="article article-single article-type-post" itemprop="nePost">
+      <div class="article-inner">
+        <header class="article-header">
+          <h2 class="article-title" itemprop="name">
+            {{event.title}}
+          </h2>
+        </header>
+        <div class="article-meta">
+          <div class="article-date">
+            <span>
+              <i class="fa fa-plus" aria-hidden="true" />
+              <time :datetime="event.createAt" itemprop="datePublished">{{setDate(event.createAt)}}</time>
+            </span>
+            <span v-if="setDate(event.createAt) !== setDate(event.updateAt)">
+              <i class="fa fa-pencil" aria-hidden="true" />
+              <time :datetime="event.updateAt" itemprop="datePublished">{{setDate(event.updateAt)}}</time>
+            </span>
+          </div>
+          <div class="article-author"><i class="fa fa-user" aria-hidden="true"></i>{{event.author}}</div>
+        </div>
+        <div class="article-entry" itemprop="articleBody" v-html="event.content" />
+        <footer class="article-footer">
+          <div class="social-share-box">
+            <div class="article-share-link" @click="handleClickShare">
+              <i class="fa fa-share"></i>Share
+            </div>
+            <div :class="['social-share', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
+          </div>
+        </footer>
+      </div>
+    </article>
+  </div>
+</div>
+</template>
+<script>
+import {mapGetters} from 'vuex'
+export default {
+  name: "event",
+  data() {
+    return {
+      title: '',
+      show: false,
+      isActive: false,
+      disable: false,
+      isActiveUn: false,
+      disableUn: false
+    }
+  },
+  computed: {
+    ...mapGetters(['event'])
+  },
+  mounted() {
+    const title = this.$route.params.title
+    if (title) {
+      this.title = title;
+      this.$store.dispatch('getEvent', {title})
+      window.socialShare('.social-share')
+    }
+  },
+  watch: {
+    '$route' (to, from) {
+      const title = to.params.title;
+      if (title) {
+        if (title === this.title) return;
+        this.title = title;
+        this.$store.dispatch('getEvent', {title})
+        window.socialShare('.social-share')
+      }
+    }
+  },
+  methods: {
+    setDate: date => date ? date.split('T')[0] : '',
+    handleClickShare() {
+      this.show = !this.show;
+    }
+  }
+}
+</script>
+<style lang="less">
+@import '../../styles/prism.css';
+</style>

@@ -10,10 +10,10 @@ const UpdateMes = data => API.post('/user/updateMessage.json', data);
 const UpdatePassW = data => API.post('/user/updatePassW.json', data);
 const LoginOut = () => API.get('/user/loginOut.json');
 // 博客
-const AddBlogs = data => API.post('/blogs/add.json', data);
-const UpdateBlogs = data => API.post('/blogs/update.json', data);
-const GetBlogs = data => API.get('/blogs/get.json', {params: data});
-const DelBlogs = data => API.delete('/blogs/delete.json', {params: data});
+const AddNews = data => API.post('/news/add.json', data);
+const UpdateNews = data => API.post('/news/update.json', data);
+const GetNews = data => API.get('/news/get.json', {params: data});
+const DelNews = data => API.delete('/news/delete.json', {params: data});
 // 待办事件
 const AddThings = data => API.post('/things/add.json', data);
 const GetThings = () => API.get('/things/get.json');
@@ -29,20 +29,28 @@ const Rename = data => API.put('/resouce/rename.json', data);
 const Mkdir = data => API.post('/resouce/mkdir.json', data);
 const DelDir = data => API.delete('/resouce/delDir.json', {params: data});
 // 合作伙伴
-const AddCompanion = data => API.post('/companion/add.json', data);
-const UpdateCompanion = data => API.post('/companion/update.json', data);
-const GetCompanion = data => API.get('/companion/get.json', {params: data});
-const DelCompanion = data => API.delete('/companion/delete.json', {params: data});
+const AddPartners = data => API.post('/partners/add.json', data);
+const UpdatePartners = data => API.post('/partners/update.json', data);
+const GetPartners = data => API.get('/partners/get.json', {params: data});
+const DelPartners = data => API.delete('/partners/delete.json', {params: data});
 // 关于我们
-const UpdateAboutUs = data => API.post('/aboutUs/update.json', data);
-const GetAboutUs = data => API.get('/aboutUs/get.json', {params: data});
+const UpdateAbout = data => API.post('/about/update.json', data);
+const GetAbout = data => API.get('/about/get.json', {params: data});
+const AddAbout = data => API.post('/about/add.json', data);
+const DelAbout = data => API.delete('/about/delete.json', {params: data});
+// 关于我们
+const UpdateEvents = data => API.post('/events/update.json', data);
+const GetEvents = data => API.get('/events/get.json', {params: data});
+const AddEvents = data => API.post('/events/add.json', data);
+const DelEvents = data => API.delete('/events/delete.json', {params: data});
 
 export {
   GetImgs, DelImg, Rename, Mkdir, DelDir,
   LoginUser, RegisterUser, GetUser, DelUser, UpdateMes, UpdatePassW, GetUserOne, LoginOut,
-  AddBlogs, GetBlogs, DelBlogs, UpdateBlogs,
+  AddNews, GetNews, DelNews, UpdateNews,
   AddThings, GetThings, DelThings,
   AddTags, GetTags, DelTags,
-  AddCompanion, UpdateCompanion, GetCompanion, DelCompanion,
-  UpdateAboutUs, GetAboutUs
+  AddPartners, UpdatePartners, GetPartners, DelPartners,
+  UpdateAbout, GetAbout, AddAbout, DelAbout,
+  UpdateEvents, GetEvents, AddEvents, DelEvents
 };

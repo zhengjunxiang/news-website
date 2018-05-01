@@ -27,8 +27,8 @@
             </Input>
           </FormItem>
           <FormItem>
-            <Button @click="handleSubmit" type="primary" long>登录</Button>
-            <p class="login-tip" @click="register">注册超级管理员</p>
+            <Button @click="handleSubmit" type="primary" long :loading="isLoading">登录</Button>
+            <p class="login-tip" @click="register" v-show="!isLoading">注册超级管理员</p>
           </FormItem>
         </Form>
       </div>
@@ -42,21 +42,14 @@ import Cookies from 'js-cookie';
 export default {
   data() {
     return {
+      isLoading: false,
       form: {
         userName: '',
         password: ''
       },
       rules: {
-        userName: [{
-          required: true,
-          message: '账号不能为空',
-          trigger: 'blur'
-        }],
-        password: [{
-          required: true,
-          message: '密码不能为空',
-          trigger: 'blur'
-        }]
+        userName: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
+        password: [{ required: true, message: '密码不能为空', trigger: 'blur' }]
       }
     };
   },
@@ -68,10 +61,12 @@ export default {
           const password = this.form.password
           const data = { name, password }
           try {
+            this.isLoading = true
             const res = await this.$store.dispatch('login', data);
             if(res.mes) this.$Message.success(res.mes);
             this.$router.push({ name: 'home_index' });
-          } catch (err) {}
+            this.isLoading = false
+          } catch (err) { this.isLoading = false }
         }
       });
     },
@@ -82,9 +77,11 @@ export default {
           const password = this.form.password
           const data = { name, password, access: 0 }
           try {
+            this.isLoading = true
             const res = await this.$store.dispatch('register', data)
             if(res.mes) this.$Message.success(res.mes);
-          } catch (err) {}
+            this.isLoading = false
+          } catch (err) { this.isLoading = false }
         }
       })
     }

@@ -77,7 +77,6 @@ export default {
         this.tagBodyLeft = Math.min(this.tagBodyLeft + tagWidth, 0);
       }
       this.$store.commit('removeTag', name);
-      this.$store.commit('closePage', name);
       pageOpenedList = this.$store.state.app.pageOpenedList;
       localStorage.pageOpenedList = JSON.stringify(pageOpenedList);
       if (this.currentPageName === name) {

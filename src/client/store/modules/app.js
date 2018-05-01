@@ -1,129 +1,168 @@
 import {
-  GetBlogs, GetTags, GetCompanion, GetAboutUs, LikeBlog, UnlikeBlog
+  GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents
 } from '@/api/server.js';
-import { Message } from 'iview';
+import vm from '@/main';
+import util from '@/libs/util.js'
 
 export default {
   state: {
-    blogs: [],
-    blog: {},
-    newBlog: '',
-    oldBlog: '',
+    allNews: [],
+    news: [],
+    ne: {},
+    allEvents: [],
+    events: [],
+    event: {},
+    newNew: '',
+    oldNew: '',
     tags: [],
+    lan: util.checkLan(),
     currentTitle: '',
-    blogsSortByYear: [],
-    blogsSortByMonth: []
+    newsSortByYear: [],
+    newsSortByMonth: []
   },
   mutations: {
+    setLan(state, lan) {
+      if (lan) state.lan = lan
+    },
     setCurrentTitle: (state, title) => {
       if (title) state.currentTitle = title
     },
-    setBlogs: (state, data) => {
-      if (data.mes) Message.info(data.mes)
-      state.blogs = data.data
+    setEvents: (state, data) => {
+      if (data) {
+        if (data.mes) vm.$Alert.error(data.mes)
+        state.allEvents = data.data
+        state.events = data.data.filter(d => d.lan === state.lan)
+      } else {
+        state.events = state.allEvents.filter(d => d.lan === state.lan)
+      }
     },
-    setBlog: (state, title) => {
-      state.blogs.forEach(blog => {
-        if (blog.title === title) state.blog = blog
+    setNews: (state, data) => {
+      if (data) {
+        if (data.mes) vm.$Alert.error(data.mes)
+        state.allNews = data.data
+        state.news = data.data.filter(d => d.lan === state.lan)
+      } else {
+        state.news = state.allNews.filter(d => d.lan === state.lan)
+      }
+    },
+    setNewnav: (state, title) => {
+      state.news.map((ne, ind) => {
+        if (title === ne.title) {
+          state.newNew = state.news[ind + 1] ? state.news[ind + 1].title : ''
+          state.oldNew = state.news[ind - 1] ? state.news[ind - 1].title : ''
+        }
       })
-      window.setTimeout(() => {
-        state.blogs.map((blog, ind) => {
-          if (state.blog.title === blog.title) {
-            state.newBlog = state.blogs[ind + 1] ? state.blogs[ind + 1].title : ''
-            state.oldBlog = state.blogs[ind - 1] ? state.blogs[ind - 1].title : ''
-          }
-        })
-      }, 60)
     },
-    addLike(state, title) {
-      state.blogs.forEach(b => { if (b.title === title) return (b.like += 1) })
-    },
-    addUnlike(state, title) {
-      state.blogs.forEach(b => { if (b.title === title) return (b.unlike += 1) })
-    },
-    setTagsBlogs: (state, data) => {
-      state.tags = data.data.map(tag => ({value: tag.value, blogs: []}))
-      window.setTimeout(() => {
+    setTagsNews: (state, data) => {
+      if (data) {
+        state.tags = data.data.map(tag => ({value: tag.value, news: []}))
+        window.setTimeout(() => {
+          state.tags.map((tag, index) => {
+            const key = tag.value
+            state.news.map(ne => {
+              ne.tags.map(tag => { if (tag === key) state.tags[index].news.push(ne) })
+            })
+          })
+        }, 60)
+      } else {
         state.tags.map((tag, index) => {
           const key = tag.value
-          state.blogs.map(blog => {
-            blog.tags.map(tag => { if (tag === key) state.tags[index].blogs.push(blog) })
+          tag.news = [];
+          state.news.map(ne => {
+            ne.tags.map(tag => { if (tag === key) state.tags[index].news.push(ne) })
           })
         })
-      }, 60)
+      }
     },
-    setSortBlogsByDate: state => {
-      let year = '', blogsDate = state.blogsSortByYear, len = blogsDate.length;
-      state.blogs.map(blog => {
-        if (year !== blog.createAt.split('-')[0]) {
-          year = blog.createAt.split('-')[0]
-          blogsDate.push({year, blogs: []});
-          len = blogsDate.length;
-          blogsDate[len - 1].blogs.push(blog);
-        } else blogsDate[len - 1].blogs.push(blog);
+    setSortNewsByDate: state => {
+      state.newsSortByYear = [];
+      let year = '', newsDate = state.newsSortByYear, len = newsDate.length;
+      state.news.map(ne => {
+        if (year !== ne.createAt.split('-')[0]) {
+          year = ne.createAt.split('-')[0]
+          newsDate.push({year, news: []});
+          len = newsDate.length;
+          newsDate[len - 1].news.push(ne);
+        } else newsDate[len - 1].news.push(ne);
       })
     },
-    setSortBlogsByMonth: state => {
-      let blogsM = state.blogsSortByMonth, len = '';
-      state.blogsSortByYear.map((year, index) => {
+    setSortNewsByMonth: state => {
+      state.newsSortByMonth = []
+      let newsM = state.newsSortByMonth, len = '';
+      state.newsSortByYear.map((year, index) => {
         let month = '';
-        blogsM.push({year: year.year, blogs: []})
-        year.blogs.map(monthC => {
+        newsM.push({year: year.year, news: []})
+        year.news.map(monthC => {
           if (month !== monthC.createAt.split('-')[1]) {
             month = monthC.createAt.split('-')[1]
-            blogsM[index].blogs.push({month, blogs: []})
-            len = blogsM[index].blogs.length;
-            blogsM[index].blogs[len - 1].blogs.push(monthC)
+            newsM[index].news.push({month, news: []})
+            len = newsM[index].news.length;
+            newsM[index].news[len - 1].news.push(monthC)
           } else {
-            blogsM[index].blogs[len - 1].blogs.push(monthC)
+            newsM[index].news[len - 1].news.push(monthC)
           }
         })
       })
     }
   },
   actions: {
-    async getBlogs({commit}, data) {
-      const res = await GetBlogs(data)
+    async getEvents({commit}, data) {
+      const res = await GetEvents(data);
+      commit('setEvents', res.data)
+    },
+    async getEvent({commit, dispatch, state}, data) {
+      const res = await GetEvents(data)
+      state.event = res.data.data || {}
+    },
+    async getNews({commit}, data) {
+      const res = await GetNews(data)
       return res.data
+    },
+    async getNew({commit, dispatch, state}, data) {
+      const res = await GetNews(data)
+      state.ne = res.data.data || {}
     },
     async getTags({commit}) {
       const res = await GetTags()
       return res.data
     },
-    async getCompanion({commit}) {
-      const res = await GetCompanion()
+    async getPartners({commit}) {
+      const res = await GetPartners()
       return res.data
     },
-    async getAboutUs({commit}) {
-      const res = await GetAboutUs()
+    async getAbout({commit}) {
+      const res = await GetAbout()
       return res.data
     },
-    async likeBlog({commit}, data) {
-      const res = await LikeBlog(data)
+    async likeNew({commit}, data) {
+      const res = await LikeNew(data)
       return res.data
     },
-    async unlikeBlog({commit}, data) {
-      const res = await UnlikeBlog(data)
+    async unlikeNew({commit}, data) {
+      const res = await UnlikeNew(data)
       return res.data
     },
-    getTagsAndBlogs({commit, dispatch, state}, data) {
-      Promise.all([dispatch('getBlogs'), dispatch('getTags')])
+    getTagsAndNews({commit, dispatch, state}, data) {
+      Promise.all([dispatch('getNews'), dispatch('getTags')])
         .then(data => {
-          commit('setBlogs', data[0])
-          commit('setTagsBlogs', data[1])
-          commit('setSortBlogsByDate')
-          commit('setSortBlogsByMonth')
-          if (state.currentTitle) commit('setBlog', state.currentTitle)
+          commit('setNews', data[0])
+          commit('setTagsNews', data[1])
+          commit('setSortNewsByDate')
+          commit('setSortNewsByMonth')
+          if (state.currentTitle) commit('setNewnav', state.currentTitle)
         })
     }
   },
   getters: {
-    blogs: state => state.blogs,
-    blog: state => state.blog,
+    news: state => state.news,
+    ne: state => state.ne,
     tags: state => state.tags,
-    blogsY: state => state.blogsSortByYear,
-    blogsM: state => state.blogsSortByMonth,
-    newBlog: state => state.newBlog,
-    oldBlog: state => state.oldBlog
+    newsY: state => state.newsSortByYear,
+    newsM: state => state.newsSortByMonth,
+    newNew: state => state.newNew,
+    oldNew: state => state.oldNew,
+    events: state => state.events,
+    event: state => state.event,
+    lan: state => state.lan
   }
 };

@@ -1,5 +1,5 @@
 var Tags = require('../models/tags');
-var Blogs = require('../models/blogs');
+var News = require('../models/news');
 
 module.exports = {
   add: (req, res) => {
@@ -31,12 +31,12 @@ module.exports = {
     Tags.remove({value: {$in: _tags.tags}}, function(err, tags) {
       if (err) global.logger.error(err);
       if (tags.ok === 1) {
-        Blogs.updateMany(
+        News.updateMany(
           { tags: {$in: _tags.tags} },
           { $pullAll: {tags: _tags.tags} },
-          (err, blog) => {
+          (err, ne) => {
             if (err) global.logger.error(err);
-            if (blog.ok === 1) res.json({ errno: 0, mes: `博客和标签${_tags.tags}更新成功` })
+            if (ne.ok === 1) res.json({ errno: 0, mes: `博客和标签${_tags.tags}更新成功` })
             else res.json({ errno: 1, mes: '删除标签成功， 博客标签更新失败' })
           }
         )

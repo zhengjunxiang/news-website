@@ -2,9 +2,9 @@
 <div class="widget-wrap widget-list">
   <h3 class="widget-title">{{$t('siderBar.tags')}}</h3>
   <ul class="tag-list">
-    <li class="tag-list-item" v-for="tag in tags">
+    <li class="tag-list-item" v-for="tag in tags" v-show="tag.news.length">
       <router-link :to="`/tags/${tag.value}`">{{tag.value}}</router-link>
-      <span class="tag-list-count">{{tag.blogs.length}}</span>
+      <span class="tag-list-count">{{tag.news.length}}</span>
     </li>
   </ul>
 </div>

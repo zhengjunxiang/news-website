@@ -1,32 +1,47 @@
 import Main from '@/views/Main.vue';
+import login from '@/views/login.vue'
+import p404 from '@/views/error-page/404.vue'
+import p403 from '@/views/error-page/403.vue'
+import p500 from '@/views/error-page/500.vue'
+import home from '@/views/home/home.vue'
+import ownSpace from '@/views/own-space/own-space.vue'
+import access from '@/views/access/access.vue'
+import imagesEditor from '@/views/my-components/image-editor/image-editor.vue'
+import fileUpload from '@/views/my-components/file-upload/file-upload.vue'
+import newPublish from '@/views/news/publish/new-publish.vue'
+import newsList from '@/views/news/list/news-list.vue'
+import partners from '@/views/partners/partners.vue'
+import about from '@/views/about/about.vue'
+import eventPublish from '@/views/events/publish/index.vue'
+import eventsList from '@/views/events/list/index.vue'
 
 // 不作为Main组件的子页面展示的页面单独写，如下
 export const loginRouter = {
   path: '/login',
   name: 'login',
   meta: { title: 'Login - 登录' },
-  component: () => import ('@/views/login.vue')
+  component: login
 };
 
 export const page404 = {
   path: '/*',
   name: 'error-404',
   meta: { title: '404-页面不存在' },
-  component: () => import ('@/views/error-page/404.vue')
+  component: p404
 };
 
 export const page403 = {
   path: '/403',
   meta: { title: '403-权限不足' },
   name: 'error-403',
-  component: () => import ('@/views/error-page/403.vue')
+  component: p403
 };
 
 export const page500 = {
   path: '/500',
   meta: { title: '500-服务端错误' },
   name: 'error-500',
-  component: () => import ('@/views/error-page/500.vue')
+  component: p500
 };
 
 // 作为Main组件的子页面展示但是不在左侧菜单显示的路由写在otherRouter里
@@ -40,12 +55,12 @@ export const otherRouter = {
       path: 'home',
       title: '首页',
       name: 'home_index',
-      component: () => import ('@/views/home/home.vue')
+      component: home
     }, {
       path: 'ownspace',
       title: '个人中心',
       name: 'ownspace_index',
-      component: () => import ('@/views/own-space/own-space.vue')
+      component: ownSpace
     },
     // { // 用于展示带参路由
     //   path: 'message',
@@ -69,7 +84,7 @@ export const appRouter = [
         path: 'index',
         title: '权限管理',
         name: 'access-index',
-        component: () => import ('@/views/access/access.vue')
+        component: access
       }
     ]
   }, {
@@ -84,34 +99,55 @@ export const appRouter = [
         icon: 'crop',
         name: 'image-editor',
         title: '图片预览编辑',
-        component: () => import ('@/views/my-components/image-editor/image-editor.vue')
+        component: imagesEditor
       }, {
         path: 'file-upload',
         icon: 'android-upload',
         name: 'file-upload',
         title: '图片上传',
-        component: () => import ('@/views/my-components/file-upload/file-upload.vue')
+        component: fileUpload
       }
     ]
   }, {
-    path: '/blog',
+    path: '/news',
     icon: 'ios-book',
-    name: 'blog',
-    title: '发布',
+    name: 'news',
+    title: '新闻',
     component: Main,
     children: [
       {
         path: 'publish',
         title: '新闻发布',
-        name: 'blog-publish',
+        name: 'new-publish',
         icon: 'compose',
-        component: () => import ('@/views/blog/publish/blog-publish.vue')
+        component: newPublish
       }, {
         path: 'list',
         title: '新闻列表',
-        name: 'blog-list',
+        name: 'news-list',
         icon: 'ios-list',
-        component: () => import ('@/views/blog/list/blogs-list.vue')
+        component: newsList
+      }
+    ]
+  }, {
+    path: '/events',
+    icon: 'ios-paperplane',
+    name: 'events',
+    title: '活动',
+    component: Main,
+    children: [
+      {
+        path: 'publish',
+        title: '活动发布',
+        name: 'event-publish',
+        icon: 'compose',
+        component: eventPublish
+      }, {
+        path: 'list',
+        title: '活动列表',
+        name: 'events-list',
+        icon: 'ios-list',
+        component: eventsList
       }
     ]
   }, {
@@ -125,21 +161,21 @@ export const appRouter = [
         path: 'partners-index',
         title: '合作伙伴',
         name: 'partners-index',
-        component: () => import ('@/views/partners/partners.vue')
+        component: partners
       }
     ]
   }, {
-    path: '/about-us',
+    path: '/about',
     icon: 'android-contacts',
-    name: 'about-us',
+    name: 'about',
     title: '关于我们',
     component: Main,
     children: [
       {
         path: 'index',
         title: '关于我们',
-        name: 'about-us-index',
-        component: () => import ('@/views/about-us/about-us.vue')
+        name: 'about-index',
+        component: about
       }
     ]
   }

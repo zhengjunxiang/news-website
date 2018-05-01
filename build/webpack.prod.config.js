@@ -35,7 +35,7 @@ new CopyWebpackPlugin([{
   from: 'ant_icon.ico',
   to: '../'
 }, {
-  from: 'src/client/styles/fonts',
+  from: 'src/client/styles/font-awesome',
   to: 'fonts'
 }])
 

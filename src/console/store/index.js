@@ -3,16 +3,17 @@ import Vuex from 'vuex';
 
 import app from './modules/app';
 import user from './modules/user';
-import blogs from './modules/blogs';
+import news from './modules/news';
 import things from './modules/things';
-import companion from './modules/companion';
+import partners from './modules/partners';
 import fileUpload from './modules/file-upload';
-import aboutUs from './modules/about-us';
+import about from './modules/about';
+import events from './modules/events';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  modules: { app, user, blogs, things, companion, fileUpload, aboutUs }
+  modules: { app, user, news, things, partners, fileUpload, about, events }
 });
 
 export default store;

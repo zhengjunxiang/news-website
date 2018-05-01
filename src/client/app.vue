@@ -6,11 +6,11 @@
       <div class="main-body-inner">
         <section class="main">
           <div class="selected-box">
-            <div v-for="(blog, ind) in selected" class="selected-item" :key="ind" @click="handleSelec">
-              <router-link :to="`/blog/${blog.title}`">
-                <span>{{blog.title}}</span>
-                <span>{{setDate(blog.createAt)}}</span>
-                <span>{{blog.author}}</span>
+            <div v-for="(news, ind) in selected" class="selected-item" :key="ind" @click="handleSelec">
+              <router-link :to="`/new/${news.title}`">
+                <span>{{news.title}}</span>
+                <span>{{setDate(news.createAt)}}</span>
+                <span>{{news.author}}</span>
               </router-link>
             </div>
           </div>
@@ -51,7 +51,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('getTagsAndBlogs')
+    this.$store.dispatch('getTagsAndNews')
   }
 };
 </script>
@@ -60,7 +60,7 @@ export default {
 @import './styles/resize.less';
 @import "./styles/common.less";
 @import "./styles/list.less";
-@import "./styles/blog.less";
+@import "./styles/news.less";
 @import './libs/components/share/css/share.less';
 @import './app.less';
 </style>

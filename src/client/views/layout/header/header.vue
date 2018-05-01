@@ -11,7 +11,7 @@
             <p class="subtitle">{{ $t('header.tro') }}</p>
           </h2>
           <div :class="['change-lan-box', {show: isShowLan}]" @click="toggleLan">
-            <span class="change-lan-btn">{{langage}}</span>
+            <span class="change-lan-btn">{{lan}}</span>
             <ul class="lan-box" @click="handleChangeLangage">
               <li class="lan-item bor-bottom" data-name="CN">中文</li>
               <li class="lan-item" data-name="EN">English</li>
@@ -26,6 +26,9 @@
             </li>
             <li class="main-nav-list-item">
               <router-link to="/tags">{{ $t("header.tags") }}</router-link>
+            </li>
+            <li class="main-nav-list-item">
+              <router-link :to="{ name: 'events'}">{{ $t("header.events") }}</router-link>
             </li>
             <li class="main-nav-list-item">
               <router-link :to="{ name: 'partners'}">{{ $t("header.partners") }}</router-link>
@@ -48,7 +51,6 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
-import util from '@/libs/util.js'
 export default {
   name: "antheader",
   data() {
@@ -59,14 +61,11 @@ export default {
       isShowLan: false
     }
   },
-  mounted() {
-    this.langage = util.checkLan();
-  },
   computed: {
-    ...mapGetters(['blogs']),
+    ...mapGetters(['news', 'lan']),
     selected() {
-      return this.blogs.filter(blog => {
-        if (this.select) return new RegExp(this.select, 'gi').test(blog.title) || new RegExp(this.select, 'gi').test(blog.author)
+      return this.news.filter(n => {
+        if (this.select) return new RegExp(this.select, 'gi').test(n.title) || new RegExp(this.select, 'gi').test(n.author)
         return false
       })
     }
@@ -80,8 +79,15 @@ export default {
       if (target.nodeName.toLowerCase() === 'li') {
         const lang = target.getAttribute('data-name') || 'CN';
         this.$i18n.locale = lang;
-        this.langage = lang;
-        localStorage.setItem('language', lang);
+        this.$store.commit('setLan', lang)
+        localStorage.setItem('language', lang)
+        this.$store.commit('setNews')
+        this.$store.commit('setTagsNews')
+        this.$store.commit('setEvents')
+        this.$store.commit('setSortNewsByDate')
+        this.$store.commit('setSortNewsByMonth')
+        if (/^\/new\//.test(this.$route.path)) this.$router.push({name: 'home'})
+        else if (/^\/event\//.test(this.$route.path)) this.$router.push({name: 'events'})
       }
     },
     toggleNav() {
