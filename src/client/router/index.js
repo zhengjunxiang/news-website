@@ -6,7 +6,8 @@ import Home from '@/views/home/home.vue';
 import Tags from '@/views/tags/tags.vue';
 import Tag from '@/views/tag/tag.vue';
 import About from '@/views/about/about.vue';
-import New from '@/views/new/index.vue';
+import New from '@/views/news/new.vue';
+import News from '@/views/news/news.vue';
 import Month from '@/views/month/index.vue';
 import Year from '@/views/year/index.vue';
 import Partners from '@/views/partners/index.vue';
@@ -51,6 +52,10 @@ const RouterConfig = {
       path: '/new/:title',
       name: 'new',
       component: New
+    }, {
+      path: '/news',
+      name: 'news',
+      component: News
     }, {
       path: '/:year/:month',
       name: 'month',

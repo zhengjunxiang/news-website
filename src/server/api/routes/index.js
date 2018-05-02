@@ -10,7 +10,7 @@ const about = require('../controller/about');
 const events = require('../controller/events');
 
 module.exports = function(app) {
-  app.use(passRoutes);
+  // app.use(passRoutes);
   // user
   router.get('/user/get.json', user.get);
   router.post('/user/signin.json', user.signin);

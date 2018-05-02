@@ -2,7 +2,7 @@ export default {
   header: {
     tro: 'Welcome to AntPool\'s News',
     home: 'Home',
-    tags: 'Tags',
+    news: 'News',
     events: 'Events',
     partners: 'Partners',
     about: 'About'
@@ -19,6 +19,7 @@ export default {
   },
   content: {
     home: 'Home',
+    news: 'news',
     aboutUs: 'About Us',
     partners: 'Partners',
     events: 'Events',

@@ -20,8 +20,8 @@ const user = {
       if (theme) localStorage.theme = theme;
     },
     setNameAndAccess(state, d) {
-      Cookies.set('user', d.name);
-      Cookies.set('access', d.access);
+      Cookies.set('user', d.name, { expires: 0.3 });
+      Cookies.set('access', d.access, { expires: 0.3 });
       localStorage.avatorImgPath = d.avatar || '';
       state.userName = d.name;
       state.access = d.access;

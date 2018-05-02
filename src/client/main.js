@@ -5,12 +5,14 @@ import App from './app.vue';
 import Alert from '@/libs/components/alert/alert.js';
 import PageNav from '@/libs/components/page-nav/pageNav.vue';
 import VueStar from '@/libs/components/star/index.js'
+import Span from '@/libs/components/span/span.vue'
 import langage from '@/lang/langage'
 import VueI18n from 'vue-i18n'
 import util from '@/libs/util.js'
 
 Vue.component('VueStar', VueStar)
 Vue.component('page-nav', PageNav)
+Vue.component('NewSpan', Span)
 Vue.use(Alert)
 
 // 使用VueI18n

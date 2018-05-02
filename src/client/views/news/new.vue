@@ -70,27 +70,39 @@ export default {
   computed: {
     ...mapGetters(['ne'])
   },
-  mounted() {
+  async mounted() {
     const title = this.$route.params.title
     if (title) {
       this.title = title;
-      this.$store.dispatch('getNew', {title})
       this.$store.commit('setCurrentTitle', title)
       this.$store.commit('setNewnav', title)
-      window.socialShare('.social-share')
+      this.$store.commit('setLoading', true)
+      try {
+        const res = await this.$store.dispatch('getNew', {title})
+        window.socialShare('.social-share')
+        this.$store.commit('setLoading', false)
+      } catch (err) {
+        this.$store.commit('setLoading', false)
+      }
     }
     this.initStar()
   },
   watch: {
-    '$route' (to, from) {
+    async '$route' (to, from) {
       const title = to.params.title;
       if (title) {
         if (title === this.title) return;
         this.title = title;
-        this.$store.dispatch('getNew', {title})
         this.$store.commit('setCurrentTitle', title)
         this.$store.commit('setNewnav', to.params.title)
-        window.socialShare('.social-share')
+        this.$store.commit('setLoading', true)
+        try {
+          const res = await this.$store.dispatch('getNew', {title})
+          window.socialShare('.social-share')
+          this.$store.commit('setLoading', false)
+        } catch (err) {
+          this.$store.commit('setLoading', false)
+        }
         this.initStar()
       }
     }

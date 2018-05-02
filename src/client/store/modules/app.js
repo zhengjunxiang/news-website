@@ -6,6 +6,7 @@ import util from '@/libs/util.js'
 
 export default {
   state: {
+    isLoading: true,
     allNews: [],
     news: [],
     ne: {},
@@ -21,12 +22,9 @@ export default {
     newsSortByMonth: []
   },
   mutations: {
-    setLan(state, lan) {
-      if (lan) state.lan = lan
-    },
-    setCurrentTitle: (state, title) => {
-      if (title) state.currentTitle = title
-    },
+    setLoading(state, bool) { state.isLoading = bool },
+    setLan(state, lan) { if (lan) state.lan = lan },
+    setCurrentTitle: (state, title) => { if (title) state.currentTitle = title },
     setEvents: (state, data) => {
       if (data) {
         if (data.mes) vm.$Alert.error(data.mes)
@@ -66,7 +64,7 @@ export default {
         }, 60)
       } else {
         state.tags.map((tag, index) => {
-          const key = tag.value
+          const key = tag.value;
           tag.news = [];
           state.news.map(ne => {
             ne.tags.map(tag => { if (tag === key) state.tags[index].news.push(ne) })
@@ -163,6 +161,7 @@ export default {
     oldNew: state => state.oldNew,
     events: state => state.events,
     event: state => state.event,
-    lan: state => state.lan
+    lan: state => state.lan,
+    isLoading: state => state.isLoading
   }
 };

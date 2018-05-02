@@ -44,8 +44,14 @@ export default {
     }
   },
   async mounted() {
-    const res = await this.$store.dispatch('getAbout');
-    this.datas = res.data;
+    this.$store.commit('setLoading', true)
+    try {
+      const res = await this.$store.dispatch('getAbout');
+      this.datas = res.data;
+      this.$store.commit('setLoading', false)
+    } catch (err) {
+      this.$store.commit('setLoading', false)
+    }
   },
   methods: {
     setDate: date => date ? date.split('T')[0] : '',

@@ -52,22 +52,34 @@ export default {
   computed: {
     ...mapGetters(['event'])
   },
-  mounted() {
+  async mounted() {
     const title = this.$route.params.title
     if (title) {
       this.title = title;
-      this.$store.dispatch('getEvent', {title})
-      window.socialShare('.social-share')
+      this.$store.commit('setLoading', true)
+      try {
+        const res = await this.$store.dispatch('getEvent', {title})
+        window.socialShare('.social-share')
+        this.$store.commit('setLoading', false)
+      } catch (err) {
+        this.$store.commit('setLoading', false)
+      }
     }
   },
   watch: {
-    '$route' (to, from) {
+    async '$route' (to, from) {
       const title = to.params.title;
       if (title) {
         if (title === this.title) return;
         this.title = title;
-        this.$store.dispatch('getEvent', {title})
-        window.socialShare('.social-share')
+        this.$store.commit('setLoading', true)
+        try {
+          const res = await this.$store.dispatch('getEvent', {title})
+          window.socialShare('.social-share')
+          this.$store.commit('setLoading', false)
+        } catch (err) {
+          this.$store.commit('setLoading', false)
+        }
       }
     }
   },

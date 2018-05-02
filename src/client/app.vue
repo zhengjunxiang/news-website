@@ -21,6 +21,7 @@
           </transition>
         </section>
         <Sidebar />
+        <NewSpan v-show="isLoading" />
       </div>
     </div>
   </div>
@@ -32,6 +33,7 @@
 import AntHeader from './views/layout/header/header.vue'
 import AntFooter from './views/layout/footer/footer.vue'
 import Sidebar from './views/layout/sidebar/sidebar.vue'
+import {mapGetters} from 'vuex'
 export default {
   name: 'home',
   components: {AntHeader, AntFooter, Sidebar},
@@ -39,6 +41,9 @@ export default {
     return {
       selected: []
     }
+  },
+  computed: {
+    ...mapGetters(['isLoading'])
   },
   methods: {
     getEelected(selected) {
@@ -50,8 +55,14 @@ export default {
       this.selected = [];
     }
   },
-  mounted() {
-    this.$store.dispatch('getTagsAndNews')
+  async mounted() {
+    this.$store.commit('setLoading', true)
+    try {
+      const res = await this.$store.dispatch('getTagsAndNews');
+      this.$store.commit('setLoading', false)
+    } catch (err) {
+      this.$store.commit('setLoading', false)
+    }
   }
 };
 </script>

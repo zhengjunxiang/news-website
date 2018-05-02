@@ -25,7 +25,7 @@
               <router-link to="/">{{ $t("header.home") }}</router-link>
             </li>
             <li class="main-nav-list-item">
-              <router-link to="/tags">{{ $t("header.tags") }}</router-link>
+              <router-link to="/news">{{ $t("header.news") }}</router-link>
             </li>
             <li class="main-nav-list-item">
               <router-link :to="{ name: 'events'}">{{ $t("header.events") }}</router-link>
@@ -39,6 +39,10 @@
           </ul>
           <nav class="sub-nav">
             <div class="search-form-wrap">
+              <select v-model="selectedType" class="search-select">
+                <option value ="news">{{ $t("header.news") }}</option>
+                <option value ="events">{{ $t("header.events") }}</option>
+              </select>
               <i class="fa fa-search"></i>
               <input type="text" v-model="select" class="search-form-input" placeholder="Search..." @keyup="onSelect" />
             </div>
@@ -57,17 +61,25 @@ export default {
     return {
       isShowNav: false,
       select: '',
+      selectedType: 'news',
       langage: 'CN',
       isShowLan: false
     }
   },
   computed: {
-    ...mapGetters(['news', 'lan']),
+    ...mapGetters(['news', 'lan', 'events']),
     selected() {
-      return this.news.filter(n => {
-        if (this.select) return new RegExp(this.select, 'gi').test(n.title) || new RegExp(this.select, 'gi').test(n.author)
-        return false
-      })
+      if (this.selectedType === 'news') {
+        return this.news.filter(n => {
+          if (this.select) return new RegExp(this.select, 'gi').test(n.title) || new RegExp(this.select, 'gi').test(n.author)
+          return false
+        })
+      } else if (this.selectedType === 'events') {
+        return this.events.filter(ev => {
+          if (this.select) return new RegExp(this.select, 'gi').test(ev.title) || new RegExp(this.select, 'gi').test(ev.author)
+          return false
+        })
+      }
     }
   },
   methods: {

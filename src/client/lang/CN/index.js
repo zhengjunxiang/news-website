@@ -2,7 +2,7 @@ export default {
   header: {
     tro: '欢迎来到蚂蚁矿池新世界',
     home: '首页',
-    tags: '标签归类',
+    news: '新闻',
     partners: '合作伙伴',
     events: '活动',
     about: '关于'
@@ -19,6 +19,7 @@ export default {
   },
   content: {
     home: '首页',
+    news: '新闻',
     aboutUs: '关于我们',
     partners: '合作伙伴',
     events: '活动',

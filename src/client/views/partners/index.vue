@@ -37,9 +37,16 @@ export default {
     }
   },
   async mounted() {
-    const res = await this.$store.dispatch('getPartners');
-    if(res.mes) this.$Message.success(res.mes);
-    this.partners = res.data;
+    this.$store.commit('setLoading', true)
+    try {
+      const res = await this.$store.dispatch('getPartners');
+      if(res.mes) this.$Message.success(res.mes);
+      this.partners = res.data;
+      this.$store.commit('setLoading', false)
+    } catch (err) {
+      this.$store.commit('setLoading', false)
+    }
+
   }
 }
 </script>
