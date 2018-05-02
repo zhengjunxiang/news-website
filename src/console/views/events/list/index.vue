@@ -104,8 +104,12 @@ export default {
     async initData() {
       this.loading = true;
       this.colNum = this.selectMaxCol = this.columns.length;
-      const res = await this.$store.dispatch('getEvents');
-      this.loading = false;
+      try {
+        const res = await this.$store.dispatch('getEvents');
+        this.loading = false;
+      } catch (err) {
+        this.loading = false;
+      }
       this.total = res.data.length;
       this.tableData = res.data;
       this.rowNum = this.selectMaxRow = res.data.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize).length;
