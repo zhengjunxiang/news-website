@@ -6,6 +6,7 @@ node_modules
 .DS_Store
 \.settings/
 dist
+logs
 src/server/api/resouce/**
 application.log
 sessions

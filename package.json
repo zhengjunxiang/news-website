@@ -13,8 +13,8 @@
     "server:pub": "cross-env ENV_TYPE=publish node ./src/server/api/app.js",
     "server:con": "nodemon ./src/server/server-console.js -w ./src/server/server-console.js",
     "server:cli": "nodemon ./src/server/server-client.js -w ./src/server/server-client.js",
-    "public:con": "node ./src/server/server-console.js",
-    "public:cli": "node ./src/server/server-client.js",
+    "publish:con": "node ./src/server/publish-con.js",
+    "publish:cli": "node ./src/server/publish-cli.js",
     "lint": "eslint --fix --ext .js,.vue src",
     "test": "npm run lint"
   },
@@ -55,6 +55,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "clean-webpack-plugin": "^0.1.17",
+    "connect-mongo": "^2.0.1",
     "copy-webpack-plugin": "^4.3.1",
     "cross-env": "^5.1.4",
     "css-hot-loader": "^1.3.5",

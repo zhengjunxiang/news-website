@@ -39,15 +39,15 @@ module.exports = {
   like(req, res) {
     global.logger.info('news/like.json');
     var {title} = req.body;
+    if (req.session.like === 1) return res.json({ errno: 1, mes: '已经点过' })
     News.update(
       {title: {$in: title}},
       {$inc: { like: 1 }},
       (err, ne) => {
         if (err) global.logger.error(err);
         if (ne.ok === 1) {
+          req.session.like = 1
           res.json({ errno: 0, mes: '' })
-          if (req.session.like) req.session.like = 1
-          else req.session.like = 1
         } else res.json({ errno: 1, mes: '点赞失败' })
       }
     );
@@ -55,15 +55,15 @@ module.exports = {
   unlike(req, res) {
     global.logger.info('news/unlike.json');
     var {title} = req.body;
+    if (req.session.unlike === 1) return res.json({ errno: 1, mes: '已经点过' })
     News.update(
       {title: {$in: title}},
       {$inc: { unlike: 1 }},
       (err, ne) => {
         if (err) global.logger.error(err);
         if (ne.ok === 1) {
+          req.session.unlike = 1
           res.json({ errno: 0, mes: '' })
-          if (req.session.unlike) req.session.unlike += 1
-          else req.session.unlike = 1
         } else res.json({ errno: 1, mes: '点赞失败' })
       }
     );

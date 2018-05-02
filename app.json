@@ -1,0 +1,17 @@
+{
+  "apps": [
+     {
+      "name": "api",
+      "script": "./src/server/api/app.js",
+      "env": {
+        "ENV_TYPE": "publish"
+      },
+      "instances": 1,
+      "exec_mode": "cluster",
+      "autorestart": true,
+      "error_file": "./logs/api-err.log",
+      "out_file": "./logs/api-out.log",
+      "log_date_format": "YYYY-MM-DD HH:mm Z"
+    }
+  ]
+}

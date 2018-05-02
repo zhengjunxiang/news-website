@@ -55,7 +55,6 @@ module.exports = {
               if (err) global.logger.error(err);
               return null;
             })
-            req.session.like = 1
             req.session.user = { name, access };
             res.json({ errno: 0, mes: '登录成功', data: {name, avatar, access} });
           } else {
@@ -145,6 +144,7 @@ module.exports = {
   },
   loginOut(req, res) {
     global.logger.info('user/loginOut.json');
+    req.session.user = null
     req.session.destroy(err => {
       if (err) {
         res.json({ errno: 1, mes: '登出失败' })

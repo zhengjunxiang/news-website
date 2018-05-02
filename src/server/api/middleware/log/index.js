@@ -15,7 +15,8 @@ log4js.configure({
   categories: {
     default: {
       appenders: [ 'out', 'app' ],
-      level: isPublish ? 'error' : 'debug'
+      // level: isPublish ? 'error' : 'debug'
+      level: 'debug'
     }
   }
 });

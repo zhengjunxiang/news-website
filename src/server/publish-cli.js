@@ -4,7 +4,7 @@ const history = require('connect-history-api-fallback')
 const proxy = require('http-proxy-middleware')
 const express = require('express')
 const app = express()
-const { hostPub, port } = require('../../config/ip-port')
+const { hostPub, port, hostLis } = require('../../config/ip-port')
 const router = express.Router()
 
 const indexRoute = router.get('/', (req, res) => {
@@ -18,13 +18,13 @@ app.set('view engine', 'html')
 app.engine('html', require('ejs').renderFile)
 
 app.use("*.json$", proxy({
-  target: `http://${hostPub}:${port.api}`,
+  target: `http://${hostLis}:${port.api}`,
   secure: false,
   changeOrigin: true
 }));
 
 app.use("/resouce", proxy({
-  target: `http://${hostPub}:${port.api}`,
+  target: `http://${hostLis}:${port.api}`,
   secure: false,
   changeOrigin: true
 }));

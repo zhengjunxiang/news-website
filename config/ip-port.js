@@ -3,6 +3,7 @@ const ip = require('ip');
 module.exports = {
   host: ip.address(),
   hostPub: '0.0.0.0',
+  hostLis: '127.0.0.1',
   port: {
     dev: {
       cli: 8080,
