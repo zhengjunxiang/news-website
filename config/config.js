@@ -1,8 +1,6 @@
-const Env = require('./env');
 const { host, port } = require('./ip-port');
 
 let config = {
-  env: Env,
   dev: {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',

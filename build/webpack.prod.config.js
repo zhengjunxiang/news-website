@@ -13,11 +13,6 @@ const config = require('../config/config');
 
 const isConsole = process.env.ENV_TYPE === 'console';
 
-fs.open('./config/env.js', 'w', function(err, fd) {
-  const buf = 'module.exports = "production";';
-  fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
-});
-
 const copyPlugin = isConsole ? new CopyWebpackPlugin([
   {
     from: 'ant_icon.ico',

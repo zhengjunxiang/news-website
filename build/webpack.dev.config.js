@@ -20,11 +20,6 @@ const copyPlugin = isConsole ? new CopyWebpackPlugin([
 ], {ignore: ['text-editor.vue']}) :
 new CopyWebpackPlugin([])
 
-fs.open('./config/env.js', 'w', function(err, fd) {
-  const buf = 'module.exports = "development";';
-  fs.write(fd, buf, 0, buf.length, 0, function(err, written, buffer) {});
-});
-
 module.exports = merge(webpackBaseConfig, {
   devtool: config.dev.devtool,
   output: {

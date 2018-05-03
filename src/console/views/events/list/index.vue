@@ -107,12 +107,12 @@ export default {
       try {
         const res = await this.$store.dispatch('getEvents');
         this.loading = false;
+        this.total = res.data.length;
+        this.tableData = res.data;
+        this.rowNum = this.selectMaxRow = res.data.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize).length;
       } catch (err) {
         this.loading = false;
       }
-      this.total = res.data.length;
-      this.tableData = res.data;
-      this.rowNum = this.selectMaxRow = res.data.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize).length;
     },
     formatDate(date) { return date.split('T')[0] },
     exportImage() {
