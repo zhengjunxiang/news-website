@@ -171,10 +171,14 @@ export default {
     },
     async getThings() {
       this.thingsLoading = true;
-      const res = await this.$store.dispatch('getThings');
+      try {
+        const res = await this.$store.dispatch('getThings');
+        this.thingsLoading = false;
+      } catch (err) {
+        this.thingsLoading = false;
+      }
       if (res.mes) this.$Message.success(res.mes)
       this.toDoList = [...res.data]
-      this.thingsLoading = false;
     },
     cancelAdd() {
       this.showAddNewTodo = false;

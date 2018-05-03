@@ -31,6 +31,7 @@
       </Card>
     </Col>
     <Col span="18" class="padding-left-10">
+      <Spin fix v-show="isLoading" />
       <div class="bread-nav">
         <span>Path: </span>
         <span
@@ -84,7 +85,7 @@ export default {
   name: 'file-upload',
   data() {
     return {
-      imgName: '', visible: false, getImgsTimer: null,
+      imgName: '', visible: false, getImgsTimer: null, isLoading: false,
       uploadList: [], uploadedList: [], clipboardJS: null,
       originName: '', rename: '', isShowRename: false,
       dirName: '', isShowDir: false, inserDirName: ['resouce']
@@ -149,14 +150,20 @@ export default {
       }, 300)
     },
     async handleGetResouce() {
-      const re = await this.$store.dispatch('getImgs', {path: this.inserDir})
-      if (re.mes) this.$Message.success(re.mes)
-      re.data.map((d, ind) => {
-        if(!this.isImgType(d.name)) {
-          re.data.unshift(re.data.splice(ind, 1)[0])
-        }
-      })
-      this.uploadedList = re.data
+      this.isLoading = true;
+      try {
+        const re = await this.$store.dispatch('getImgs', {path: this.inserDir})
+        if (re.mes) this.$Message.success(re.mes)
+        re.data.map((d, ind) => {
+          if(!this.isImgType(d.name)) {
+            re.data.unshift(re.data.splice(ind, 1)[0])
+          }
+        })
+        this.uploadedList = re.data
+        this.isLoading = false;
+      } catch (err) {
+        this.isLoading = false;
+      }
     },
     showMkdir() {
       this.isShowDir = true;

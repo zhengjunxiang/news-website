@@ -1,32 +1,6 @@
 {
   "apps": [
     {
-      "name": "console",
-      "script": "./src/server/publish-con.js",
-      "cwd": "./",
-      "env": {
-        "NODE_ENV": "production"
-      },
-      "instances": 1,
-      "exec_mode": "cluster",
-      "autorestart": true,
-      "error_file": "./logs/console-err.log",
-      "out_file": "./logs/console-out.log",
-      "log_date_format": "YYYY-MM-DD HH:mm Z"
-    }, {
-      "name": "client",
-      "script": "./src/server/publish-cli.js",
-      "cwd": "./",
-      "env": {
-        "NODE_ENV": "production"
-      },
-      "instances": 1,
-      "exec_mode": "cluster",
-      "autorestart": true,
-      "error_file": "./logs/client-err.log",
-      "out_file": "./logs/client-out.log",
-      "log_date_format": "YYYY-MM-DD HH:mm Z"
-    }, {
       "name": "api",
       "script": "./src/server/api/app.js",
       "env": {
