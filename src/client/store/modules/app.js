@@ -44,6 +44,11 @@ export default {
       }
     },
     setNewnav: (state, title) => {
+      if (!title) {
+        state.newNew = '';
+        state.oldNew = '';
+        return;
+      }
       state.news.map((ne, ind) => {
         if (title === ne.title) {
           state.newNew = state.news[ind + 1] ? state.news[ind + 1].title : ''

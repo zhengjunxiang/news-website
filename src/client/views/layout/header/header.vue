@@ -98,6 +98,7 @@ export default {
         this.$store.commit('setEvents')
         this.$store.commit('setSortNewsByDate')
         this.$store.commit('setSortNewsByMonth')
+        this.$store.commit('setNewnav')
         if (/^\/new\//.test(this.$route.path)) this.$router.push({name: 'home'})
         else if (/^\/event\//.test(this.$route.path)) this.$router.push({name: 'events'})
       }
