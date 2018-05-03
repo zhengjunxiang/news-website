@@ -163,22 +163,24 @@ export default {
     async addNew() {
       if (this.newToDoItemValue.length !== 0) {
         const data = { title: this.newToDoItemValue, creater: this.userName }
-        const res = await this.$store.dispatch('addThings', data)
-        if (res.mes) this.$Message.success(res.mes)
-        this.getThings()
-        this.cancelAdd();
+        try {
+          const res = await this.$store.dispatch('addThings', data)
+          if (res.mes) this.$Message.success(res.mes)
+          this.getThings()
+          this.cancelAdd();
+        } catch () {}
       } else this.$Message.error('请输入待办事项内容');
     },
     async getThings() {
       this.thingsLoading = true;
       try {
         const res = await this.$store.dispatch('getThings');
+        if (res.mes) this.$Message.success(res.mes)
+        this.toDoList = [...res.data]
         this.thingsLoading = false;
       } catch (err) {
         this.thingsLoading = false;
       }
-      if (res.mes) this.$Message.success(res.mes)
-      this.toDoList = [...res.data]
     },
     cancelAdd() {
       this.showAddNewTodo = false;
