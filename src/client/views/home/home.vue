@@ -12,7 +12,7 @@
           <article class="article article-summary" v-for="(n, ind) in news.slice(0, 10)" :key="ind">
             <div class="article-summary-inner">
                 <router-link :to="`/new/${n.title}`" class="thumbnail">
-                  <span :style="`background-image:url(${n.cover})`" class="thumbnail-image" v-if="n.cover" />
+                  <img :src="ne.cover" class="thumbnail-image" v-if="ne.cover" />
                   <i class="fa fa-picture-o" aria-hidden="true" v-else />
                 </router-link>
               <div class="article-meta">

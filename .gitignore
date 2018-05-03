@@ -10,3 +10,5 @@ logs
 src/server/api/resouce/**
 application.log
 sessions
+nginx.conf
+mime.types

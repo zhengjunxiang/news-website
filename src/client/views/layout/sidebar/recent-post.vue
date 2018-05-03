@@ -6,7 +6,7 @@
         <li v-for="(ne, ind) in recentMews" :key="ind">
           <div class="item-thumbnail">
             <router-link :to="`/new/${ne.title}`" class="thumbnail">
-              <span :style="`background-image:url(${ne.cover})`" class="thumbnail-image" v-if="ne.cover" />
+              <img :src="ne.cover" class="thumbnail-image" v-if="ne.cover" />
               <i class="fa fa-picture-o" aria-hidden="true" v-else />
             </router-link>
           </div>

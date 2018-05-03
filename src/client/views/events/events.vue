@@ -15,7 +15,7 @@
           <article class="article article-summary" v-for="(event, ind) in curEvents" :key="ind">
             <div class="article-summary-inner">
                 <router-link :to="`/event/${event.title}`" class="thumbnail">
-                  <span :style="`background-image:url(${event.cover})`" class="thumbnail-image" v-if="event.cover" />
+                  <img :src="event.cover" class="thumbnail-image" v-if="event.cover" />
                   <i class="fa fa-picture-o" aria-hidden="true" v-else />
                 </router-link>
               <div class="article-meta">
