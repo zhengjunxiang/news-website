@@ -168,7 +168,7 @@ export default {
           if (res.mes) this.$Message.success(res.mes)
           this.getThings()
           this.cancelAdd();
-        } catch () {}
+        } catch (err) {}
       } else this.$Message.error('请输入待办事项内容');
     },
     async getThings() {
