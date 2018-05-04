@@ -36,8 +36,8 @@ module.exports = function(app) {
   router.get('/tags/get.json', tags.get);
   router.delete('/tags/delete.json', tags.delete);
   // uploadImg
-  router.post('/resouce', upload.upImgs);
-  router.get('/resouce', upload.getImgs);
+  router.post('/resouce/addImg.json', upload.upImgs);
+  router.get('/resouce/getImgs.json', upload.getImgs);
   router.delete('/resouce/delImg.json', upload.delImg);
   router.put('/resouce/rename.json', upload.rename);
   router.post('/resouce/mkdir.json', upload.mkdir);

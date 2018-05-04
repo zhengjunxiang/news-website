@@ -18,7 +18,7 @@
           :before-upload="handleBeforeUpload" :on-format-error="handleFormatError"
           :on-exceeded-size="handleMaxSize" :max-size="2048" multiple
           :data="{inserDir}"
-          type="drag" action='/resouce' style="display: inline-block; width: 100%;">
+          type="drag" action='/resouce/addImg.json' style="display: inline-block; width: 100%;">
           <div style="width: 100%;height:58px;line-height: 68px;">
             <Icon type="ios-cloud-upload" size="28" style="color: #3399ff" />
           </div>

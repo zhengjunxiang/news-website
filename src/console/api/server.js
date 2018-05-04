@@ -9,7 +9,7 @@ const DelUser = data => API.delete('/user/delete.json', {params: data});
 const UpdateMes = data => API.post('/user/updateMessage.json', data);
 const UpdatePassW = data => API.post('/user/updatePassW.json', data);
 const LoginOut = () => API.get('/user/loginOut.json');
-// 博客
+// 新闻
 const AddNews = data => API.post('/news/add.json', data);
 const UpdateNews = data => API.post('/news/update.json', data);
 const GetNews = data => API.get('/news/get.json', {params: data});
@@ -23,7 +23,7 @@ const AddTags = data => API.post('/tags/add.json', data);
 const GetTags = () => API.get('/tags/get.json');
 const DelTags = data => API.delete('/tags/delete.json', {params: data});
 // 获取已经上传的图片
-const GetImgs = data => API.get('/resouce', {params: data})
+const GetImgs = data => API.get('/resouce/getImgs.json', {params: data})
 const DelImg = data => API.delete('/resouce/delImg.json', {params: data})
 const Rename = data => API.put('/resouce/rename.json', data);
 const Mkdir = data => API.post('/resouce/mkdir.json', data);
@@ -38,7 +38,7 @@ const UpdateAbout = data => API.post('/about/update.json', data);
 const GetAbout = data => API.get('/about/get.json', {params: data});
 const AddAbout = data => API.post('/about/add.json', data);
 const DelAbout = data => API.delete('/about/delete.json', {params: data});
-// 关于我们
+// 活动
 const UpdateEvents = data => API.post('/events/update.json', data);
 const GetEvents = data => API.get('/events/get.json', {params: data});
 const AddEvents = data => API.post('/events/add.json', data);

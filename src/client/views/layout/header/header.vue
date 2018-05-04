@@ -62,7 +62,6 @@ export default {
       isShowNav: false,
       select: '',
       selectedType: 'news',
-      langage: 'CN',
       isShowLan: false
     }
   },

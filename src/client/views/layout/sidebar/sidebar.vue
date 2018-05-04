@@ -54,18 +54,6 @@ export default {
 </script>
 <style lang="less">
 @import './sidebar.less';
-.widget-list ol li a:before,
-.widget-list ul li a:before {
-    color: #ccc;
-    content: "\f0da";
-    font-size: 12px;
-    margin-right: 6px;
-    font-family: FontAwesome;
-    -webkit-transition: 0.2s ease;
-    -moz-transition: 0.2s ease;
-    -ms-transition: 0.2s ease;
-    transition: 0.2s ease;
-}
 .widget.tagcloud a {
   padding-right: 5px;
 }
