@@ -7,6 +7,7 @@ module.exports = function(req, res, next) {
       url === '/user/loginOut.json' ||
       /^\/news\/get.json/g.test(url) ||
       /^\/events\/get.json/g.test(url) ||
+      /^\/resouce/g.test(url) ||
       url === '/news/like.json' ||
       url === '/news/unlike.json' ||
       url === '/tags/get.json' ||
