@@ -1,6 +1,6 @@
 let util = {};
 util.title = function(title) {
-  window.document.title = title || 'Antpool\'s News'
+  if (title) window.document.title = title
 };
 util.checkLan = () => {
   const naLan = navigator.language, loLan = localStorage.getItem('language');
