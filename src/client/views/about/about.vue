@@ -19,10 +19,12 @@
         </div>
         <div class="article-entry" itemprop="articleBody" v-html="curData.content" />
         <footer class="article-footer">
-          <div class="article-share-link" @click="handleClickShare">
-            <i class="fa fa-share"></i>Share
+          <div class="social-share-box">
+            <div class="article-share-link" @click="handleClickShare">
+              <i class="fa fa-share"></i>Share
+            </div>
+            <div :class="['social-share', 'social-share-about', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
           </div>
-          <div :class="['social-share', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
         </footer>
       </div>
     </article>
@@ -48,6 +50,7 @@ export default {
     try {
       const res = await this.$store.dispatch('getAbout');
       this.datas = res.data;
+      window.socialShare('.social-share-about')
       this.$store.commit('setLoading', false)
     } catch (err) {
       this.$store.commit('setLoading', false)

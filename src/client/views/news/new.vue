@@ -32,19 +32,15 @@
             <vue-star ref="like" animate="animated rubberBand" color="#F05654" :isActive="isActive" :disable="disable">
               <a slot="icon" class="fa fa-heart" @click="handleStar"></a>
             </vue-star>
-            <vue-star animate="animated rubberBand" color="#333" :isActive="isActiveUn" :disable="disableUn">
-              <a slot="icon" class="fa fa-thumbs-down" @click="handleDown"></a>
-            </vue-star>
           </div>
           <div class="star-number-box">
             <span class="star-number like">{{ne.like}}</span>
-            <span class="star-number unlike">{{ne.unlike}}</span>
           </div>
           <div class="social-share-box">
             <div class="article-share-link" @click="handleClickShare">
               <i class="fa fa-share"></i>Share
             </div>
-            <div :class="['social-share', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
+            <div :class="['social-share', 'social-share-new', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
           </div>
         </footer>
       </div>
@@ -79,7 +75,7 @@ export default {
       this.$store.commit('setLoading', true)
       try {
         const res = await this.$store.dispatch('getNew', {title})
-        window.socialShare('.social-share')
+        window.socialShare('.social-share-new')
         this.$store.commit('setLoading', false)
       } catch (err) {
         this.$store.commit('setLoading', false)
@@ -98,7 +94,7 @@ export default {
         this.$store.commit('setLoading', true)
         try {
           const res = await this.$store.dispatch('getNew', {title})
-          window.socialShare('.social-share')
+          window.socialShare('.social-share-new')
           this.$store.commit('setLoading', false)
         } catch (err) {
           this.$store.commit('setLoading', false)

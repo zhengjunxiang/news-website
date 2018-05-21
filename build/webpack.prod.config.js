@@ -68,7 +68,7 @@ module.exports = merge(webpackBaseConfig, {
     }),
     copyPlugin,
     new HtmlWebpackPlugin({
-      title: 'Antpool\'s News',
+      title: 'Antpool News',
       filename: path.resolve(__dirname, `../dist/${isConsole ? 'console' : 'client'}/index.html`),
       template: `!!ejs-loader!./src/${isConsole ? 'console' : 'client'}/template/index.ejs`,
       inject: false

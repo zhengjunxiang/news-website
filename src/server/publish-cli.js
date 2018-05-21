@@ -1,7 +1,6 @@
 /* eslint-disable */
 const path = require('path')
 const history = require('connect-history-api-fallback')
-// const proxy = require('http-proxy-middleware')
 const express = require('express')
 const app = express()
 const { hostPub, port, hostLis } = require('../../config/ip-port')
@@ -16,18 +15,6 @@ const serPort = port.pub.cli
 app.set('views', path.join(__dirname, '../../dist/client'))
 app.set('view engine', 'html')
 app.engine('html', require('ejs').renderFile)
-
-// app.use("*.json$", proxy({
-//   target: `http://${hostLis}:${port.api}`,
-//   secure: false,
-//   changeOrigin: true
-// }));
-//
-// app.use("/resouce", proxy({
-//   target: `http://${hostLis}:${port.api}`,
-//   secure: false,
-//   changeOrigin: true
-// }));
 
 app.use('/', express.static(path.join(__dirname, '../../dist/client')))
 

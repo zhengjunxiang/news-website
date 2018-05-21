@@ -48,7 +48,7 @@ module.exports = merge(webpackBaseConfig, {
       minChunks: Infinity
     }),
     new HtmlWebpackPlugin({
-      title: 'Antpool\'s New',
+      title: 'Antpool New',
       filename: 'index.html',
       template: isConsole ? 'src/console/index.html' : 'src/client/index.html',
       inject: true

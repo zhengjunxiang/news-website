@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="partners">
     <div class="main-body-header">
       <h1 class="header">
         <em class="page-title-link" data-url="home">{{$t('content.partners')}}</em>
@@ -50,40 +50,6 @@ export default {
   }
 }
 </script>
-<style lang="less" scoped>
-.partners-con {
-  padding: 15px;
-}
-.partners-box {
-  margin-bottom: 15px;
-  overflow: hidden;
-  padding-bottom: 15px;
-  border-bottom: 1px solid #ddd;
-  .partners-title {
-    padding-bottom: 10px;
-    font-size: 22px;
-    font-weight: 500;
-    color: #333;
-    line-height: 28px;
-  }
-  .logo-box {
-    float: left;
-    width: 40%;
-    padding: 8px;
-    box-sizing: border-box;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    img {
-      max-width: 100%;
-    }
-  }
-  .content-box {
-    box-sizing: border-box;
-    font-size: 14px;
-    text-indent: 28px;
-    padding: 0 15px;
-    float: left;
-    width: 60%;
-  }
-}
+<style lang="less">
+@import './index.less';
 </style>
