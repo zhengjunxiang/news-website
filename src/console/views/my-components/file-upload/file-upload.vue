@@ -147,6 +147,7 @@ export default {
       clearTimeout(this.getImgsTimer);
       this.getImgsTimer = setTimeout(() => {
         this.handleGetResouce()
+        this.$refs.upload.clearFiles()
       }, 300)
     },
     async handleGetResouce() {
@@ -202,6 +203,7 @@ export default {
       this.rename = '';
     },
     handleError(error, file, fileList) {
+      this.$refs.upload.clearFiles()
       this.$Notice.warning({
         title: '文件上传失败',
         desc: '文件 ' + fileList.name || '' + ' 上传失败'

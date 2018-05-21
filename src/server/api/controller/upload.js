@@ -27,15 +27,17 @@ module.exports = {
       name = files.upimg.name;
       imgPath = `${url}/${name}`;
       newPath = `${form.uploadDir}/${inserDir ? inserDir + '/' : ''}${name}`;
-      fs.renameSync(files.upimg.path, newPath); // 重命名
-      res.json({'newPath': imgPath});
+      fs.rename(files.upimg.path, newPath, (err) => {
+        if (err) global.logger.error('err', err);
+        else res.json({'newPath': imgPath});
+      });
     });
   },
   getImgs(req, res) {
     var { path } = req.query, p = path ? `${UPLOAD_IMG}/${path}` : UPLOAD_IMG;
     fs.readdir(p, function(err, files) {
       if (err) {
-        global.logger.info('err', err)
+        global.logger.error('err', err)
         res.json({ errno: 1, mes: '获取图片资源失败', data: [] });
       } else {
         const data = files.map(f => ({name: f, url: `${url}/${path ? path + '/' : ''}${f}`}))
