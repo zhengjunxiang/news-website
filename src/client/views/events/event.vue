@@ -27,7 +27,7 @@
             <div class="article-share-link" @click="handleClickShare">
               <i class="fa fa-share"></i>Share
             </div>
-            <div :class="['social-share', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
+            <div :class="['social-share', 'social-share-event', {show}]" data-mode="prepend" :data-sites="setSites" />
           </div>
         </footer>
       </div>
@@ -50,7 +50,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['event'])
+    ...mapGetters(['event', 'lan']),
+    setSites() {
+      if (this.lan === 'EN') return 'twitter,facebook,google'
+      else return 'wechat,qq,weibo,twitter,facebook,google'
+    }
   },
   async mounted() {
     const title = this.$route.params.title
@@ -59,7 +63,7 @@ export default {
       this.$store.commit('setLoading', true)
       try {
         const res = await this.$store.dispatch('getEvent', {title})
-        window.socialShare('.social-share')
+        window.socialShare('.social-share-event')
         this.$store.commit('setLoading', false)
       } catch (err) {
         this.$store.commit('setLoading', false)
@@ -68,6 +72,7 @@ export default {
   },
   watch: {
     async '$route' (to, from) {
+      this.show = false
       const title = to.params.title;
       if (title) {
         if (title === this.title) return;
@@ -75,7 +80,7 @@ export default {
         this.$store.commit('setLoading', true)
         try {
           const res = await this.$store.dispatch('getEvent', {title})
-          window.socialShare('.social-share')
+          window.socialShare('.social-share-event')
           this.$store.commit('setLoading', false)
         } catch (err) {
           this.$store.commit('setLoading', false)

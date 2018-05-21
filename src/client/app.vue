@@ -15,9 +15,7 @@
             </div>
           </div>
           <transition name="fade" mode="out-in">
-            <keep-alive>
-              <router-view />
-            </keep-alive>
+            <router-view />
           </transition>
         </section>
         <Sidebar />

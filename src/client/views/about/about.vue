@@ -1,7 +1,7 @@
 <template>
 <div id="new">
   <div class="main-body-header">
-    <h1 class="header">
+    <h1 class="header" style="text-align: center;">
       <em class="page-title-link" data-url="home">{{$t('content.aboutUs')}}</em>
     </h1>
   </div>
@@ -23,7 +23,7 @@
             <div class="article-share-link" @click="handleClickShare">
               <i class="fa fa-share"></i>Share
             </div>
-            <div :class="['social-share', 'social-share-about', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
+            <div :class="['social-share', 'social-share-about', {show}]" data-mode="prepend" :data-sites="setSites" />
           </div>
         </footer>
       </div>
@@ -41,6 +41,10 @@ export default {
   },
   computed: {
     ...mapGetters(['lan']),
+    setSites() {
+      if (this.lan === 'EN') return 'twitter,facebook,google'
+      else return 'wechat,qq,weibo,twitter,facebook,google'
+    },
     curData() {
       return this.datas.filter(da => da.lan === this.lan)[0] || {};
     }

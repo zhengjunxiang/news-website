@@ -31,26 +31,7 @@
     var title = getMetaContentByName('title') || getMetaContentByName('Title') || document.title;
     var description = getMetaContentByName('description') || getMetaContentByName('Description') || '';
 
-    var defaults = {
-        url: location.href,
-        origin: location.origin,
-        source: site,
-        title: title,
-        description: description,
-        image: image,
-        imageSelector: undefined,
-
-        weiboKey: '',
-
-        wechatQrcodeTitle: '微信扫一扫：分享',
-        wechatQrcodeHelper: '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>',
-        wechatQrcodeSize: 100,
-
-        sites: ['weibo', 'qq', 'wechat', 'tencent', 'douban', 'qzone', 'linkedin', 'diandian', 'facebook', 'twitter', 'google'],
-        mobileSites: [],
-        disabled: [],
-        initialized: false
-    };
+    var defaults = {};
 
     var templates = {
         qzone: 'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url={{URL}}&title={{TITLE}}&desc={{DESCRIPTION}}&summary={{SUMMARY}}&site={{SOURCE}}',
@@ -74,16 +55,14 @@
      * @param  {Object} options
      */
     window.socialShare = function (elem, options) {
-        elem = typeof elem === 'string' ? querySelectorAlls(elem) : elem;
 
+        elem = typeof elem === 'string' ? querySelectorAlls(elem) : elem;
         if (elem.length === undefined) {
             elem = [elem];
         }
 
         each(elem, function (el) {
-            if (!el.initialized) {
-                share(el, options);
-            }
+            share(el, options);
         });
     };
 
@@ -101,6 +80,8 @@
      * @return {Void}
      */
     function share(elem, options) {
+        elem.innerHTML = ''
+        setDefault()
         var data = mixin({}, defaults, options || {}, dataset(elem));
 
         if (data.imageSelector) {
@@ -112,8 +93,29 @@
         addClass(elem, 'share-component social-share');
         createIcons(elem, data);
         createWechat(elem, data);
+    }
 
-        elem.initialized = true;
+    function setDefault () {
+      defaults = {
+          url: location.href,
+          origin: location.origin,
+          source: site,
+          title: title,
+          description: description,
+          image: image,
+          imageSelector: undefined,
+
+          weiboKey: '',
+
+          wechatQrcodeTitle: '微信扫一扫：分享',
+          wechatQrcodeHelper: '<p>微信里点“发现”，扫一下</p><p>二维码便可将本文分享至朋友圈。</p>',
+          wechatQrcodeSize: 100,
+
+          sites: ['weibo', 'qq', 'wechat', 'tencent', 'douban', 'qzone', 'linkedin', 'diandian', 'facebook', 'twitter', 'google'],
+          mobileSites: [],
+          disabled: [],
+          // initialized: false
+      }
     }
 
 

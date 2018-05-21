@@ -1,6 +1,6 @@
 <template>
 <div id="new">
-  <div class="main-body-header">
+  <div class="main-body-header" v-if="ne.tags.length">
     <h3 class="header">
       <span v-for="(tag, ind) in ne.tags" class="tags-list">{{tag}}</span>
     </h3>
@@ -40,7 +40,7 @@
             <div class="article-share-link" @click="handleClickShare">
               <i class="fa fa-share"></i>Share
             </div>
-            <div :class="['social-share', 'social-share-new', {show}]" data-mode="prepend" data-sites="wechat,qq,weibo,twitter,facebook,google" />
+            <div :class="['social-share', 'social-share-new', {show}]" data-mode="prepend" :data-sites="setSites" />
           </div>
         </footer>
       </div>
@@ -64,7 +64,11 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['ne'])
+    ...mapGetters(['ne', 'lan']),
+    setSites() {
+      if (this.lan === 'EN') return 'twitter,facebook,google'
+      else return 'wechat,qq,weibo,twitter,facebook,google'
+    }
   },
   async mounted() {
     const title = this.$route.params.title
@@ -85,6 +89,7 @@ export default {
   },
   watch: {
     async '$route' (to, from) {
+      this.show = false
       const title = to.params.title;
       if (title) {
         if (title === this.title) return;

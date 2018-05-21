@@ -4,3 +4,4 @@ src/server/server
 build
 router.js
 src/views/my-components/text-editor/tinymce
+src/client/libs

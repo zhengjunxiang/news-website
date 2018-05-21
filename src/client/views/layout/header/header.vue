@@ -68,14 +68,24 @@ export default {
   computed: {
     ...mapGetters(['news', 'lan', 'events']),
     selected() {
+      const select = this.select.trim();
       if (this.selectedType === 'news') {
         return this.news.filter(n => {
-          if (this.select) return new RegExp(this.select, 'gi').test(n.title) || new RegExp(this.select, 'gi').test(n.author)
+          if (select) {
+            return new RegExp(select, 'gi').test(n.title) ||
+              new RegExp(select, 'gi').test(n.author) ||
+              n.tags.some(it => {
+                return new RegExp(select, 'gi').test(it)
+              })
+          }
           return false
         })
       } else if (this.selectedType === 'events') {
         return this.events.filter(ev => {
-          if (this.select) return new RegExp(this.select, 'gi').test(ev.title) || new RegExp(this.select, 'gi').test(ev.author)
+          if (select) {
+            return new RegExp(select, 'gi').test(ev.title) ||
+              new RegExp(select, 'gi').test(ev.author)
+          }
           return false
         })
       }
