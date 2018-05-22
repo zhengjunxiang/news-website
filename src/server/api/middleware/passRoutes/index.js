@@ -1,5 +1,4 @@
 module.exports = function(req, res, next) {
-  global.logger.info(req.originalUrl)
   if (!req.session.user) {
     const url = req.originalUrl;
     if (url === '/api/user/signin.json' ||

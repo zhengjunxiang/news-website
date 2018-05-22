@@ -3,7 +3,7 @@ import { Message } from 'iview';
 import vm from '../main';
 const baseURL = '';
 
-const instance = axios.create({timeout: 30000});
+const instance = axios.create({timeout: 10000});
 
 // 请求统一处理
 instance.interceptors.request.use(config => {
@@ -22,7 +22,7 @@ instance.interceptors.response.use(async response => {
         vm.$router.push({ name: 'login' });
       }
     } else return response
-  };
+  }
   return Promise.reject(response);
 }, error => {
   if (error) Message.error({ content: error, duration: 5 });

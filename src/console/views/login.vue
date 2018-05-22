@@ -28,7 +28,7 @@
           </FormItem>
           <FormItem>
             <Button @click="handleSubmit" type="primary" long :loading="isLoading">登录</Button>
-            <p class="login-tip" @click="register" v-show="!isLoading">注册超级管理员</p>
+            <!-- <p class="login-tip" @click="register" v-show="!isLoading">注册超级管理员</p> -->
           </FormItem>
         </Form>
       </div>
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
+import util from '@/libs/util.js';
 export default {
   data() {
     return {
@@ -59,6 +59,9 @@ export default {
         if (valid) {
           const name = this.form.userName
           const password = this.form.password
+          if (util.mapScript(name) || util.mapScript(password)) {
+            return this.$Message.error('含有非法字符');
+          }
           const data = { name, password }
           try {
             this.isLoading = true
@@ -75,6 +78,9 @@ export default {
         if (valid) {
           const name = this.form.userName
           const password = this.form.password
+          if (util.mapScript(name) || util.mapScript(password)) {
+            return this.$Message.error('含有非法字符');
+          }
           const data = { name, password, access: 0 }
           try {
             this.isLoading = true

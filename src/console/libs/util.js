@@ -1,4 +1,6 @@
+/* eslint-disable */
 let util = {};
+const pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
 util.title = function(title) {
   if (title) window.document.title = title
 };
@@ -179,6 +181,8 @@ util.toDefaultPage = function(routers, name, route, next) {
   }
   if (notHandle) next();
 };
+
+util.mapScript = str => pattern.test(str)
 
 util.fullscreenEvent = function(vm) {
   vm.$store.commit('initCachepage');

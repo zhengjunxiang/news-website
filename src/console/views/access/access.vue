@@ -78,6 +78,7 @@
 <script>
 import { mapGetters } from 'vuex';
 import columns from './columns.js';
+import util from '@/libs/util.js'
 export default {
   name: 'access-index',
   computed: {
@@ -152,6 +153,9 @@ export default {
           const name = this.form.userName,
             password = this.form.password,
             access = this.form.access;
+          if (util.mapScript(name) || util.mapScript(password)) {
+            return this.$Message.error('含有敏感字符')
+          }
           const data = { name, password, access }
           const res = await this.$store.dispatch('register', data)
           if (res.mes) this.$Message.success(res.mes)

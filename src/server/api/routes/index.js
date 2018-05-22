@@ -8,8 +8,18 @@ const upload = require('../controller/upload');
 const partners = require('../controller/partners');
 const about = require('../controller/about');
 const events = require('../controller/events');
+var RateLimit = require('express-rate-limit');
+
+var limit = new RateLimit({
+  windowMs: 10 * 60 * 1000,
+  delayAfter: 0,
+  delayMs: 3 * 1000,
+  max: 10,
+  message: 'Too many request created from this IP, please try again after 10 minute'
+});
 
 module.exports = function(app) {
+  // app.use(limit(router));
   app.use(passRoutes);
   // user
   router.get('/api/user/get.json', user.get);
@@ -58,5 +68,6 @@ module.exports = function(app) {
   router.post('/api/events/add.json', events.add);
   router.delete('/api/events/delete.json', events.delete);
 
+  app.use('/api/user/signin.json', limit)
   app.use(router);
 };
