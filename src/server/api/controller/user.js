@@ -28,10 +28,6 @@ module.exports = {
   },
   delete: (req, res) => {
     global.logger.info('User/delete.json');
-    if (req.session.user.access !== 0) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     var _user = req.query;
     User.remove({name: _user.name, access: {'$gt': 0}}, function(err, User) {
       if (err) global.logger.error(err);
@@ -87,10 +83,6 @@ module.exports = {
             }
           })
         } else {
-          if (!req.session.user || req.session.user.access !== 0) {
-            res.json({ errno: 1, mes: '没有权限' })
-            return;
-          }
           let user = new User(_user);
           user.save((err, user) => {
             if (err) global.logger.error(err);
@@ -151,6 +143,17 @@ module.exports = {
       } else {
         res.clearCookie(conf.identityKey);
         res.json({ errno: 0, mes: '登出成功' })
+      }
+    })
+  },
+  addMessage(req, res) {
+    global.logger.info('user/addMessage.json');
+    const {opt, name, title} = req.body;
+    User.findOne({name}, function(err, user) {
+      if (err) global.logger.error(err);
+      else {
+        global.logger.info('addMessage', user);
+        res.json({ errno: 0, mes: 'addMessage' })
       }
     })
   }

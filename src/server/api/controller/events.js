@@ -21,10 +21,6 @@ module.exports = {
   },
   update: (req, res) => {
     global.logger.info('events/update.json');
-    if (req.session.user.access > 1) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     const {title, content, intro, tags, author, cover} = req.body;
     Events.update(
       {title: {$in: title}},
@@ -54,10 +50,6 @@ module.exports = {
   },
   delete: (req, res) => {
     global.logger.info('events/delete.json');
-    if (req.session.user.access !== 0) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     var _event = req.query;
     Events.remove({title: _event.title}, function(err, events) {
       if (err) global.logger.error(err);

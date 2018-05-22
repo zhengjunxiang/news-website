@@ -1,6 +1,6 @@
 import API from './axios';
 
-// 登录注册
+// 用户
 const LoginUser = data => API.post('/api/user/signin.json', data);
 const RegisterUser = data => API.post('/api/user/signup.json', data);
 const GetUser = data => API.get('/api/user/get.json');

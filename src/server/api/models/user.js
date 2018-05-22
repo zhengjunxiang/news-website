@@ -8,6 +8,7 @@ var UserSchema = new mongoose.Schema({
   userName: { type: String, default: '' },
   department: { type: String, default: '' },
   password: String,
+  messages: { type: Array, default: [] },
   avatar: { type: String, default: '' },
   access: { type: Number },
   createAt: { type: Date, default: Date.now() },

@@ -1,5 +1,6 @@
 const router = require('express').Router();
-const passRoutes = require('../middleware/passRoutes/index')
+const passRoutes = require('../middleware/passRoutes')
+const access = require('../middleware/access')
 const user = require('../controller/user');
 const news = require('../controller/news');
 const things = require('../controller/things');
@@ -20,6 +21,7 @@ var limit = new RateLimit({
 
 module.exports = function(app) {
   app.use(passRoutes);
+  app.use(access);
   // user
   router.get('/api/user/get.json', user.get);
   router.post('/api/user/signin.json', user.signin);
@@ -29,6 +31,7 @@ module.exports = function(app) {
   router.post('/api/user/updatePassW.json', user.updatePassW);
   router.get('/api/user/getUser.json', user.getUser);
   router.get('/api/user/loginOut.json', user.loginOut);
+  router.post('/api/user/addMessage.json', user.addMessage);
   // news
   router.post('/api/news/add.json', news.add);
   router.post('/api/news/update.json', news.update);

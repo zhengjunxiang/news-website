@@ -3,10 +3,6 @@ var About = require('../models/about');
 module.exports = {
   add(req, res) {
     global.logger.info('about/add.json');
-    if (req.session.user.access !== 0) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     const _about = req.body;
     About.findOne({lan: _about.lan}, (err, us) => {
       if (err) {
@@ -29,10 +25,6 @@ module.exports = {
   },
   update: (req, res) => {
     global.logger.info('about/update.json');
-    if (req.session.user.access !== 0) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     const {content, lan} = req.body;
     About.update(
       {lan: {$in: lan}},
@@ -53,10 +45,6 @@ module.exports = {
   },
   delete: (req, res) => {
     global.logger.info('about/delete.json');
-    if (req.session.user.access !== 0) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     var { lan } = req.query;
     About.remove({ lan }, function(err, about) {
       if (err) global.logger.error(err);

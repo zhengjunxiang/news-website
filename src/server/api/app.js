@@ -12,7 +12,7 @@ var app = express();
 
 const h = process.env.ENV_TYPE === 'publish' ? hostPub : host;
 
-require('./middleware/log/index')
+require('./middleware/log')
 require('./mongodb')
 
 fs.stat(path.join(__dirname, 'resouce'), (err, stats) => {

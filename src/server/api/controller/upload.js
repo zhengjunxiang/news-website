@@ -47,10 +47,6 @@ module.exports = {
   },
   delImg(req, res) {
     global.logger.info('resouce/delImg.json');
-    if (req.session.user.access > 1) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     var _name = req.query;
     fs.unlink(`${UPLOAD_IMG}/${_name.name}`, (err, f) => {
       if (err) {
@@ -61,10 +57,6 @@ module.exports = {
   },
   delDir(req, res) {
     global.logger.info('resouce/delDir.json');
-    if (req.session.user.access > 1) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     var _name = req.query;
     rimraf(`${UPLOAD_IMG}/${_name.name}`, (err, f) => {
       if (err) {
@@ -75,10 +67,6 @@ module.exports = {
   },
   rename(req, res) {
     global.logger.info('resouce/rename.json');
-    if (req.session.user.access > 1) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     var {origin, newname} = req.body;
     fs.rename(`${UPLOAD_IMG}/${origin}`, `${UPLOAD_IMG}/${newname}`, err => {
       if (err) {
@@ -88,10 +76,6 @@ module.exports = {
     })
   },
   mkdir(req, res) {
-    if (req.session.user.access > 1) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     var {dirName} = req.body;
     fs.mkdir(`${UPLOAD_IMG}/${dirName}`, '0777', function (err) {
       if (err) {

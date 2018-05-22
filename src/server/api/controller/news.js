@@ -21,10 +21,6 @@ module.exports = {
   },
   update: (req, res) => {
     global.logger.info('news/update.json');
-    if (req.session.user.access > 1) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     const {title, content, intro, tags, author, cover} = req.body;
     News.update(
       {title: {$in: title}},
@@ -86,10 +82,6 @@ module.exports = {
   },
   delete: (req, res) => {
     global.logger.info('news/delete.json');
-    if (req.session.user.access !== 0) {
-      res.json({ errno: 1, mes: '没有权限' })
-      return;
-    }
     var _new = req.query;
     News.remove({title: _new.title}, function(err, news) {
       if (err) global.logger.error(err);
