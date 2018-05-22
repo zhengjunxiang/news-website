@@ -5,6 +5,7 @@ import p403 from '@/views/error-page/403.vue'
 import p500 from '@/views/error-page/500.vue'
 import home from '@/views/home/home.vue'
 import ownSpace from '@/views/own-space/own-space.vue'
+import message from '@/views/message/message.vue'
 import access from '@/views/access/access.vue'
 import imagesEditor from '@/views/my-components/image-editor/image-editor.vue'
 import fileUpload from '@/views/my-components/file-upload/file-upload.vue'
@@ -55,19 +56,22 @@ export const otherRouter = {
       path: 'home',
       title: '首页',
       name: 'home_index',
+      meta: { title: 'Home - 首页' },
       component: home
     }, {
       path: 'ownspace',
       title: '个人中心',
+      meta: { title: 'Ownspace - 个人中心' },
       name: 'ownspace_index',
       component: ownSpace
     },
-    // { // 用于展示带参路由
-    //   path: 'message',
-    //   title: '消息中心',
-    //   name: 'message_index',
-    //   component: () => import ('@/views/message/message.vue')
-    // }
+    { // 用于展示带参路由
+      path: 'message',
+      title: '消息中心',
+      meta: { title: 'Message - 消息中心' },
+      name: 'message_index',
+      component: message
+    }
   ]
 };
 
@@ -84,6 +88,7 @@ export const appRouter = [
         path: 'index',
         title: '权限管理',
         name: 'access-index',
+        meta: { title: 'Access - 权限管理' },
         component: access
       }
     ]
@@ -99,11 +104,13 @@ export const appRouter = [
         icon: 'crop',
         name: 'image-editor',
         title: '图片预览编辑',
+        meta: { title: 'Image-Editor - 图片预览编辑' },
         component: imagesEditor
       }, {
         path: 'file-upload',
         icon: 'android-upload',
         name: 'file-upload',
+        meta: { title: 'Image-Upload - 图片上传' },
         title: '图片上传',
         component: fileUpload
       }
@@ -119,12 +126,14 @@ export const appRouter = [
         path: 'publish',
         title: '新闻发布',
         name: 'new-publish',
+        meta: { title: 'New-Publish - 新闻发布' },
         icon: 'compose',
         component: newPublish
       }, {
         path: 'list',
         title: '新闻列表',
         name: 'news-list',
+        meta: { title: 'News-List - 新闻列表' },
         icon: 'ios-list',
         component: newsList
       }
@@ -140,12 +149,14 @@ export const appRouter = [
         path: 'publish',
         title: '活动发布',
         name: 'event-publish',
+        meta: { title: 'Event-Publish - 活动发布' },
         icon: 'compose',
         component: eventPublish
       }, {
         path: 'list',
         title: '活动列表',
         name: 'events-list',
+        meta: { title: 'Events-List - 活动列表' },
         icon: 'ios-list',
         component: eventsList
       }
@@ -160,6 +171,7 @@ export const appRouter = [
       {
         path: 'partners-index',
         title: '合作伙伴',
+        meta: { title: 'Partners - 合作伙伴' },
         name: 'partners-index',
         component: partners
       }
@@ -174,6 +186,7 @@ export const appRouter = [
       {
         path: 'index',
         title: '关于我们',
+        meta: { title: 'About - 关于我们' },
         name: 'about-index',
         component: about
       }

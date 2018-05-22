@@ -19,7 +19,6 @@ var limit = new RateLimit({
 });
 
 module.exports = function(app) {
-  // app.use(limit(router));
   app.use(passRoutes);
   // user
   router.get('/api/user/get.json', user.get);

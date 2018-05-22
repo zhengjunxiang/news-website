@@ -25,7 +25,7 @@
       </div>
       <div class="header-avator-con">
         <full-screen v-model="isFullScreen" />
-        <!-- <message-tip v-model="mesCount" /> -->
+        <message-tip v-model="mesCount" />
         <theme-switch />
         <div class="user-dropdown-menu-con">
           <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
