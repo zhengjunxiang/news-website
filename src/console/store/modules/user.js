@@ -1,13 +1,14 @@
 import Cookies from 'js-cookie';
 import {
   LoginUser, RegisterUser, GetUser, DelUser, UpdateMes, UpdatePassW, GetUserOne, LoginOut,
-  ReadMes, BinMes, ResetMes, DelMes
+  ReadMes, BinMes, ResetMes, DelMes, DelAllMes
 } from '@/api/server.js';
 
 const user = {
   state: {
     userName: Cookies.get('user') || '',
     access: parseInt(Cookies.get('access')),
+    artName: localStorage.artName || '',
     mesCount: 0
   },
   mutations: {
@@ -23,11 +24,13 @@ const user = {
       localStorage.clear();
       if (theme) localStorage.theme = theme;
     },
-    setNameAndAccess(state, d) {
+    setInitDate(state, d) {
       Cookies.set('user', d.name, { expires: 0.3 });
       Cookies.set('access', d.access, { expires: 0.3 });
       localStorage.avatorImgPath = d.avatar || '';
+      localStorage.artName = d.artName || '';
       state.userName = d.name;
+      state.artName = d.artName;
       state.access = d.access;
     },
     setMesCount(state, num) {
@@ -38,7 +41,7 @@ const user = {
     async login({commit}, data) {
       const res = await LoginUser(data),
         d = res.data.data;
-      commit('setNameAndAccess', d)
+      commit('setInitDate', d)
       return res.data
     },
     async register({commit}, data) {
@@ -84,11 +87,16 @@ const user = {
     async delMes({commit}, data) {
       const res = await DelMes(data)
       return res.data
+    },
+    async delAllMes({commit}, data) {
+      const res = await DelAllMes(data)
+      return res.data
     }
   },
   getters: {
     userN: state => state.userName,
     accessCode: state => state.access,
+    artName: state => state.artName,
     mesCount: state => state.mesCount
   }
 };

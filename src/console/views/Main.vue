@@ -105,12 +105,15 @@ export default {
     }
   },
   methods: {
-    async init() {
+     init() {
       let pathArr = util.setCurrentPath(this, this.$route.name);
       this.$store.commit('updateMenulist');
       this.userName = this.userN;
       if (pathArr.length >= 2) this.$store.commit('addOpenSubmenu', pathArr[1].name);
       this.checkTag(this.$route.name);
+      this.handleFetchMes()
+    },
+    async handleFetchMes() {
       const res = await this.$store.dispatch('getUserOne', {name: this.userN});
       if (res.mes) this.$Message.success(res.mes)
       const unreadMes = res.data.messages.filter(m => !m.isReaded)

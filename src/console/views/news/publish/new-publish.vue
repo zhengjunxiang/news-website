@@ -70,7 +70,7 @@ export default {
   name: 'new-publish',
   components: { preview, tagsCard },
   computed: {
-    ...mapGetters(['userN'])
+    ...mapGetters(['userN', 'artName'])
   },
   data() {
     return {
@@ -99,11 +99,11 @@ export default {
   methods: {
     closeEdit() {
       localStorage.newEdit = '';
-      this.isEdit = false
+      this.isEdit = false;
     },
     initData() {
       this.newTitle = localStorage.newTitle || '';
-      this.author = localStorage.newAuthor || this.userN;
+      this.author = this.artName || localStorage.newAuthor || this.userN;
       this.newIntro = localStorage.newIntro || '';
       this.cover = localStorage.newCover || '';
       this.lan = localStorage.newLan || '';
@@ -133,13 +133,7 @@ export default {
       }
     },
     handleTitleBlur() {
-      if (this.newTitle.length !== 0) {
-        localStorage.newTitle = this.newTitle; // 本地存储文章标题
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-      }
+      if (this.newTitle.length !== 0) localStorage.newTitle = this.newTitle;
     },
     handleIntroBlur() { localStorage.newIntro = this.newIntro },
     handleAuthorBlur() { localStorage.newAuthor = this.author },
@@ -156,11 +150,7 @@ export default {
     handlePreview() {
       if (this.canPublish()) {
         this.$refs.preview.onShow();
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        localStorage.publishTime = year + '-' + month + '-' + day;
+        localStorage.publishTime = this.$U.fDate();
         localStorage.newContent = tinymce.activeEditor.getContent({format: 'raw'});
         this.$nextTick(() => { this.$refs.preview.onPreview() })
       }

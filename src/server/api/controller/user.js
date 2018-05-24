@@ -87,6 +87,20 @@ module.exports = {
       }
     )
   },
+  delallmes: (req, res) => {
+    global.logger.info('user/delallmes.json');
+    var { name } = req.query;
+    User.updateOne(
+      { name },
+      { $pull: { messages: { isDelete: true } } },
+      (err, user) => {
+        if (err) global.logger.error(err);
+        if (user.ok === 1) {
+          res.json({ errno: 0, mes: '' })
+        } else res.json({ errno: 1, mes: '操作信息更新失败' })
+      }
+    )
+  },
   signin: (req, res) => {
     global.logger.info('user/signin.json');
     var { name, password } = req.body;
@@ -98,13 +112,13 @@ module.exports = {
         user.comparePassword(password, (err, isMatch) => {
           if (err) global.logger.error(err);
           if (isMatch) {
-            const { name, avatar, access } = user;
+            const { name, avatar, access, artName } = user;
             req.session.regenerate(err => {
               if (err) global.logger.error(err);
               return null;
             })
             req.session.user = { name, access };
-            res.json({ errno: 0, mes: '登录成功', data: {name, avatar, access} });
+            res.json({ errno: 0, mes: '登录成功', data: {name, avatar, access, artName} });
           } else {
             res.json({ errno: 1, mes: '密码不正确' });
             global.logger.info('password is not meached');
@@ -149,10 +163,11 @@ module.exports = {
   },
   updateMessage(req, res, next) {
     global.logger.info('user/updateMessage.json');
-    const {userName, department, name, avatar} = req.body;
+    const body = req.body,
+      data = {};
+    Object.keys(body).forEach(key => { if (body[key] && key !== 'name') data[key] = body[key] })
     User.update(
-      {name: { $in: name }},
-      { userName, department, avatar },
+      {name: { $in: body.name }}, data,
       (err, ne) => {
         if (err) global.logger.error(err);
         if (ne.ok === 1) {

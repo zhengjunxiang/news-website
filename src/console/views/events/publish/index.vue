@@ -63,7 +63,7 @@ export default {
   name: 'event-publish',
   components: { preview },
   computed: {
-    ...mapGetters(['userN'])
+    ...mapGetters(['userN', 'artName'])
   },
   data() {
     return {
@@ -96,7 +96,7 @@ export default {
     },
     initData() {
       this.title = localStorage.eventTitle || '';
-      this.author = localStorage.eventAuthor || this.userN;
+      this.author = this.artName || localStorage.eventAuthor || this.userN;
       this.cover = localStorage.eventCover || '';
       this.lan = localStorage.eventLan || '';
     },
@@ -123,13 +123,7 @@ export default {
       }
     },
     handleTitleBlur() {
-      if (this.title.length !== 0) {
-        localStorage.eventTitle = this.title; // 本地存储文章标题
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-      }
+      if (this.title.length !== 0) localStorage.eventTitle = this.title;
     },
     handleAuthorBlur() { localStorage.eventAuthor = this.author },
     handleCoverBlur() { localStorage.eventCover = this.cover },
@@ -145,11 +139,7 @@ export default {
     handlePreview() {
       if (this.canPublish()) {
         this.$refs.preview.onShow();
-        let date = new Date();
-        let year = date.getFullYear();
-        let month = date.getMonth() + 1;
-        let day = date.getDate();
-        localStorage.eventlishTime = year + '-' + month + '-' + day;
+        localStorage.eventlishTime = this.$U.fDate();
         localStorage.eventContent = tinymce.activeEditor.getContent({format: 'raw'});
         this.$nextTick(() => { this.$refs.preview.onPreview() })
       }

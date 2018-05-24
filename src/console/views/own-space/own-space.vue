@@ -23,6 +23,11 @@
             <Input v-model="userForm.avatar" placeholder="url" />
           </div>
         </FormItem>
+        <FormItem label="艺名">
+          <div style="display:inline-block;width:300px;">
+            <Input v-model="userForm.artName" />
+          </div>
+        </FormItem>
         <FormItem label="登录密码：">
           <Button type="text" size="small" @click="showEditPassword">修改密码</Button>
         </FormItem>
@@ -63,7 +68,7 @@ export default {
       else callback();
     };
     return {
-      userForm: { userName: '', department: '',  avatar: ''},
+      userForm: { userName: '', artName: '', department: '',  avatar: ''},
       save_loading: false,
       editPasswordModal: false, // 修改密码模态框显示
       savePassLoading: false,
@@ -91,6 +96,7 @@ export default {
     if (res.mes) this.$Message.success(res.mes)
     this.userForm.userName = res.data.userName
     this.userForm.department = res.data.department
+    this.userForm.artName = res.data.artName
   },
   computed: {
     ...mapGetters(['userN'])
@@ -100,7 +106,7 @@ export default {
       this.editPasswordModal = true;
     },
     cancelEditUserInfor() {
-      this.userForm = { userName: '', department: '', avatar: '' };
+      this.userForm = { userName: '', artName: '', department: '', avatar: '' };
       this.$store.commit('removeTag', 'ownspace_index');
       localStorage.pageOpenedList = JSON.stringify(this.$store.state.app.pageOpenedList);
       let lastPageName = this.$store.state.app.pageOpenedList[1].name || this.$store.state.app.pageOpenedList[0].name;
@@ -110,9 +116,9 @@ export default {
       this.$refs['userForm'].validate(async (valid) => {
         if (valid) {
           this.save_loading = true;
-          const { userName, department, avatar } = this.userForm;
+          const { userName, artName, department, avatar } = this.userForm;
           try {
-            const res = await this.$store.dispatch('updateMes', {userName, department, name: this.userN, avatar})
+            const res = await this.$store.dispatch('updateMes', {userName, artName, department, name: this.userN, avatar})
             if (res.mes) this.$Message.success(res.mes)
             this.save_loading = false;
           } catch (err) { this.save_loading = false }

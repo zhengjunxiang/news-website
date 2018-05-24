@@ -13,6 +13,7 @@ const ReadMes = data => API.get('/api/user/readmes.json', {params: data});
 const BinMes = data => API.get('/api/user/binmes.json', {params: data});
 const ResetMes = data => API.get('/api/user/resetmes.json', {params: data});
 const DelMes = data => API.get('/api/user/delmes.json', {params: data});
+const DelAllMes = data => API.get('/api/user/delallmes.json', {params: data});
 // 新闻
 const AddNews = data => API.post('/api/news/add.json', data);
 const UpdateNews = data => API.post('/api/news/update.json', data);
@@ -51,7 +52,7 @@ const DelEvents = data => API.delete('/api/events/delete.json', {params: data});
 export {
   GetImgs, DelImg, Rename, Mkdir, DelDir,
   LoginUser, RegisterUser, GetUser, DelUser, UpdateMes, UpdatePassW, GetUserOne, LoginOut,
-  ReadMes, BinMes, ResetMes, DelMes,
+  ReadMes, BinMes, ResetMes, DelMes, DelAllMes,
   AddNews, GetNews, DelNews, UpdateNews,
   AddThings, GetThings, DelThings,
   AddTags, GetTags, DelTags,

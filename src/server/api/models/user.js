@@ -9,6 +9,7 @@ var UserSchema = new mongoose.Schema({
   userName: { type: String, default: '' },
   department: { type: String, default: '' },
   password: String,
+  artName: { type: String, default: '' },
   messages: [{
     mes: { type: String },
     isReaded: { type: Boolean, default: false },

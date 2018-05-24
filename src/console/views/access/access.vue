@@ -4,7 +4,7 @@
 
 <template>
 <div class="access">
-  <Row>
+  <Row v-if="!isShowUsers">
     <Col span="8">
     <Card>
       <p slot="title">
@@ -66,24 +66,45 @@
     </Card>
     </Col>
   </Row>
-  <Modal v-model="isShow" width="800px" title="普通用户列表">
-    <Table :data="userData" :columns="columns" stripe />
-    <div slot="footer">
-      <Button type="primary" @click="isShow = false">关闭</Button>
-    </div>
-  </Modal>
+  <Row v-show="isShowUsers">
+    <Card class="users-con">
+      <div slot="title">
+        <Icon type="ios-people" size="20" style="float: left;" />
+        <span style="float: left; margin-left: 6px;"><b>用户列表</b></span>
+        <Button type="primary" size="small" style="float: right; margin-right: 30px;" @click="isShowUsers = false">
+          <Icon type="chevron-left" />
+        </Button>
+      </div>
+      <Table :data="userData" :columns="columns" stripe size="small" />
+    </Card>
+    <Card class="users-con" v-show="checkUser">
+      <div slot="title">
+        <Icon type="person" size="20" style="float: left;" />
+        <span style="float: left; margin-left: 6px;"><b>历史操作记录 ({{checkUser}})</b></span>
+        <Button type="primary" size="small" style="float: right; margin-right: 30px;" @click="checkUser = ''">
+          <Icon type="close" />
+        </Button>
+      </div>
+      <Table :data="checkData" :columns="columnsUser" stripe size="small" />
+    </Card>
+  </Row>
 </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 import columns from './columns.js';
+import columnsUser from './columnsUser.js';
 import util from '@/libs/util.js'
 export default {
   name: 'access-index',
   computed: {
     ...mapGetters(['accessCode']),
-    avatorPath: () => localStorage.avatorImgPath
+    avatorPath: () => localStorage.avatorImgPath,
+    checkData() {
+      const userData = this.userData.filter(item => item.name === this.checkUser)[0] || null
+      return userData ? userData.messages : []
+    }
   },
   data() {
     const validatePassCheck = (rule, value, callback) => {
@@ -96,39 +117,19 @@ export default {
       else callback();
     };
     return {
-      isShow: false,
+      isShowUsers: false,
       userData: [],
-      columns: [],
-      form: {
-        userName: '',
-        password: '',
-        passwdCheck: '',
-        access: ''
-      },
+      checkUser: '',
+      columnsUser: columnsUser(this),
+      columns: columns(this),
+      form: { userName: '', password: '', passwdCheck: '', access: '' },
       rules: {
-        userName: [{
-          required: true,
-          message: '账号不能为空',
-          trigger: 'blur'
-        }],
-        password: [{
-          required: true,
-          message: '密码不能为空',
-          trigger: 'blur'
-        }],
-        passwdCheck: [{
-          validator: validatePassCheck,
-          trigger: 'blur'
-        }],
-        access: [{
-          validator: validateAccessCheck,
-          trigger: 'change'
-        }]
+        userName: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
+        password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
+        passwdCheck: [{ validator: validatePassCheck, trigger: 'blur' }],
+        access: [{ validator: validateAccessCheck, trigger: 'change' }]
       }
     };
-  },
-  mounted() {
-    this.columns = columns(this, this.accessCode)
   },
   methods: {
     async getUser() {
@@ -137,8 +138,8 @@ export default {
       this.userData = res.data
     },
     handleShowUser() {
-      this.isShow = true
       this.getUser();
+      this.isShowUsers = true;
     },
     resetData() {
       this.form.userName = '',
@@ -152,9 +153,7 @@ export default {
           const name = this.form.userName,
             password = this.form.password,
             access = this.form.access;
-          if (util.mapScript(name) || util.mapScript(password)) {
-            return this.$Message.error('含有敏感字符')
-          }
+          if (util.mapScript(name) || util.mapScript(password)) return this.$Message.error('含有敏感字符')
           const data = { name, password, access }
           const res = await this.$store.dispatch('register', data)
           if (res.mes) this.$Message.success(res.mes)

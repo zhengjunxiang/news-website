@@ -35,6 +35,11 @@
   </div>
   <div class="message-content-con">
     <div class="message-title-list-con">
+      <div class="trash-a-con">
+        <span @click="delBinMes" v-if="recyclebinCount">
+          <Tooltip content="清空回收站" placement="left"><Icon type="trash-a" /></Tooltip>
+        </span>
+      </div>
       <Table ref="messageList" :columns="mesTitleColumns" :data="currentMesList" />
     </div>
   </div>
@@ -53,7 +58,6 @@ export default {
       hasreadMesList: [],
       recyclebinList: [],
       currentMessageType: 'unread',
-      showMesTitleList: true,
       unreadCount: 0,
       hasreadCount: 0,
       recyclebinCount: 0,
@@ -64,27 +68,40 @@ export default {
     ...mapGetters(['userN'])
   },
   methods: {
+    async init() {
+      const res = await this.$store.dispatch('getUserOne', {name: this.userN});
+      if (res.mes) this.$Message.success(res.mes)
+      res.data.messages.forEach(m => {
+        if (m.isDelete) this.recyclebinList.push(m)
+        else if (m.isReaded) this.hasreadMesList.push(m)
+        else this.unreadMesList.push(m)
+      })
+      this.currentMesList = this.unreadMesList
+      this.unreadCount = this.unreadMesList.length;
+      this.$store.commit('setMesCount', this.unreadMesList.length)
+      this.hasreadCount = this.hasreadMesList.length;
+      this.recyclebinCount = this.recyclebinList.length;
+    },
     setCurrentMesType(type) {
       this.currentMessageType = type;
       if (type === 'unread') this.currentMesList = this.unreadMesList
       else if (type === 'hasread') this.currentMesList = this.hasreadMesList
       else this.currentMesList = this.recyclebinList
+    },
+    delBinMes() {
+      this.$Modal.confirm({
+        title: '清空回收站',
+        content: '<p>确定删清空回收站吗？</p>',
+        onOk: async () => {
+          const res = await this.$store.dispatch('delAllMes', {name: this.userN})
+          if (res.mes) this.$Message.success(res.mes)
+          this.recyclebinList.splice(0, this.recyclebinList.length);
+        }
+      });
     }
   },
-  async mounted() {
-    const res = await this.$store.dispatch('getUserOne', {name: this.userN});
-    if (res.mes) this.$Message.success(res.mes)
-    res.data.messages.forEach(m => {
-      if (m.isDelete) this.recyclebinList.push(m)
-      else if (m.isReaded) this.hasreadMesList.push(m)
-      else this.unreadMesList.push(m)
-    })
-    this.currentMesList = this.unreadMesList
-    this.unreadCount = this.unreadMesList.length;
-    this.$store.commit('setMesCount', this.unreadMesList.length)
-    this.hasreadCount = this.hasreadMesList.length;
-    this.recyclebinCount = this.recyclebinList.length;
-  },
+  mounted() { this.init() },
+  activated() { this.init() },
   watch: {
     unreadMesList(arr) {
       this.unreadCount = arr.length

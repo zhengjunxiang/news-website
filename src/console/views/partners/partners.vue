@@ -101,14 +101,14 @@ export default {
     },
     delCom(title, lan) {
       this.$Modal.confirm({
-          title: `删除`,
-          content: `确定删除 <b>${title}</b> 吗？`,
-          onOk: async () => {
-            const res = await this.$store.dispatch('delPartners', {title, lan})
-            if(res.mes) this.$Message.success(res.mes)
-            this.getCom()
-          },
-          closable: true
+        title: `删除`,
+        content: `确定删除 <b>${title}</b> 吗？`,
+        onOk: async () => {
+          const res = await this.$store.dispatch('delPartners', {title, lan})
+          if(res.mes) this.$Message.success(res.mes)
+          this.getCom()
+        },
+        closable: true
       });
     },
     showUpdateCom(t, lang) {
