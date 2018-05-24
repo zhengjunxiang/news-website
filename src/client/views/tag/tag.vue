@@ -20,7 +20,7 @@
                 </router-link>
               <div class="article-meta">
                 <div class="date">
-                  <time :datetime="ne.createAt" itemprop="datePublished">{{setDate(ne.createAt)}}</time>
+                  <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
                   <span style="margin-left: 10px;">{{ne.author}}</span>
                 </div>
               </div>
@@ -58,10 +58,6 @@ export default {
     curNews() {
       return this.news.slice((this.curP-1)*this.pageSize, this.curP*this.pageSize)
     }
-  },
-  methods: {
-    setDate: date => date.split('T')[0],
-    onClickPage(page) { this.curP = page }
   }
 };
 </script>

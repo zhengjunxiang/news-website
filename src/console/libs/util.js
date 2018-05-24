@@ -1,4 +1,5 @@
 /* eslint-disable */
+import moment from 'moment'
 let util = {};
 const pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
 util.title = function(title) {
@@ -190,5 +191,10 @@ util.fullscreenEvent = function(vm) {
   vm.$store.commit('updateMenulist');
   // 全屏相关
 };
+
+util.fDate = (date, f) => {
+  if (date) return moment(date).format(f || 'YYYY-MM-DD HH:mm:ss')
+  else return moment().format(f || 'YYYY-MM-DD HH:mm:ss')
+}
 
 export default util;

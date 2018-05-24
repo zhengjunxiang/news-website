@@ -81,8 +81,8 @@ export default {
       state.newsSortByYear = [];
       let year = '', newsDate = state.newsSortByYear, len = newsDate.length;
       state.news.map(ne => {
-        if (year !== ne.createAt.split('-')[0]) {
-          year = ne.createAt.split('-')[0]
+        if (year !== util.fDate(ne.createAt, 'YYYY')) {
+          year = util.fDate(ne.createAt, 'YYYY')
           newsDate.push({year, news: []});
           len = newsDate.length;
           newsDate[len - 1].news.push(ne);
@@ -96,8 +96,8 @@ export default {
         let month = '';
         newsM.push({year: year.year, news: []})
         year.news.map(monthC => {
-          if (month !== monthC.createAt.split('-')[1]) {
-            month = monthC.createAt.split('-')[1]
+          if (month !== util.fDate(monthC.createAt, 'MM')) {
+            month = util.fDate(monthC.createAt, 'MM')
             newsM[index].news.push({month, news: []})
             len = newsM[index].news.length;
             newsM[index].news[len - 1].news.push(monthC)

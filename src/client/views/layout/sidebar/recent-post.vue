@@ -19,7 +19,7 @@
             <p class="item-title">
               <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
             </p>
-            <p class="item-date"><time :datetime="ne.createAt" itemprop="datePublished">{{setDate(ne.createAt)}}</time></p>
+            <p class="item-date"><time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time></p>
           </div>
         </li>
       </ul>
@@ -33,11 +33,8 @@ export default {
   computed: {
     ...mapGetters(['news']),
     recentMews() {
-        return this.news.slice(0,5)
+      return this.news.slice(0,5)
     }
-  },
-  methods: {
-    setDate: date => date.split('T')[0] || ''
   }
 }
 </script>

@@ -12,7 +12,7 @@
           <div class="article-date">
             <span>
               <i class="fa fa-pencil" aria-hidden="true" />
-              <time :datetime="setDate(curData.updateAt)" itemprop="datePublished">{{setDate(curData.updateAt)}}</time>
+              <time :datetime="$U.fDate(curData.updateAt)" itemprop="datePublished">{{$U.fDate(curData.updateAt)}}</time>
             </span>
           </div>
           <div class="article-author"><i class="fa fa-users" aria-hidden="true"></i>Antpool</div>
@@ -61,7 +61,6 @@ export default {
     }
   },
   methods: {
-    setDate: date => date ? date.split('T')[0] : '',
     handleClickShare() {
       this.show = !this.show;
     }

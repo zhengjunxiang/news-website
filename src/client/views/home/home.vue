@@ -17,7 +17,7 @@
                 </router-link>
               <div class="article-meta">
                 <div class="date">
-                  <time :datetime="n.createAt" itemprop="datePublished">{{setDate(n.createAt)}}</time>
+                  <time :datetime="n.createAt" itemprop="datePublished">{{$U.fDate(n.createAt)}}</time>
                   <span style="margin-left: 10px;">{{n.author}}</span>
                 </div>
               </div>
@@ -41,9 +41,6 @@ export default {
     recentNews() {
         return this.news.slice(0,5)
     }
-  },
-  methods: {
-    setDate: date => date ? date.split('T')[0] : ''
   }
 };
 </script>

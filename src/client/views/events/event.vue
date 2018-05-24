@@ -12,11 +12,11 @@
           <div class="article-date">
             <span>
               <i class="fa fa-plus" aria-hidden="true" />
-              <time :datetime="event.createAt" itemprop="datePublished">{{setDate(event.createAt)}}</time>
+              <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
             </span>
-            <span v-if="setDate(event.createAt) !== setDate(event.updateAt)">
+            <span v-if="$U.fDate(event.createAt) !== $U.fDate(event.updateAt)">
               <i class="fa fa-pencil" aria-hidden="true" />
-              <time :datetime="event.updateAt" itemprop="datePublished">{{setDate(event.updateAt)}}</time>
+              <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
             </span>
           </div>
           <div class="article-author"><i class="fa fa-user" aria-hidden="true"></i>{{event.author}}</div>
@@ -89,7 +89,6 @@ export default {
     }
   },
   methods: {
-    setDate: date => date ? date.split('T')[0] : '',
     handleClickShare() {
       this.show = !this.show;
     }

@@ -14,13 +14,13 @@ export default that => [
     title: '创建时间',
     key: 'createAt',
     render: (h, params) => {
-      return h('div', that.formatDate(that.tableData[params.index].createAt));
+      return h('div', that.$U.fDate(that.tableData[params.index].createAt));
     }
   }, {
     title: '更新时间',
     key: 'updateAt',
     render: (h, params) => {
-      return h('div', that.formatDate(that.tableData[params.index].updateAt));
+      return h('div', that.$U.fDate(that.tableData[params.index].updateAt));
     }
   }, {
     title: '操作',

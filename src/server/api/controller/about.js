@@ -23,16 +23,18 @@ module.exports = {
       }
     })
   },
-  update: (req, res) => {
+  update: (req, res, next) => {
     global.logger.info('about/update.json');
     const {content, lan} = req.body;
     About.update(
       {lan: {$in: lan}},
-      { content, updateAt: Date.now(), lan },
+      { content, updateAt: Date.now() },
       (err, ne) => {
         if (err) global.logger.error(err);
-        if (ne.ok === 1) res.json({ errno: 0, mes: '关于我们更新成功' })
-        else res.json({ errno: 1, mes: '关于我们更新失败' })
+        if (ne.ok === 1) {
+          res.json({ errno: 0, mes: '关于我们更新成功' })
+          next()
+        } else res.json({ errno: 1, mes: '关于我们更新失败' })
       }
     )
   },

@@ -136,7 +136,6 @@ export default {
       if (res.mes) this.$Message.success(res.mes)
       this.userData = res.data
     },
-    formatDate(date) { return date.split('T')[0] },
     handleShowUser() {
       this.isShow = true
       this.getUser();

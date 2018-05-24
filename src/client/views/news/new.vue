@@ -17,11 +17,11 @@
           <div class="article-date">
             <span>
               <i class="fa fa-plus" aria-hidden="true" />
-              <time :datetime="ne.createAt" itemprop="datePublished">{{setDate(ne.createAt)}}</time>
+              <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
             </span>
-            <span v-if="setDate(ne.createAt) !== setDate(ne.updateAt)">
+            <span v-if="$U.fDate(ne.createAt) !== $U.fDate(ne.updateAt)">
               <i class="fa fa-pencil" aria-hidden="true" />
-              <time :datetime="ne.updateAt" itemprop="datePublished">{{setDate(ne.updateAt)}}</time>
+              <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
             </span>
           </div>
           <div class="article-author"><i class="fa fa-user" aria-hidden="true"></i>{{ne.author}}</div>
@@ -164,7 +164,6 @@ export default {
         }
       }
     },
-    setDate: date => date ? date.split('T')[0] : '',
     handleClickShare() {
       this.show = !this.show;
     }

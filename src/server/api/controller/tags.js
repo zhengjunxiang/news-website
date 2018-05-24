@@ -2,7 +2,7 @@ var Tags = require('../models/tags');
 var News = require('../models/news');
 
 module.exports = {
-  add: (req, res) => {
+  add: (req, res, next) => {
     global.logger.info('tags/add.json');
     const _tag = req.body;
     Tags.findOne({value: _tag.value}, function(err, tags) {
@@ -13,7 +13,10 @@ module.exports = {
         let tags = new Tags(_tag);
         tags.save((err, tags) => {
           if (err) global.logger.error(err);
-          else res.json({ errno: 0, mes: '标签添加成功' });
+          else {
+            res.json({ errno: 0, mes: '标签添加成功' })
+            next()
+          }
         });
       }
     });
@@ -25,7 +28,7 @@ module.exports = {
       else res.json({ errno: 0, mse: '', data: tags });
     });
   },
-  delete: (req, res) => {
+  delete: (req, res, next) => {
     global.logger.info('tags/delete.json');
     var _tags = req.query;
     Tags.remove({value: {$in: _tags.tags}}, function(err, tags) {
@@ -36,8 +39,10 @@ module.exports = {
           { $pullAll: {tags: _tags.tags} },
           (err, ne) => {
             if (err) global.logger.error(err);
-            if (ne.ok === 1) res.json({ errno: 0, mes: `博客和标签${_tags.tags}更新成功` })
-            else res.json({ errno: 1, mes: '删除标签成功， 博客标签更新失败' })
+            if (ne.ok === 1) {
+              res.json({ errno: 0, mes: `博客和标签${_tags.tags}更新成功` })
+              next()
+            } else res.json({ errno: 1, mes: '删除标签成功， 博客标签更新失败' })
           }
         )
       } else res.json({ errno: 1, mes: '删除标签失败' })

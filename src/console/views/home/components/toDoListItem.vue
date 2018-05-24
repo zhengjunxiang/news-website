@@ -14,7 +14,7 @@
       <p class="to-do-list-item-text" @click="handleHasDid" :class="{hasDid: todoitem}">{{ item.title }}</p>
       <p class="to-do-list-item-text creatAt" @click="handleHasDid" :class="{hasDid: todoitem}">
         <b>{{ item.creater }}</b>
-        创建时间：{{ item.createAt }}
+        创建时间：{{ $U.fDate(item.createAt) }}
       </p>
     </Row>
   </Col>

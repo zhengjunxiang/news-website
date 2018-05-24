@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const passRoutes = require('../middleware/passRoutes')
 const access = require('../middleware/access')
+const messages = require('../middleware/messages')
 const user = require('../controller/user');
 const news = require('../controller/news');
 const things = require('../controller/things');
@@ -31,7 +32,9 @@ module.exports = function(app) {
   router.post('/api/user/updatePassW.json', user.updatePassW);
   router.get('/api/user/getUser.json', user.getUser);
   router.get('/api/user/loginOut.json', user.loginOut);
-  router.post('/api/user/addMessage.json', user.addMessage);
+  router.get('/api/user/readmes.json', user.readmes);
+  router.get('/api/user/binmes.json', user.binmes);
+  router.get('/api/user/resetmes.json', user.resetmes);
   // news
   router.post('/api/news/add.json', news.add);
   router.post('/api/news/update.json', news.update);
@@ -48,7 +51,7 @@ module.exports = function(app) {
   router.get('/api/tags/get.json', tags.get);
   router.delete('/api/tags/delete.json', tags.delete);
   // resouce
-  router.post('/api/resouce/addImg.json', upload.upImgs);
+  router.post('/api/resouce/addImg.json', upload.addImg);
   router.get('/api/resouce/getImgs.json', upload.getImgs);
   router.delete('/api/resouce/delImg.json', upload.delImg);
   router.put('/api/resouce/rename.json', upload.rename);
@@ -72,4 +75,5 @@ module.exports = function(app) {
 
   app.use('/api/user/signin.json', limit)
   app.use(router);
+  app.use(messages);
 };

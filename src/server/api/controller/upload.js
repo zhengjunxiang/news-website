@@ -1,3 +1,5 @@
+const User = require('../models/user');
+const mongoose = require('mongoose');
 var formidable = require('formidable'),
   {root} = require('../config'),
   fs = require('fs'),
@@ -7,7 +9,7 @@ var formidable = require('formidable'),
   UPLOAD_IMG = path.resolve(root, 'resouce');
 
 module.exports = {
-  upImgs(req, res) {
+  addImg(req, res) {
     var form = new formidable.IncomingForm(), // 创建上传表单
       name = '', newPath = '', imgPath = ''; // 图片写入地址；
     form.encoding = 'utf-8'; // 设置编辑
@@ -29,7 +31,17 @@ module.exports = {
       newPath = `${form.uploadDir}/${inserDir ? inserDir + '/' : ''}${name}`;
       fs.rename(files.upimg.path, newPath, (err) => {
         if (err) global.logger.error('err', err);
-        else res.json({'newPath': imgPath});
+        else {
+          const { name } = req.session.user;
+          res.json({'newPath': imgPath})
+          User.update({name}, { $push: { messages: {
+            _id: mongoose.Types.ObjectId(),
+            title: 'Upload Image',
+            mes: `上传了图片 ${files.upimg.name}`,
+            isReaded: false,
+            createAt: Date.now()
+          } } }, (err, user) => { if (err) global.logger.error(err) });
+        };
       });
     });
   },
@@ -45,43 +57,56 @@ module.exports = {
       };
     })
   },
-  delImg(req, res) {
+  delImg(req, res, next) {
     global.logger.info('resouce/delImg.json');
     var _name = req.query;
     fs.unlink(`${UPLOAD_IMG}/${_name.name}`, (err, f) => {
       if (err) {
         global.logger.error('err', err)
         res.json({ errno: 1, mes: '删除失败' })
-      } else res.json({ errno: 0, mes: `删除 ${_name.name} 成功` })
+      } else {
+        res.json({ errno: 0, mes: `删除 ${_name.name} 成功` })
+        next()
+      }
     })
   },
-  delDir(req, res) {
+  delDir(req, res, next) {
     global.logger.info('resouce/delDir.json');
     var _name = req.query;
     rimraf(`${UPLOAD_IMG}/${_name.name}`, (err, f) => {
       if (err) {
         global.logger.error('err', err)
         res.json({ errno: 1, mes: '删除失败' })
-      } else res.json({ errno: 0, mes: `删除 ${_name.name} 成功` })
+      } else {
+        res.json({ errno: 0, mes: `删除 ${_name.name} 成功` })
+        next()
+      }
     })
   },
-  rename(req, res) {
+  rename(req, res, next) {
     global.logger.info('resouce/rename.json');
     var {origin, newname} = req.body;
     fs.rename(`${UPLOAD_IMG}/${origin}`, `${UPLOAD_IMG}/${newname}`, err => {
       if (err) {
         global.logger.error('err', err)
         res.json({ errno: 1, mes: `重命名 ${origin} 失败` })
-      } else res.json({ errno: 0, mes: `重命名 ${origin} 成功` })
+      } else {
+        res.json({ errno: 0, mes: `重命名 ${origin} 成功` })
+        next()
+      }
     })
   },
-  mkdir(req, res) {
+  mkdir(req, res, next) {
+    global.logger.info('resouce/mkdir.json');
     var {dirName} = req.body;
     fs.mkdir(`${UPLOAD_IMG}/${dirName}`, '0777', function (err) {
       if (err) {
         global.logger.error('err', err)
         res.json({ errno: 1, mes: `创建文件夹 ${dirName} 失败` })
-      } else res.json({ errno: 0, mes: `创建文件夹 ${dirName} 成功` })
+      } else {
+        res.json({ errno: 0, mes: `创建文件夹 ${dirName} 成功` })
+        next()
+      }
     });
   }
 }

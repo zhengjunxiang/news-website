@@ -20,7 +20,7 @@
                 </router-link>
               <div class="article-meta">
                 <div class="date">
-                  <time :datetime="ne.createAt" itemprop="datePublished">{{setDate(ne.createAt)}}</time>
+                  <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
                   <span style="margin-left: 10px;">{{ne.author}}</span>
                 </div>
               </div>
@@ -47,9 +47,6 @@ export default {
   name: 'tags',
   computed: {
     ...mapGetters(['tags'])
-  },
-  methods: {
-    setDate: date => date.split('T')[0]
   }
 };
 </script>

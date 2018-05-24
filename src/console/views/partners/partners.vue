@@ -36,6 +36,7 @@
         <p class="com-title">{{par.title}} / <span>{{par.lan}}</span> </p>
         <Button type="error" size="small" class="margin-left-10" @click="delCom(par.title, par.lan)">删除</Button>
         <Button type="info" size="small" @click="showUpdateCom(par.title, par.lan)">编辑</Button>
+        <span class="title-date">更新时间：{{$U.fDate(par.updateAt)}}</span>
       </div>
       <Row>
         <Col span="10">
@@ -143,6 +144,12 @@ export default {
       .com-title {
         width: auto;
         float: left;
+      }
+      .title-date {
+        float: right;
+        line-height: 22px;
+        font-size: 12px;
+        margin-right: 30px;
       }
       button {
         float: right;

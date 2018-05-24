@@ -1,7 +1,7 @@
 var Partners = require('../models/partners');
 
 module.exports = {
-  add: (req, res) => {
+  add: (req, res, next) => {
     global.logger.info('partners/add.json');
     const _par = req.body;
     Partners.find({
@@ -19,12 +19,15 @@ module.exports = {
           if (err) {
             global.logger.error(err);
             res.json({ errno: 1, mes: '伙伴添加失败' });
-          } else { res.json({ errno: 0, mes: '伙伴添加成功' }) }
+          } else {
+            res.json({ errno: 0, mes: '伙伴添加成功' })
+            next()
+          }
         });
       }
     });
   },
-  update: (req, res) => {
+  update: (req, res, next) => {
     global.logger.info('partners/update.json');
     const {title, content, link, cover, lan} = req.body;
     Partners.update(
@@ -32,8 +35,10 @@ module.exports = {
       { content, updateAt: Date.now(), link, cover, lan },
       (err, par) => {
         if (err) global.logger.error(err);
-        if (par.ok === 1) res.json({ errno: 0, mes: `伙伴${title}更新成功` })
-        else res.json({ errno: 1, mes: '伙伴更新失败' })
+        if (par.ok === 1) {
+          res.json({ errno: 0, mes: `伙伴${title}更新成功` })
+          next()
+        } else res.json({ errno: 1, mes: '伙伴更新失败' })
       }
     )
   },
@@ -45,13 +50,14 @@ module.exports = {
       else res.json({ errno: 0, mse: '', data: partners });
     });
   },
-  delete: (req, res) => {
+  delete: (req, res, next) => {
     global.logger.info('partners/delete.json');
     var { title, lan } = req.query;
     Partners.remove({title: {$in: title}, lan: {$in: lan}}, function(err, partners) {
       if (err) global.logger.error(err);
       if (partners.ok === 1) {
         res.json({ errno: 0, mes: `删除伙伴${title}成功` })
+        next()
       } else res.json({ errno: 1, mes: `删除伙伴${title}失败` })
     });
   }

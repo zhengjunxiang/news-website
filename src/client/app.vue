@@ -9,7 +9,7 @@
             <div v-for="(news, ind) in selected" class="selected-item" :key="ind" @click="handleSelec">
               <router-link :to="`/new/${news.title}`">
                 <span>{{news.title}}</span>
-                <span>{{setDate(news.createAt)}}</span>
+                <span>{{$U.fDate(news.createAt)}}</span>
                 <span>{{news.author}}</span>
               </router-link>
             </div>
@@ -47,7 +47,6 @@ export default {
     getEelected(selected) {
       this.selected = selected
     },
-    setDate: date => date.split('T')[0],
     handleSelec() {
       this.$refs.header.onResetSelect()
       this.selected = [];

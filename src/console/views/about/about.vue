@@ -25,7 +25,7 @@
           <span>语言： {{us.lan}}</span>
         </div>
         <div class="about-us-meta">
-          <span>更新日期： {{formatDate(us.updateAt)}}</span>
+          <span>更新日期： {{$U.fDate(us.updateAt)}}</span>
         </div>
         <div class="preview-content-con" v-html="us.content" />
       </div>
@@ -119,7 +119,6 @@ export default {
     handleAdd() {
       this.curType = 'add'
     },
-    formatDate(date) { return date ? date.split('T')[0] : '' },
     async init() {
       const res = await this.$store.dispatch('getAbout');
       this.aboutUsData = res.data || [];

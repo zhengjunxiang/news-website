@@ -114,7 +114,6 @@ export default {
         this.loading = false;
       }
     },
-    formatDate(date) { return date.split('T')[0] },
     exportImage() {
       let vm = this;
       let table = this.$refs.table.$el;

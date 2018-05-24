@@ -1,4 +1,5 @@
 var mongoose = require('mongoose');
+
 // 用于md5加密
 var bcrypt = require('bcryptjs');
 // 加盐数
@@ -8,11 +9,16 @@ var UserSchema = new mongoose.Schema({
   userName: { type: String, default: '' },
   department: { type: String, default: '' },
   password: String,
-  messages: { type: Array, default: [] },
+  messages: [{
+    mes: { type: String },
+    isReaded: { type: Boolean, default: false },
+    isDelete: { type: Boolean, default: false },
+    createAt: { type: Number, default: Date.now }
+  }],
   avatar: { type: String, default: '' },
   access: { type: Number },
-  createAt: { type: Date, default: Date.now() },
-  updateAt: { type: Date, default: Date.now() }
+  createAt: { type: Number, default: Date.now },
+  updateAt: { type: Number, default: Date.now }
 });
 // 对密码进行加密
 UserSchema.pre('save', function(next) {

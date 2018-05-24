@@ -20,7 +20,7 @@
                 </router-link>
               <div class="article-meta">
                 <div class="date">
-                  <time :datetime="event.createAt" itemprop="datePublished">{{setDate(event.createAt)}}</time>
+                  <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
                   <span style="margin-left: 10px;">{{event.author}}</span>
                 </div>
               </div>
@@ -56,7 +56,6 @@ export default {
     }
   },
   methods: {
-    setDate: date => date.split('T')[0],
     onClickPage(page) {
       this.curP = page
     }

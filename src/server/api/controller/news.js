@@ -1,7 +1,7 @@
 var News = require('../models/news');
 
 module.exports = {
-  add: (req, res) => {
+  add: (req, res, next) => {
     global.logger.info('news/add.json');
     const _new = req.body;
     News.findOne({title: _new.title}, function(err, news) {
@@ -14,12 +14,15 @@ module.exports = {
           if (err) {
             global.logger.error(err);
             res.json({ errno: 1, mes: '发布新闻失败' });
-          } else { res.json({ errno: 0, mes: '发布新闻成功' }) }
+          } else {
+            res.json({ errno: 0, mes: '发布新闻成功' })
+            next()
+          }
         });
       }
     });
   },
-  update: (req, res) => {
+  update: (req, res, next) => {
     global.logger.info('news/update.json');
     const {title, content, intro, tags, author, cover} = req.body;
     News.update(
@@ -27,8 +30,10 @@ module.exports = {
       { content, intro, tags, author, updateAt: Date.now(), cover },
       (err, ne) => {
         if (err) global.logger.error(err);
-        if (ne.ok === 1) res.json({ errno: 0, mes: `新闻${title}更新成功` })
-        else res.json({ errno: 1, mes: '新闻更新失败' })
+        if (ne.ok === 1) {
+          res.json({ errno: 0, mes: `新闻${title}更新成功` })
+          next()
+        } else res.json({ errno: 1, mes: '新闻更新失败' })
       }
     )
   },
@@ -80,13 +85,14 @@ module.exports = {
       });
     }
   },
-  delete: (req, res) => {
+  delete: (req, res, next) => {
     global.logger.info('news/delete.json');
     var _new = req.query;
     News.remove({title: _new.title}, function(err, news) {
       if (err) global.logger.error(err);
       if (news.ok === 1) {
         res.json({ errno: 0, mes: `删除新闻${_new.title}成功` })
+        next()
       } else res.json({ errno: 1, mes: `删除新闻${_new.title}失败` })
     });
   }

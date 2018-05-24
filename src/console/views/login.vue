@@ -4,24 +4,25 @@
 
 <template>
 <div class="login" @keydown.enter="handleSubmit">
+  <div class="bg"></div>
   <div class="login-con">
     <Card :bordered="false">
       <p slot="title">
-        <Icon type="log-in" />欢迎登录
+        <Icon type="log-in" /> 欢迎登录
       </p>
       <div class="form-con">
         <Form ref="loginForm" :model="form" :rules="rules">
           <FormItem prop="userName">
             <Input v-model="form.userName" placeholder="请输入用户名">
               <span slot="prepend">
-                  <Icon :size="16" type="person"></Icon>
+                <Icon :size="16" type="person" />
               </span>
             </Input>
           </FormItem>
           <FormItem prop="password">
             <Input type="password" v-model="form.password" placeholder="请输入密码">
               <span slot="prepend">
-                  <Icon :size="14" type="locked"></Icon>
+                <Icon :size="14" type="locked" />
               </span>
             </Input>
           </FormItem>

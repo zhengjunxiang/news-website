@@ -9,7 +9,7 @@ export default (that, code) => [
     title: '创建时间',
     key: 'createAt',
     render: (h, params) => {
-      return h('div', that.formatDate(that.userData[params.index].createAt));
+      return h('div', that.$U.fDate(that.userData[params.index].createAt));
     }
   }, {
     title: '操作',

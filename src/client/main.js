@@ -14,6 +14,7 @@ Vue.component('VueStar', VueStar)
 Vue.component('page-nav', PageNav)
 Vue.component('NewSpan', Span)
 Vue.use(Alert)
+Vue.prototype.$U = util
 
 // 使用VueI18n
 Vue.use(VueI18n)

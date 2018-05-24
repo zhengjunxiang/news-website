@@ -1,7 +1,7 @@
 var Events = require('../models/events');
 
 module.exports = {
-  add: (req, res) => {
+  add: (req, res, next) => {
     global.logger.info('events/add.json');
     const _event = req.body;
     Events.findOne({title: _event.title}, function(err, events) {
@@ -14,12 +14,15 @@ module.exports = {
           if (err) {
             global.logger.error(err);
             res.json({ errno: 1, mes: '发布活动失败' });
-          } else { res.json({ errno: 0, mes: '发布活动成功' }) }
+          } else {
+            res.json({ errno: 0, mes: '发布活动成功' })
+            next()
+          }
         });
       }
     });
   },
-  update: (req, res) => {
+  update: (req, res, next) => {
     global.logger.info('events/update.json');
     const {title, content, intro, tags, author, cover} = req.body;
     Events.update(
@@ -27,8 +30,10 @@ module.exports = {
       { content, intro, tags, author, updateAt: Date.now(), cover },
       (err, ne) => {
         if (err) global.logger.error(err);
-        if (ne.ok === 1) res.json({ errno: 0, mes: `活动${title}更新成功` })
-        else res.json({ errno: 1, mes: '活动更新失败' })
+        if (ne.ok === 1) {
+          res.json({ errno: 0, mes: `活动${title}更新成功` })
+          next()
+        } else res.json({ errno: 1, mes: '活动更新失败' })
       }
     )
   },
@@ -48,13 +53,14 @@ module.exports = {
       });
     }
   },
-  delete: (req, res) => {
+  delete: (req, res, next) => {
     global.logger.info('events/delete.json');
     var _event = req.query;
     Events.remove({title: _event.title}, function(err, events) {
       if (err) global.logger.error(err);
       if (events.ok === 1) {
         res.json({ errno: 0, mes: `删除活动${_event.title}成功` })
+        next()
       } else res.json({ errno: 1, mes: `删除活动${_event.title}失败` })
     });
   }

@@ -33,6 +33,7 @@
     "html2canvas": "^0.5.0-beta4",
     "iview": "^2.11.0",
     "js-cookie": "^2.2.0",
+    "moment": "^2.22.1",
     "simplemde": "^1.11.2",
     "time-localstorage": "^1.0.2",
     "tinymce": "^4.7.4",

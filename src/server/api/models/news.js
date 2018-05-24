@@ -10,8 +10,8 @@ var NewsSchema = new mongoose.Schema({
   tags: { type: Array },
   like: { type: Number, default: 0 },
   unlike: { type: Number, default: 0 },
-  createAt: { type: Date, default: Date.now() },
-  updateAt: { type: Date, default: Date.now() }
+  createAt: { type: Number, default: Date.now },
+  updateAt: { type: Number, default: Date.now }
 });
 
 module.exports = mongoose.model('News', NewsSchema);
