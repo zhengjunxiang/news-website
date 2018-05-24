@@ -1,13 +1,14 @@
 import Cookies from 'js-cookie';
 import {
   LoginUser, RegisterUser, GetUser, DelUser, UpdateMes, UpdatePassW, GetUserOne, LoginOut,
-  ReadMes, BinMes, ResetMes
+  ReadMes, BinMes, ResetMes, DelMes
 } from '@/api/server.js';
 
 const user = {
   state: {
     userName: Cookies.get('user') || '',
-    access: parseInt(Cookies.get('access'))
+    access: parseInt(Cookies.get('access')),
+    mesCount: 0
   },
   mutations: {
     logout(state, vm) {
@@ -28,6 +29,9 @@ const user = {
       localStorage.avatorImgPath = d.avatar || '';
       state.userName = d.name;
       state.access = d.access;
+    },
+    setMesCount(state, num) {
+      state.mesCount = num
     }
   },
   actions: {
@@ -76,11 +80,16 @@ const user = {
     async resetMes({commit}, data) {
       const res = await ResetMes(data)
       return res.data
+    },
+    async delMes({commit}, data) {
+      const res = await DelMes(data)
+      return res.data
     }
   },
   getters: {
     userN: state => state.userName,
-    accessCode: state => state.access
+    accessCode: state => state.access,
+    mesCount: state => state.mesCount
   }
 };
 

@@ -1,17 +1,18 @@
 <template>
 <div @click="showMessage" class="message-con">
-  <Tooltip :content="value > 0 ? '有' + value + '条未读消息' : '无未读消息'" placement="bottom">
-    <Badge :count="value" dot><Icon type="ios-bell" :size="22" /></Badge>
+  <Tooltip :content="mesCount > 0 ? '有' + mesCount + '条未读消息' : '无未读消息'" placement="bottom">
+    <Badge :count="mesCount" dot><Icon type="ios-bell" :size="22" /></Badge>
   </Tooltip>
 </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import util from '@/libs/util.js';
 export default {
   name: 'messageTip',
-  props: {
-    value: { type: Number, default: 0 }
+  computed: {
+    ...mapGetters(['mesCount'])
   },
   methods: {
     showMessage() {

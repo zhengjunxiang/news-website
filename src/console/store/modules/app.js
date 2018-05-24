@@ -19,8 +19,7 @@ export default {
     currentPath: [initRoute], // 面包屑数组
     menuList: [],
     routers: [ otherRouter, ...appRouter ],
-    tagsList: [ ...otherRouter.children ],
-    messageCount: 0
+    tagsList: [ ...otherRouter.children ]
   },
   mutations: {
     setTagsList(state, list) { state.tagsList.push(...list); },
@@ -115,9 +114,6 @@ export default {
     setCurrentPath(state, pathArr) { state.currentPath = pathArr },
     setCurrentPageName(state, name) { state.currentPageName = name; },
     clearOpenedSubmenu(state) { state.openedSubmenuArr.length = 0; },
-    setMessageCount(state, count) {
-      state.messageCount = count;
-    },
     increateTag(state, tagObj) {
       state.pageOpenedList.push(tagObj);
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);

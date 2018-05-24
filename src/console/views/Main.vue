@@ -25,7 +25,7 @@
       </div>
       <div class="header-avator-con">
         <full-screen v-model="isFullScreen" />
-        <message-tip v-model="mesCount" />
+        <message-tip />
         <theme-switch />
         <div class="user-dropdown-menu-con">
           <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
@@ -102,21 +102,19 @@ export default {
     },
     menuTheme() {
       return this.$store.state.app.menuTheme;
-    },
-    mesCount() {
-      return this.$store.state.app.messageCount;
     }
   },
   methods: {
-    init() {
+    async init() {
       let pathArr = util.setCurrentPath(this, this.$route.name);
       this.$store.commit('updateMenulist');
       this.userName = this.userN;
       if (pathArr.length >= 2) this.$store.commit('addOpenSubmenu', pathArr[1].name);
-      let messageCount = 3;
-      this.messageCount = messageCount.toString();
       this.checkTag(this.$route.name);
-      this.$store.commit('setMessageCount', 3);
+      const res = await this.$store.dispatch('getUserOne', {name: this.userN});
+      if (res.mes) this.$Message.success(res.mes)
+      const unreadMes = res.data.messages.filter(m => !m.isReaded)
+      this.$store.commit('setMesCount', unreadMes.length)
     },
     toggleClick() {
       this.shrink = !this.shrink;

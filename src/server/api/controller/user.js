@@ -73,6 +73,20 @@ module.exports = {
       }
     )
   },
+  delmes: (req, res) => {
+    global.logger.info('user/delmes.json');
+    var { name, _id } = req.query;
+    User.updateOne(
+      { name },
+      { $pull: { messages: { _id } } },
+      (err, user) => {
+        if (err) global.logger.error(err);
+        if (user.ok === 1) {
+          res.json({ errno: 0, mes: '' })
+        } else res.json({ errno: 1, mes: '操作信息更新失败' })
+      }
+    )
+  },
   signin: (req, res) => {
     global.logger.info('user/signin.json');
     var { name, password } = req.body;

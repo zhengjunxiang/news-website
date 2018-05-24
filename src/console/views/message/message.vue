@@ -81,11 +81,15 @@ export default {
     })
     this.currentMesList = this.unreadMesList
     this.unreadCount = this.unreadMesList.length;
+    this.$store.commit('setMesCount', this.unreadMesList.length)
     this.hasreadCount = this.hasreadMesList.length;
     this.recyclebinCount = this.recyclebinList.length;
   },
   watch: {
-    unreadMesList(arr) { this.unreadCount = arr.length },
+    unreadMesList(arr) {
+      this.unreadCount = arr.length
+      this.$store.commit('setMesCount', arr.length)
+    },
     hasreadMesList(arr) { this.hasreadCount = arr.length },
     recyclebinList(arr) { this.recyclebinCount = arr.length }
   }

@@ -35,6 +35,7 @@ module.exports = function(app) {
   router.get('/api/user/readmes.json', user.readmes);
   router.get('/api/user/binmes.json', user.binmes);
   router.get('/api/user/resetmes.json', user.resetmes);
+  router.get('/api/user/delmes.json', user.delmes);
   // news
   router.post('/api/news/add.json', news.add);
   router.post('/api/news/update.json', news.update);
