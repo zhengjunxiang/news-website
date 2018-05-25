@@ -48,12 +48,6 @@
                 </span>
               </Input>
             </FormItem>
-            <FormItem prop="access">
-              <Select v-model="form.access" placeholder="权限">
-                <Option :value="1">1</Option>
-                <Option :value="2">2</Option>
-              </Select>
-            </FormItem>
             <FormItem>
               <Button @click="register" type="primary" long>创建用户</Button>
             </FormItem>
@@ -85,7 +79,14 @@
           <Icon type="close" />
         </Button>
       </div>
-      <Table :data="checkData" :columns="columnsUser" stripe size="small" />
+      <div class="margin-bottom-10">
+        <Input v-model="excelFileName" icon="document" placeholder="请输入文件名" style="width: 190px" />
+        <a id="hrefToExportTable" style="postion: absolute;left: -10px;top: -10px;width: 0px;height: 0px;"></a>
+        <Button type="primary" @click="exportExcel">表格数据</Button>
+        <Input v-model="csvFileName" icon="document" placeholder="请输入文件名" style="width: 190px" />
+        <Button type="primary" @click="exportData()"><Icon type="ios-download-outline" /> 导出数据</Button>
+      </div>
+      <Table ref='table' :data="checkData" :columns="columnsUser" stripe size="small" />
     </Card>
   </Row>
 </div>
@@ -96,14 +97,15 @@ import { mapGetters } from 'vuex';
 import columns from './columns.js';
 import columnsUser from './columnsUser.js';
 import util from '@/libs/util.js'
+import table2excel from '@/libs/table2excel.js';
 export default {
   name: 'access-index',
   computed: {
     ...mapGetters(['accessCode']),
     avatorPath: () => localStorage.avatorImgPath,
     checkData() {
-      const userData = this.userData.filter(item => item.name === this.checkUser)[0] || null
-      return userData ? userData.messages : []
+      const userData = this.userData.filter(item => item.name === this.checkUser)[0] || null;
+      return userData ? userData.messages : [];
     }
   },
   data() {
@@ -117,17 +119,18 @@ export default {
       else callback();
     };
     return {
+      excelFileName: '',
+      csvFileName: '',
       isShowUsers: false,
       userData: [],
       checkUser: '',
       columnsUser: columnsUser(this),
       columns: columns(this),
-      form: { userName: '', password: '', passwdCheck: '', access: '' },
+      form: { userName: '', password: '', passwdCheck: '', access: 1 },
       rules: {
         userName: [{ required: true, message: '账号不能为空', trigger: 'blur' }],
         password: [{ required: true, message: '密码不能为空', trigger: 'blur' }],
-        passwdCheck: [{ validator: validatePassCheck, trigger: 'blur' }],
-        access: [{ validator: validateAccessCheck, trigger: 'change' }]
+        passwdCheck: [{ validator: validatePassCheck, trigger: 'blur' }]
       }
     };
   },
@@ -142,22 +145,25 @@ export default {
       this.isShowUsers = true;
     },
     resetData() {
-      this.form.userName = '',
-      this.form.password = '',
-      this.form.passwdCheck = '',
-      this.form.access = ''
+      this.form.userName = '';
+      this.form.password = '';
+      this.form.passwdCheck = '';
+      this.form.access = '';
+    },
+    exportData() {
+      this.$refs.table.exportCsv({ filename: this.csvFileName || 'none', original: false })
+    },
+    exportExcel() {
+      table2excel.transform(this.$refs.table, 'hrefToExportTable', this.excelFileName || 'none')
     },
     register() {
       this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
-          const name = this.form.userName,
-            password = this.form.password,
-            access = this.form.access;
-          if (util.mapScript(name) || util.mapScript(password)) return this.$Message.error('含有敏感字符')
-          const data = { name, password, access }
-          const res = await this.$store.dispatch('register', data)
-          if (res.mes) this.$Message.success(res.mes)
-          this.resetData()
+          const name = this.form.userName, password = this.form.password, access = this.form.access;
+          if (util.mapScript(name) || util.mapScript(password)) return this.$Message.error('含有敏感字符');
+          const data = { name, password, access }, res = await this.$store.dispatch('register', data);
+          if (res.mes) this.$Message.success(res.mes);
+          this.resetData();
         }
       })
     }

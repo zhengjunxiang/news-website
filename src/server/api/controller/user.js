@@ -4,10 +4,12 @@ var bcrypt = require('bcryptjs');
 var SALT_WORK_FACTOR = 10;
 
 module.exports = {
-  get: (req, res) => {
-    global.logger.info('user/get.json');
-    const cond = { access: {'$gt': 0} };
-    User.find(cond, { password: 0 }, (err, user) => {
+  getUsers: (req, res) => {
+    global.logger.info('user/getUsers.json');
+    const cond = { access: {'$gt': 0} },
+      {access} = req.session.user,
+      filter = access === 0 ? { password: 0 } : { password: 0, messages: 0 };
+    User.find(cond, filter, (err, user) => {
       if (err) global.logger.error(err);
       else res.json({ errno: 0, mse: '', data: user });
     });
@@ -17,7 +19,10 @@ module.exports = {
     const {name} = req.query;
     User.findOne({ name }, { password: 0 }, (err, user) => {
       if (err) global.logger.error(err)
-      else res.json({ errno: 0, mse: '', data: user });
+      else {
+        user.messages = user.messages.filter(mes => !mes.isRemove)
+        res.json({ errno: 0, mse: '', data: user })
+      }
     });
   },
   delete: (req, res, next) => {
@@ -77,8 +82,8 @@ module.exports = {
     global.logger.info('user/delmes.json');
     var { name, _id } = req.query;
     User.updateOne(
-      { name },
-      { $pull: { messages: { _id } } },
+      { name, 'messages._id': _id },
+      { $set: { 'messages.$.isRemove': true } },
       (err, user) => {
         if (err) global.logger.error(err);
         if (user.ok === 1) {
@@ -92,7 +97,7 @@ module.exports = {
     var { name } = req.query;
     User.updateOne(
       { name },
-      { $pull: { messages: { isDelete: true } } },
+      { $set: { 'messages.$.isRemove': true } },
       (err, user) => {
         if (err) global.logger.error(err);
         if (user.ok === 1) {

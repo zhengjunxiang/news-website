@@ -39,8 +39,11 @@
         <span @click="delBinMes" v-if="recyclebinCount">
           <Tooltip content="清空回收站" placement="left"><Icon type="trash-a" /></Tooltip>
         </span>
+        <span @click="fetchMes">
+          <Tooltip content="更新消息" placement="left"><Icon type="refresh" /></Tooltip>
+        </span>
       </div>
-      <Table ref="messageList" :columns="mesTitleColumns" :data="currentMesList" />
+      <Table ref="messageList" :columns="mesTitleColumns" :data="currentMesList" :loading="isLoading" />
     </div>
   </div>
 </div>
@@ -58,6 +61,7 @@ export default {
       hasreadMesList: [],
       recyclebinList: [],
       currentMessageType: 'unread',
+      isLoading: false,
       unreadCount: 0,
       hasreadCount: 0,
       recyclebinCount: 0,
@@ -68,19 +72,30 @@ export default {
     ...mapGetters(['userN'])
   },
   methods: {
-    async init() {
-      const res = await this.$store.dispatch('getUserOne', {name: this.userN});
-      if (res.mes) this.$Message.success(res.mes)
-      res.data.messages.forEach(m => {
-        if (m.isDelete) this.recyclebinList.push(m)
-        else if (m.isReaded) this.hasreadMesList.push(m)
-        else this.unreadMesList.push(m)
-      })
-      this.currentMesList = this.unreadMesList
-      this.unreadCount = this.unreadMesList.length;
-      this.$store.commit('setMesCount', this.unreadMesList.length)
-      this.hasreadCount = this.hasreadMesList.length;
-      this.recyclebinCount = this.recyclebinList.length;
+    resetData() {
+      this.currentMesList = [];
+      this.unreadMesList = [];
+      this.hasreadMesList = [];
+      this.recyclebinList = [];
+    },
+    async fetchMes() {
+      this.isLoading = true;
+      try {
+        const res = await this.$store.dispatch('getUserOne', {name: this.userN});
+        if (res.mes) this.$Message.success(res.mes)
+        this.isLoading = false;
+        this.resetData();
+        res.data.messages.forEach(m => {
+          if (m.isDelete) this.recyclebinList.push(m)
+          else if (m.isReaded) this.hasreadMesList.push(m)
+          else this.unreadMesList.push(m)
+        })
+        this.currentMesList = this.unreadMesList
+        this.unreadCount = this.unreadMesList.length;
+        this.$store.commit('setMesCount', this.unreadMesList.length)
+        this.hasreadCount = this.hasreadMesList.length;
+        this.recyclebinCount = this.recyclebinList.length;
+      } catch (e) { this.isLoading = false }
     },
     setCurrentMesType(type) {
       this.currentMessageType = type;
@@ -100,8 +115,7 @@ export default {
       });
     }
   },
-  mounted() { this.init() },
-  activated() { this.init() },
+  mounted() { this.fetchMes() },
   watch: {
     unreadMesList(arr) {
       this.unreadCount = arr.length

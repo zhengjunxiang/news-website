@@ -1,10 +1,17 @@
 export default (that) => [
   {
-    title: ' ',
+    title: '操作',
     key: 'mes'
   }, {
-    title: ' ',
+    title: '查阅',
+    key: 'isReaded'
+  }, {
+    title: '删除',
+    key: 'isRemove'
+  }, {
+    title: '时间',
     key: 'createAt',
+    sortable: true,
     render: (h, params) => {
       return h('div', [
         h('Icon', {

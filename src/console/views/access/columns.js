@@ -6,9 +6,6 @@ export default (that) => [
     title: '姓名',
     key: 'userName'
   }, {
-    title: '权限',
-    key: 'access'
-  }, {
     title: '艺名',
     key: 'artName'
   }, {
@@ -16,6 +13,7 @@ export default (that) => [
     key: 'department'
   }, {
     title: '创建时间',
+    sortable: true,
     key: 'createAt',
     render: (h, params) => {
       return h('div', that.$U.fDate(that.userData[params.index].createAt));

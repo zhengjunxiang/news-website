@@ -3,7 +3,7 @@ import API from './axios';
 // 用户
 const LoginUser = data => API.post('/api/user/signin.json', data);
 const RegisterUser = data => API.post('/api/user/signup.json', data);
-const GetUser = data => API.get('/api/user/get.json');
+const GetUser = data => API.get('/api/user/getUsers.json');
 const GetUserOne = data => API.get('/api/user/getUser.json', {params: data});
 const DelUser = data => API.delete('/api/user/delete.json', {params: data});
 const UpdateMes = data => API.post('/api/user/updateMessage.json', data);

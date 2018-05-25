@@ -24,7 +24,7 @@ module.exports = function(app) {
   app.use(passRoutes);
   app.use(access);
   // user
-  router.get('/api/user/get.json', user.get);
+  router.get('/api/user/getUsers.json', user.getUsers);
   router.post('/api/user/signin.json', user.signin);
   router.post('/api/user/signup.json', user.signup);
   router.delete('/api/user/delete.json', user.delete);

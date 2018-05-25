@@ -14,6 +14,7 @@ var UserSchema = new mongoose.Schema({
     mes: { type: String },
     isReaded: { type: Boolean, default: false },
     isDelete: { type: Boolean, default: false },
+    isRemove: { type: Boolean, default: false },
     createAt: { type: Number, default: Date.now }
   }],
   avatar: { type: String, default: '' },
