@@ -1,6 +1,6 @@
 <template>
 <div id="new">
-  <div class="main-body-header" v-if="ne.tags.length">
+  <div class="main-body-header" v-if="ne.tags && ne.tags.length">
     <h3 class="header">
       <span v-for="(tag, ind) in ne.tags" class="tags-list">{{tag}}</span>
     </h3>

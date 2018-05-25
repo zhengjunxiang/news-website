@@ -58,6 +58,11 @@ export default {
     curNews() {
       return this.news.slice((this.curP-1)*this.pageSize, this.curP*this.pageSize)
     }
+  },
+  methods: {
+    onClickPage(page) {
+      this.curP = page
+    }
   }
 };
 </script>
