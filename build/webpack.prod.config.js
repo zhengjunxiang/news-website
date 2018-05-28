@@ -29,9 +29,6 @@ const copyPlugin = isConsole ? new CopyWebpackPlugin([
 new CopyWebpackPlugin([{
   from: 'ant_icon.ico',
   to: '../'
-}, {
-  from: 'src/client/styles/font-awesome',
-  to: 'fonts'
 }])
 
 module.exports = merge(webpackBaseConfig, {

@@ -1,10 +1,7 @@
 import Vue from 'vue';
 import router from './router/index';
 import store from './store';
-import {
-  Button, Table, i18n, Select, Option, Input, Icon, Message, Spin, Dropdown, DropdownMenu,
-  DropdownItem, BackTop, Page, Tag
-} from 'iview';
+import iview from 'iview'
 import App from './app.vue';
 import VueStar from '@/libs/components/star/index.js'
 import langage from '@/lang/langage'
@@ -20,21 +17,7 @@ Vue.config.productionTip = false
 Vue.component('VueStar', VueStar)
 Vue.prototype.$U = util
 
-Vue.component('Tag', Tag);
-Vue.component('Page', Page);
-Vue.component('BackTop', BackTop);
-Vue.component('Dropdown', Dropdown);
-Vue.component('DropdownMenu', DropdownMenu);
-Vue.component('DropdownItem', DropdownItem);
-Vue.component('Spin', Spin);
-Vue.component('Icon', Icon);
-Vue.component('Input', Input);
-Vue.component('Select', Select);
-Vue.component('Option', Option);
-Vue.component('Button', Button);
-Vue.component('Table', Table);
-Vue.prototype.$Message = Message;
-
+Vue.use(iview)
 // 使用VueI18n
 Vue.use(VueI18n)
 Vue.locale = () => {}
@@ -48,7 +31,7 @@ const I18n = new VueI18n({
   }
 })
 
-i18n((key, value) => I18n.t(key, value))
+iview.i18n((key, value) => I18n.t(key, value))
 
 const vm = new Vue({
   el: '#app',
