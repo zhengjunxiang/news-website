@@ -20,7 +20,7 @@ export default {
   content: {
     home: '首页',
     news: '新闻',
-    aboutUs: '关于我们',
+    aboutUs: '关于蚂蚁矿池',
     partners: '合作伙伴',
     events: '活动',
     archive: '档案',

@@ -36,7 +36,7 @@
   <div class="message-content-con">
     <div class="message-title-list-con">
       <div class="trash-a-con">
-        <span @click="delBinMes" v-if="recyclebinCount">
+        <span @click="delBinMes" v-if="currentMessageType === 'recyclebin' && recyclebinCount">
           <Tooltip content="清空回收站" placement="left"><Icon type="trash-a" /></Tooltip>
         </span>
         <span @click="fetchMes">

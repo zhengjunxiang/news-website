@@ -14,8 +14,11 @@
         <FormItem label="标题">
           <Input v-model="title" :disabled="isEdit" @on-blur="handleTitleBlur" icon="android-list" />
         </FormItem>
+        <FormItem label="简介">
+          <Input v-model="eventIntro" type="textarea" @on-blur="handleIntroBlur" />
+        </FormItem>
         <FormItem label="语言">
-          <Select v-model="lan" style="width:200px">
+          <Select v-model="lan" style="width:200px" :disabled="isEdit">
             <Option v-for="item in lans" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>
@@ -67,7 +70,7 @@ export default {
   },
   data() {
     return {
-      title: '', author: '', cover: '', showLink: false,
+      title: '', eventIntro: '', author: '', cover: '', showLink: false,
       editPathButtonType: 'ghost', publishTime: '',
       publishLoading: false, isShowPreview: false, isEdit: false,
       lans: conf.lans, lan: ''
@@ -97,6 +100,7 @@ export default {
     initData() {
       this.title = localStorage.eventTitle || '';
       this.author = this.artName || localStorage.eventAuthor || this.userN;
+      this.eventIntro = localStorage.eventIntro || '';
       this.cover = localStorage.eventCover || '';
       this.lan = localStorage.eventLan || '';
     },
@@ -104,6 +108,7 @@ export default {
       if (this.canPublish()) {
         const data = {
           title: this.title,
+          intro: this.eventIntro,
           author: this.author,
           cover: this.cover,
           lan: this.lan,
@@ -125,6 +130,7 @@ export default {
     handleTitleBlur() {
       if (this.title.length !== 0) localStorage.eventTitle = this.title;
     },
+    handleIntroBlur() { localStorage.eventIntro = this.eventIntro },
     handleAuthorBlur() { localStorage.eventAuthor = this.author },
     handleCoverBlur() { localStorage.eventCover = this.cover },
     canPublish() {

@@ -1,9 +1,9 @@
 <template>
   <div class="partners">
     <div class="main-body-header">
-      <h1 class="header">
+      <h2 class="header">
         <em class="page-title-link" data-url="home">{{$t('content.partners')}}</em>
-      </h1>
+      </h2>
     </div>
     <div class="main-body-content">
       <div class="partners-con">

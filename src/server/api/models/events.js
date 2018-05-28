@@ -3,9 +3,10 @@ var mongoose = require('mongoose');
 var EventsSchema = new mongoose.Schema({
   title: { unique: true, type: String },
   content: { type: String },
+  intro: { type: String },
   author: { type: String, default: 'Noname' },
   cover: { type: String },
-  lan: { type: String, default: 'CN' },
+  lan: { type: String, default: 'zh' },
   createAt: { type: Number, default: Date.now },
   updateAt: { type: Number, default: Date.now }
 });

@@ -28,11 +28,11 @@
         </div>
         <Input v-model="excelFileName" icon="document" placeholder="请输入文件名" style="width: 190px" />
         <a id="hrefToExportTableEvent" style="postion: absolute;left: -10px;top: -10px;width: 0px;height: 0px;"></a>
-        <Button type="primary" size="large" @click="exportExcel">表格数据</Button>
+        <Button type="primary" @click="exportExcel">表格数据</Button>
       </Col>
       <Col :span="6">
-        <Button type="primary" size="large" @click="exportData(1)"><Icon type="ios-download-outline" /> 原始数据</Button>
-        <Button type="primary" size="large" @click="exportData(2)"><Icon type="ios-download-outline" /> 排序后数据</Button>
+        <Button type="primary" @click="exportData(1)"><Icon type="ios-download-outline" /> 原始数据</Button>
+        <Button type="primary" @click="exportData(2)"><Icon type="ios-download-outline" /> 排序后数据</Button>
       </Col>
       <Col :span="11">
         <div>
@@ -49,12 +49,12 @@
         </div>
         <div class="margin-top-10 margin-bottom-10">
           <Input v-model="csvFileName" icon="document" placeholder="请输入文件名" style="width: 190px" />
-          <Button type="primary" size="large" @click="exportData(3)"><Icon type="ios-download-outline" /> 自定义数据</Button>
+          <Button type="primary" @click="exportData(3)"><Icon type="ios-download-outline" /> 自定义数据</Button>
         </div>
       </Col>
       <Col span="24" class="table-con">
         <span @click="refreshTable" class="refresh-box"><Icon type="refresh" /></span>
-        <Table :data="currentData" :columns="columns" stripe ref="table" :loading="loading" />
+        <Table size="small" :data="currentData" :columns="columns" stripe ref="table" :loading="loading" />
         <div class="page-box">
           <Page :total="tableData.length" show-total @on-change="onPageChange" :current="curPage" :page-size="pageSize"  />
         </div>

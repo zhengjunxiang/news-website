@@ -6,8 +6,8 @@ util.title = function(title) {
 util.checkLan = () => {
   const naLan = navigator.language, loLan = localStorage.getItem('language');
   if (loLan) return loLan;
-  else if (naLan) return (naLan === 'zh-CN' || naLan === 'zh') ? 'CN' : 'EN';
-  else return 'CN';
+  else if (naLan) return (naLan === 'zh-CN' || naLan === 'zh') ? 'zh' : 'en';
+  else return 'zh';
 }
 util.fDate = (date, f) => {
   if (date) return moment(date - 0).format(f || 'YYYY-MM-DD HH:mm:ss')

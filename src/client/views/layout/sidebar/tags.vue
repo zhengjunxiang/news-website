@@ -1,6 +1,10 @@
 <template>
 <div class="widget-wrap widget-list">
-  <h3 class="widget-title">{{$t('siderBar.tags')}}</h3>
+  <h3 class="widget-title">
+    <router-link to="/tags">
+      {{$t('siderBar.tags')}}
+    </router-link>
+  </h3>
   <ul class="tag-list">
     <li class="tag-list-item" v-for="tag in tags" v-show="tag.news.length">
       <router-link :to="`/tags/${tag.value}`">{{tag.value}}</router-link>

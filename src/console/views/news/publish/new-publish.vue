@@ -18,7 +18,7 @@
           <Input v-model="newIntro" type="textarea" @on-blur="handleIntroBlur" />
         </FormItem>
         <FormItem label="语言">
-          <Select v-model="lan" style="width:200px">
+          <Select v-model="lan" style="width:200px" :disabled="isEdit">
             <Option v-for="item in lans" :value="item.value" :key="item.value">{{ item.label }}</Option>
           </Select>
         </FormItem>

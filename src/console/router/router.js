@@ -100,19 +100,19 @@ export const appRouter = [
     component: Main,
     children: [
       {
-        path: 'image-editor',
-        icon: 'crop',
-        name: 'image-editor',
-        title: '图片预览编辑',
-        meta: { title: 'Image-Editor - 图片预览编辑' },
-        component: imagesEditor
-      }, {
         path: 'file-upload',
         icon: 'android-upload',
         name: 'file-upload',
         meta: { title: 'Image-Upload - 图片上传' },
         title: '图片上传',
         component: fileUpload
+      }, {
+        path: 'image-editor',
+        icon: 'crop',
+        name: 'image-editor',
+        title: '图片预览编辑',
+        meta: { title: 'Image-Editor - 图片预览编辑' },
+        component: imagesEditor
       }
     ]
   }, {

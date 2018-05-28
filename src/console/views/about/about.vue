@@ -141,11 +141,7 @@ export default {
     },
     handlePreview() {
       this.$refs.preview.onShow();
-      let date = new Date();
-      let year = date.getFullYear();
-      let month = date.getMonth() + 1;
-      let day = date.getDate();
-      localStorage.aboutUsPublishTime = year + '-' + month + '-' + day;
+      localStorage.aboutUsPublishTime = this.$U.fDate();
       localStorage.aboutUsContent = tinymce.activeEditor.getContent({format: 'raw'});
       this.$nextTick(() => { this.$refs.preview.onPreview() })
     },

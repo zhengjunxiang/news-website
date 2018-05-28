@@ -19,11 +19,12 @@
           </transition>
         </section>
         <Sidebar />
-        <NewSpan v-show="isLoading" />
+        <Spin v-show="isLoading" fix size="large" />
       </div>
     </div>
   </div>
   <AntFooter />
+  <BackTop />
 </div>
 </template>
 
@@ -52,14 +53,9 @@ export default {
       this.selected = [];
     }
   },
-  async mounted() {
-    this.$store.commit('setLoading', true)
-    try {
-      const res = await this.$store.dispatch('getTagsAndNews');
-      this.$store.commit('setLoading', false)
-    } catch (err) {
-      this.$store.commit('setLoading', false)
-    }
+  mounted() {
+    this.$store.dispatch('getEvents');
+    this.$store.dispatch('getTagsAndNews');
   }
 };
 </script>
@@ -68,7 +64,6 @@ export default {
 @import './styles/resize.less';
 @import "./styles/common.less";
 @import "./styles/list.less";
-@import "./styles/news.less";
-@import './libs/components/share/css/share.less';
+@import "./styles/content.less";
 @import './app.less';
 </style>

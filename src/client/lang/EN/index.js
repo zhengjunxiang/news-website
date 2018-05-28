@@ -8,8 +8,8 @@ export default {
     about: 'About'
   },
   siderBar: {
-    newer: 'Newer',
-    older: 'Older',
+    newer: 'NEXT ARTICLE',
+    older: 'PREVIOUS ARTICLE',
     archive: 'Archive',
     recent: 'Recent',
     follow: 'Follow :',
@@ -20,7 +20,7 @@ export default {
   content: {
     home: 'Home',
     news: 'news',
-    aboutUs: 'About Us',
+    aboutUs: 'About AntPool',
     partners: 'Partners',
     events: 'Events',
     archive: 'Archive',

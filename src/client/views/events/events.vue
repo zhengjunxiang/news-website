@@ -3,37 +3,29 @@
 <template>
 <div>
   <div class="main-body-header">
-    <h1 class="header">
-      <i class="icon fa fa-calendar-o"></i> <em class="page-title-link" data-url="home">{{$t('content.events')}}</em>
-
-    </h1>
+    <h2 class="header"><em class="page-title-link" data-url="home">{{$t('content.events')}}</em></h2>
   </div>
   <div class="main-body-content">
     <section class="archives-wrap">
-      <div class="archives">
-        <div class="article-row">
-          <article class="article article-summary" v-for="(event, ind) in curEvents" :key="ind">
-            <div class="article-summary-inner">
-                <router-link :to="`/event/${event.title}`" class="thumbnail">
-                  <img :src="event.cover" class="thumbnail-image" v-if="event.cover" />
-                  <i class="fa fa-picture-o" aria-hidden="true" v-else />
-                </router-link>
-              <div class="article-meta">
-                <div class="date">
-                  <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
-                  <span style="margin-left: 10px;">{{event.author}}</span>
-                </div>
-              </div>
-              <h2 class="article-title" itemprop="name">
-                <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
-              </h2>
-            </div>
-          </article>
+      <article class="article article-summary" v-for="(event, ind) in curEvents" :key="ind">
+        <router-link :to="`/event/${event.title}`" class="thumbnail">
+          <img :src="event.cover" class="thumbnail-image" v-if="event.cover" />
+          <Icon type="image" v-else></Icon>
+        </router-link>
+        <div class="article-tro">
+          <h2 class="article-title" itemprop="name">
+            <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
+          </h2>
+          <div class="article-meta">
+            <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
+            <span>{{event.author}}</span>
+          </div>
+          <p class="article-excerpt">{{event.intro}}</p>
         </div>
-      </div>
+      </article>
     </section>
+    <Page :total="events.length" show-total @on-change="handlePage" :page-size="pageSize" />
   </div>
-  <page-nav :datas="events" :size="pageSize" @on-change="onClickPage" />
 </div>
 </template>
 <script>
@@ -46,9 +38,6 @@ export default {
       curP: 1
     }
   },
-  async mounted() {
-    const res = this.$store.dispatch('getEvents')
-  },
   computed: {
     ...mapGetters(['events']),
     curEvents() {
@@ -56,7 +45,7 @@ export default {
     }
   },
   methods: {
-    onClickPage(page) {
+    handlePage(page) {
       this.curP = page
     }
   }

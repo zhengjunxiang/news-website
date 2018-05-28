@@ -1,57 +1,40 @@
 <template>
-<div id="header" class="header">
-  <div class="header-outer">
-    <div class="container">
-      <div class="container-inner" style="position: relative">
-        <div class="header-title">
-          <h1 class="logo-wrap">
-            <a href="https://www.antpool.com/home.htm" target="_black" class="logo"></a>
-          </h1>
-          <h2 class="subtitle-wrap">
-            <p class="subtitle">{{ $t('header.tro') }}</p>
-          </h2>
-          <div :class="['change-lan-box', {show: isShowLan}]" @click="toggleLan">
-            <span class="change-lan-btn">{{lan}}</span>
-            <ul class="lan-box" @click="handleChangeLangage">
-              <li class="lan-item bor-bottom" data-name="CN">中文</li>
-              <li class="lan-item" data-name="EN">English</li>
-            </ul>
-          </div>
-        </div>
-        <div :class="{'header-inner': true, show: isShowNav}">
-          <a class="main-nav-toggle nav-icon fa fa-bars" @click="toggleNav" />
-          <ul class="main-nav">
-            <li class="main-nav-list-item">
-              <router-link to="/">{{ $t("header.home") }}</router-link>
-            </li>
-            <li class="main-nav-list-item">
-              <router-link to="/news">{{ $t("header.news") }}</router-link>
-            </li>
-            <li class="main-nav-list-item">
-              <router-link :to="{ name: 'events'}">{{ $t("header.events") }}</router-link>
-            </li>
-            <li class="main-nav-list-item">
-              <router-link :to="{ name: 'partners'}">{{ $t("header.partners") }}</router-link>
-            </li>
-            <li class="main-nav-list-item">
-              <router-link :to="{ name: 'about'}">{{ $t("header.about") }}</router-link>
-            </li>
-          </ul>
-          <nav class="sub-nav">
-            <div class="search-form-wrap">
-              <select v-model="selectedType" class="search-select">
-                <option value ="news">{{ $t("header.news") }}</option>
-                <option value ="events">{{ $t("header.events") }}</option>
-              </select>
-              <i class="fa fa-search"></i>
-              <input type="text" v-model="select" class="search-form-input" placeholder="Search..." @keyup="onSelect" />
-            </div>
-          </nav>
-        </div>
+  <div class="container header">
+    <div class="container-inner">
+      <div :class="{'header-inner': true, show: isShowNav}">
+        <span class="main-nav-toggle" @click="toggleNav">
+          <Icon type="navicon" />
+        </span>
+        <h1 class="logo-wrap">
+          <a href="https://www.antpool.com/home.htm" target="_black" class="logo"></a>
+        </h1>
+        <ul class="main-nav">
+          <li class="main-nav-list-item">
+            <router-link :to="{ name: 'home'}">{{ $t("header.news") }}</router-link>
+          </li>
+          <li class="main-nav-list-item">
+            <router-link :to="{ name: 'events'}">{{ $t("header.events") }}</router-link>
+          </li>
+          <li class="main-nav-list-item">
+            <router-link :to="{ name: 'partners'}">{{ $t("header.partners") }}</router-link>
+          </li>
+          <li class="main-nav-list-item">
+            <router-link :to="{ name: 'about'}">{{ $t("header.about") }}</router-link>
+          </li>
+        </ul>
+        <nav class="sub-nav">
+          <Dropdown trigger="click" @on-click="toggleType" placement="bottom-start">
+            <Button type="primary">{{type}}<Icon type="arrow-down-b" /></Button>
+            <DropdownMenu slot="list">
+              <DropdownItem name="news">{{$t("header.news")}}</DropdownItem>
+              <DropdownItem name="events">{{$t("header.events")}}</DropdownItem>
+            </DropdownMenu>
+          </Dropdown>
+          <Input v-model="select" icon="search" placeholder="Search..." @on-keyup="onSelect" />
+        </nav>
       </div>
     </div>
   </div>
-</div>
 </template>
 <script>
 import {mapGetters} from 'vuex'
@@ -61,12 +44,11 @@ export default {
     return {
       isShowNav: false,
       select: '',
-      selectedType: 'news',
-      isShowLan: false
+      selectedType: 'news'
     }
   },
   computed: {
-    ...mapGetters(['news', 'lan', 'events']),
+    ...mapGetters(['news', 'events']),
     selected() {
       const select = this.select.trim();
       if (this.selectedType === 'news') {
@@ -89,28 +71,15 @@ export default {
           return false
         })
       }
+    },
+    type() {
+      if (this.selectedType === 'news') return this.$t("header.news")
+      else if (this.selectedType === 'events') return this.$t("header.events")
     }
   },
   methods: {
-    toggleLan() {
-      this.isShowLan = !this.isShowLan
-    },
-    handleChangeLangage(ev) {
-      const target = ev.target;
-      if (target.nodeName.toLowerCase() === 'li') {
-        const lang = target.getAttribute('data-name') || 'CN';
-        this.$i18n.locale = lang;
-        this.$store.commit('setLan', lang)
-        localStorage.setItem('language', lang)
-        this.$store.commit('setNews')
-        this.$store.commit('setTagsNews')
-        this.$store.commit('setEvents')
-        this.$store.commit('setSortNewsByDate')
-        this.$store.commit('setSortNewsByMonth')
-        this.$store.commit('setNewnav')
-        if (/^\/new\//.test(this.$route.path)) this.$router.push({name: 'home'})
-        else if (/^\/event\//.test(this.$route.path)) this.$router.push({name: 'events'})
-      }
+    toggleType(type) {
+      this.selectedType = type
     },
     toggleNav() {
       this.isShowNav = !this.isShowNav

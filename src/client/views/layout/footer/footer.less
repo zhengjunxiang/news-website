@@ -1,18 +1,89 @@
 .footer {
-  h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-    padding: 0;
-  }
-  background: #33363b;
+  background: #1f2226;
   margin-top: 60px;
   color: #aaa;
   line-height: 1.6em;
+  .footer-b {
+    padding: 15px 30px;
+    overflow: hidden;
+  }
   .credit {
-    padding: 30px;
+    float: right;
+    padding-left: 30px;
     .logo {
       width: 168px;
       height: 60px;
       background-size: 168px 40px;
+    }
+    p {
+      text-align: right;
+    }
+  }
+  .links-box {
+    float: left;
+    p {
+      font-size: 14px;
+      color: #ccc;
+    }
+    a {
+      font-size: 14px;
+      margin-right: 10px;
+      line-height: 36px;
+      color: #aaa;
+    }
+  }
+  .social {
+    padding: 15px;
+    overflow: hidden;
+    line-height: 34px;
+    height: 64px;
+    p {
+      float: left;
+      color: rgba(255,255,255,0.8);
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .ivu-dropdown {
+      .ivu-icon-arrow-down-b {
+        margin-left: 5px;
+      }
+    }
+    .lang-box {
+      float: right;
+    }
+    .social-links {
+      float: left;
+      line-height: 36px;
+      position: relative;
+      li {
+        float: left;
+        margin-left: 15px;
+        font-size: 24px;
+        text-align: center;
+        .social-tooltip {
+          position: relative;
+          i.ivu-icon {
+            color: rgba(255,255,255,0.8);
+            transition: all ease .5s;
+            width: 24px;
+            font-size: 24px;
+          }
+          i.ivu-icon:hover {
+            color: rgba(255,255,255,1);
+          }
+        }
+      }
+    }
+
+    .icon-weibo {
+      color: rgba(255,255,255,0.8);
+      font-size: 24px;
+      margin: 0;
+      border: none;
+      background: none;
+    }
+    .icon-weibo:hover {
+      color: rgba(255,255,255,1);
     }
   }
 }

@@ -1,0 +1,133 @@
+.main-body-content {
+  .content-header {
+    position: relative;
+    .mark {
+      position: absolute;
+      padding: 180px 30px 20px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(rgba(0,0,0,0) 0, rgba(0,0,0,.78) 100%);
+    }
+    img {
+      width: 100%;
+    }
+    .article-title {
+      font-size: 36px;
+      line-height: 1.4;
+      font-weight: 600;
+      color: #fff;
+    }
+  }
+  .content-header.no-cover {
+    .article-title {
+      padding: 30px 30px 0;
+      color: #333;
+    }
+  }
+  .article-single {
+    padding: 30px 30px 20px;
+
+    .social-share-box {
+      height: 56px;
+      padding-bottom: 20px;
+      .social-share {
+        width: 100%;
+        .social-share-icon {
+          float: right;
+          font-size: 24px;
+          line-height: 36px;
+          height: 36px;
+          border-radius: 0;
+          margin: 0;
+          width: 16.5%;
+        }
+      }
+    }
+
+    .article-title {
+      margin-top: 0px;
+      text-align: center;
+      text-decoration: none;
+      font-size: 28px;
+      letter-spacing: -1px;
+      color: #333;
+      line-height: 1.3em;
+      transition: color 0.2s;
+      margin-bottom: 10px;
+    }
+
+    .article-meta {
+      line-height: 1.6;
+      font-size: 14px;
+      color: #666;
+      overflow: hidden;
+      padding: 0 5px 10px;
+      .edit-date {
+        padding-left: 10px;
+        border-left: 1px solid #999;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .article-entry {
+    border-bottom: 1px dashed #ddd;
+    border-top: 1px dashed #ddd;
+    color: #333;
+    font-size: 14px;
+    padding: 12px 0 20px;
+    min-height: 300px;
+
+    .article-entry img {
+      max-width: 100%;
+      height: auto;
+      display: block;
+      margin: auto;
+    }
+  }
+
+  .article-footer {
+    font-size: 14px;
+    line-height: 1.6em;
+    .tags-box {
+      padding-top: 20px;
+      .ivu-tag {
+        margin: 5px;
+      }
+    }
+    .vue-star-box {
+      text-align: center;
+      height: 60px;
+      .VueStar {
+        font-size: 24px;
+        color: #999;
+        display: inline-block;
+        position: static;
+        .VueStar__ground {
+          height: 60px;
+        }
+        .VueStar__icon {
+          line-height: 40px;
+          cursor: pointer;
+        }
+      }
+    }
+    .star-number-box {
+      text-align: center;
+      margin-top: -15px;
+      .star-number {
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+      }
+      .like {
+        color: #eb5020;
+      }
+      .unlike {
+        color: #666;
+      }
+    }
+
+  }
+}

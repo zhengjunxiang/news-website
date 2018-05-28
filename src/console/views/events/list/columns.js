@@ -28,7 +28,7 @@ export default that => [
     render: (h, params) => {
       return h('div', [
         h('Button', {
-          props: { type: 'error' },
+          props: { type: 'error', size: 'small' },
           style: { marginRight: '5px' },
           on: {
             click: () => {
@@ -47,7 +47,7 @@ export default that => [
           }
         }, '删除'),
         h('Button', {
-          props: { type: 'primary' },
+          props: { type: 'primary', size: 'small' },
           on: {
             click: async () => {
               const {title} = params.row;

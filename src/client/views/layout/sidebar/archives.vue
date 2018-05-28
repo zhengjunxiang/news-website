@@ -1,6 +1,10 @@
 <template>
 <div class="widget-wrap widget-list">
-  <h3 class="widget-title">{{$t('siderBar.archive')}}</h3>
+  <h3 class="widget-title">
+    <router-link to="/year">
+      {{$t('siderBar.archive')}}
+    </router-link>
+  </h3>
   <ul class="tag-list" v-for="year in newsM">
     <li class="tag-list-item" v-for="month in year.news">
       <router-link class="tag-list-link" :to="`/${year.year}/${month.month}`">

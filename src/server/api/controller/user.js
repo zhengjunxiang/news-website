@@ -95,13 +95,20 @@ module.exports = {
   delallmes: (req, res) => {
     global.logger.info('user/delallmes.json');
     var { name } = req.query;
-    User.updateOne(
+    User.findOne(
       { name },
-      { $set: { 'messages.$.isRemove': true } },
       (err, user) => {
         if (err) global.logger.error(err);
-        if (user.ok === 1) {
-          res.json({ errno: 0, mes: '' })
+        if (user) {
+          try {
+            user.messages.map(m => { if (m.isDelete) m.isRemove = true })
+            user.markModified('messages');
+            user.save()
+            res.json({ errno: 0, mes: '' })
+          } catch (err) {
+            if (err) global.logger.error(err);
+            res.json({ errno: 1, mes: '操作信息更新失败' })
+          }
         } else res.json({ errno: 1, mes: '操作信息更新失败' })
       }
     )
@@ -169,7 +176,7 @@ module.exports = {
   updateMessage(req, res, next) {
     global.logger.info('user/updateMessage.json');
     const body = req.body,
-      data = {};
+      data = { updateAt: Date.now() };
     Object.keys(body).forEach(key => { if (body[key] && key !== 'name') data[key] = body[key] })
     User.update(
       {name: { $in: body.name }}, data,

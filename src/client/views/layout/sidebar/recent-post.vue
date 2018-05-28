@@ -7,11 +7,11 @@
           <div class="item-thumbnail">
             <router-link :to="`/new/${ne.title}`" class="thumbnail">
               <img :src="ne.cover" class="thumbnail-image" v-if="ne.cover" />
-              <i class="fa fa-picture-o" aria-hidden="true" v-else />
+              <Icon type="image" v-else></Icon>
             </router-link>
           </div>
           <div class="item-inner">
-            <p class="item-category">
+            <p class="item-category" v-if="ne.tags">
               <router-link class="article-tag-link" v-for="(tag, ind) in ne.tags.slice(0, 2)" :to="`/tags/${tag}`" :key="ind">
                 {{tag}}
               </router-link>
@@ -19,7 +19,7 @@
             <p class="item-title">
               <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
             </p>
-            <p class="item-date"><time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time></p>
+            <p class="item-date"><time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time></p>
           </div>
         </li>
       </ul>
@@ -31,9 +31,9 @@ import {mapGetters} from 'vuex'
 export default {
   name: "widget",
   computed: {
-    ...mapGetters(['news']),
+    ...mapGetters(['news', 'events']),
     recentMews() {
-      return this.news.slice(0,5)
+      return this.news.slice(0,5).concat(this.events.slice(0,5)).sort((pre, old) => old.updateAt - pre.updateAt).slice(0,5)
     }
   }
 }

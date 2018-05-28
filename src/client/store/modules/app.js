@@ -13,18 +13,20 @@ export default {
     allEvents: [],
     events: [],
     event: {},
-    newNew: '',
-    oldNew: '',
+    newNew: {},
+    oldNew: {},
+    newEvent: {},
+    oldEvent: {},
     tags: [],
     lan: util.checkLan(),
-    currentTitle: '',
+    currentNewTitle: '',
     newsSortByYear: [],
     newsSortByMonth: []
   },
   mutations: {
     setLoading(state, bool) { state.isLoading = bool },
     setLan(state, lan) { if (lan) state.lan = lan },
-    setCurrentTitle: (state, title) => { if (title) state.currentTitle = title },
+    setCurrentNewTitle: (state, title) => { if (title) state.currentNewTitle = title },
     setEvents: (state, data) => {
       if (data) {
         if (data.mes) vm.$Alert.error(data.mes)
@@ -44,15 +46,18 @@ export default {
       }
     },
     setNewnav: (state, title) => {
-      if (!title) {
-        state.newNew = '';
-        state.oldNew = '';
-        return;
-      }
       state.news.map((ne, ind) => {
         if (title === ne.title) {
-          state.newNew = state.news[ind + 1] ? state.news[ind + 1].title : ''
-          state.oldNew = state.news[ind - 1] ? state.news[ind - 1].title : ''
+          state.news[ind + 1] ? state.newNew = state.news[ind + 1] : state.newNew = {}
+          state.news[ind - 1] ? state.oldNew = state.news[ind - 1] : state.oldNew = {}
+        }
+      })
+    },
+    setEventnav: (state, title) => {
+      state.events.map((ne, ind) => {
+        if (title === ne.title) {
+          state.events[ind + 1] ? state.newEvent = state.events[ind + 1] : state.newEvent = {}
+          state.events[ind - 1] ? state.oldEvent = state.events[ind - 1] : state.oldEvent = {}
         }
       })
     },
@@ -152,7 +157,7 @@ export default {
           commit('setTagsNews', data[1])
           commit('setSortNewsByDate')
           commit('setSortNewsByMonth')
-          if (state.currentTitle) commit('setNewnav', state.currentTitle)
+          if (state.currentNewTitle) commit('setNewnav', state.currentNewTitle)
         })
     }
   },
@@ -164,6 +169,8 @@ export default {
     newsM: state => state.newsSortByMonth,
     newNew: state => state.newNew,
     oldNew: state => state.oldNew,
+    newEvent: state => state.newEvent,
+    oldEvent: state => state.oldEvent,
     events: state => state.events,
     event: state => state.event,
     lan: state => state.lan,

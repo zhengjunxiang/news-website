@@ -2,7 +2,6 @@ import Vue from 'vue';
 import iView from 'iview';
 import Util from '../libs/util';
 import VueRouter from 'vue-router';
-import Home from '@/views/home/home.vue';
 import Tags from '@/views/tags/tags.vue';
 import Tag from '@/views/tag/tag.vue';
 import About from '@/views/about/about.vue';
@@ -23,7 +22,7 @@ const RouterConfig = {
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: News
     }, {
       path: '/tags',
       name: 'tags',
@@ -53,17 +52,13 @@ const RouterConfig = {
       name: 'new',
       component: New
     }, {
-      path: '/news',
-      name: 'news',
-      component: News
+      path: '/:year',
+      name: 'year',
+      component: Year
     }, {
       path: '/:year/:month',
       name: 'month',
       component: Month
-    }, {
-      path: '/:year',
-      name: 'year',
-      component: Year
     }, {
       path: '*',
       redirect: { name: 'home' }

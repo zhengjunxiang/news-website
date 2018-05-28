@@ -1,27 +1,59 @@
-@import './font-awesome/css/font-awesome.min.css';
+.container {
+  padding: 0 20px;
+
+  &-inner {
+    max-width: 1280px;
+    min-width: 320px;
+    width: 100%;
+    margin: 0 auto;
+  }
+}
 
 .app-container {
-  background: #f0f0f0;
+  background: #f1f1f1;
   .main-body {
-    margin-top: -60px;
     background-color: #f9f9f9;
+    margin-top: 15px;
     &-inner {
+      width: 100%;
       position: relative;
       box-sizing: border-box;
       box-shadow: rgba(0,0,0,0.098) 0 1px 1px 0;
-      padding-left: 300px;
+      padding-right: 300px;
       overflow: hidden;
       .main {
-        background-color: #fff;
-        padding-bottom: 60px;
-        float: right;
+        background: #fff;
+        padding-bottom: 40px;
+        float: left;
         width: 100%;
         box-sizing: border-box;
-        min-height: 600px;
+        .selected-box {
+          position: absolute;
+          z-index: 999;
+          width: 100%;
+          .selected-item {
+            padding: 0 30px;
+            line-height: 48px;
+            border-bottom: 1px solid #ddd;
+            background: #fcfcfc;
+            span {
+              padding-right: 10px;
+              color: #666;
+              font-size: 14px;
+            }
+          }
+        }
       }
     }
   }
 }
+
+.sidebar-toggle {
+  line-height: 38px;
+  width: 100%;
+}
+
+
 
 .article-tag-link {
   color: #006bde;
@@ -29,78 +61,6 @@
   line-height: 12px;
   display: inline-block;
   margin-right: 5px;
-}
-
-.article-footer {
-  font-size: 14px;
-  line-height: 1.6em;
-  border-top: 1px solid #ddd;
-  padding-top: 1.6em;
-  height: 20px;
-  .vue-star-box {
-    text-align: center;
-    height: 100px;
-    .VueStar {
-      font-size: 18px;
-      color: #999;
-      display: inline-block;
-      position: static;
-      .VueStar__icon {
-        cursor: pointer;
-      }
-    }
-  }
-  .star-number-box {
-    text-align: center;
-    margin-top: -25px;
-    .star-number {
-      display: inline-block;
-      width: 100px;
-      text-align: center;
-    }
-    .like {
-      color: #eb5020;
-    }
-    .unlike {
-      color: #666;
-    }
-  }
-
-  .social-share-box {
-    position: relative;
-  }
-  .article-share-link {
-    color: #666;
-    cursor: pointer;
-    float: right;
-    margin-left: 20px;
-    i {
-      padding-right: 8px;
-    }
-  }
-  .social-share {
-    transition: all ease .2s;
-    opacity: 0;
-    background: #fff;
-    right: 0px;
-    top: 30px;
-    position: absolute;
-  }
-  .show.social-share {
-    opacity: 1;
-  }
-}
-
-.container {
-  position: relative;
-  padding: 0 20px;
-
-  &-inner {
-    max-width: 1120px;
-    min-width: 320px;
-    width: 100%;
-    margin: 0 auto;
-  }
 }
 
 .fade-enter-active,
@@ -122,8 +82,8 @@ i.icon {
 .logo {
   display: block;
   padding: 10px 0;
-  width: 210px;
+  width: 180px;
   height: 70px;
-  background: url("./images/logo.png") 0 10px no-repeat;
-  background-size: 210px 50px;
+  background: url("./images/logo.png") 0 15px no-repeat;
+  background-size: 160px 38px;
 }

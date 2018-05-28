@@ -1,34 +1,44 @@
 <template>
 <div id="new">
   <div class="main-body-content">
-    <article class="article article-single article-type-post" itemprop="nePost">
-      <div class="article-inner">
+
+    <div class="content-header" v-if="event.cover">
+      <img :src="event.cover" />
+      <div class="mark">
         <header class="article-header">
           <h2 class="article-title" itemprop="name">
             {{event.title}}
           </h2>
         </header>
+      </div>
+    </div>
+    <div class="content-header no-cover" v-else>
+      <header class="article-header">
+        <h2 class="article-title" itemprop="name">
+          {{event.title}}
+        </h2>
+      </header>
+    </div>
+
+    <article class="article article-single article-type-post" itemprop="nePost">
+      <div class="social-share-box">
+        <div class="social-share backg social-share-event show" data-mode="prepend" :data-sites="setSites" />
+      </div>
+      <div class="article-inner">
         <div class="article-meta">
-          <div class="article-date">
-            <span>
-              <i class="fa fa-plus" aria-hidden="true" />
-              <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
-            </span>
-            <span v-if="$U.fDate(event.createAt) !== $U.fDate(event.updateAt)">
-              <i class="fa fa-pencil" aria-hidden="true" />
-              <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
-            </span>
-          </div>
-          <div class="article-author"><i class="fa fa-user" aria-hidden="true"></i>{{event.author}}</div>
+          <div class="article-author"><Icon type="android-person"></Icon> {{event.author}}</div>
+          <span>
+            <Icon type="ios-clock" />
+            <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
+          </span>
+          <span v-if="$U.fDate(event.createAt) !== $U.fDate(event.updateAt)" class="edit-date">
+            <Icon type="edit" />
+            <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
+          </span>
         </div>
         <div class="article-entry" itemprop="articleBody" v-html="event.content" />
         <footer class="article-footer">
-          <div class="social-share-box">
-            <div class="article-share-link" @click="handleClickShare">
-              <i class="fa fa-share"></i>Share
-            </div>
-            <div :class="['social-share', 'social-share-event', {show}]" data-mode="prepend" :data-sites="setSites" />
-          </div>
+          <EventsNav />
         </footer>
       </div>
     </article>
@@ -37,22 +47,25 @@
 </template>
 <script>
 import {mapGetters} from 'vuex'
+import EventsNav from './events-nav.vue'
 export default {
   name: "event",
   data() {
     return {
       title: '',
-      show: false,
       isActive: false,
       disable: false,
       isActiveUn: false,
       disableUn: false
     }
   },
+  components: {
+    EventsNav
+  },
   computed: {
     ...mapGetters(['event', 'lan']),
     setSites() {
-      if (this.lan === 'EN') return 'twitter,facebook,google'
+      if (this.lan === 'en') return 'twitter,facebook,google'
       else return 'wechat,qq,weibo,twitter,facebook,google'
     }
   },
@@ -60,14 +73,9 @@ export default {
     const title = this.$route.params.title
     if (title) {
       this.title = title;
-      this.$store.commit('setLoading', true)
-      try {
-        const res = await this.$store.dispatch('getEvent', {title})
-        window.socialShare('.social-share-event')
-        this.$store.commit('setLoading', false)
-      } catch (err) {
-        this.$store.commit('setLoading', false)
-      }
+      const res = await this.$store.dispatch('getEvent', {title})
+      this.$store.commit('setEventnav', title)
+      window.socialShare('.social-share-event')
     }
   },
   watch: {
@@ -75,22 +83,14 @@ export default {
       this.show = false
       const title = to.params.title;
       if (title) {
+        console.log('title', title)
+        console.log('this.title', this.title)
         if (title === this.title) return;
         this.title = title;
-        this.$store.commit('setLoading', true)
-        try {
-          const res = await this.$store.dispatch('getEvent', {title})
-          window.socialShare('.social-share-event')
-          this.$store.commit('setLoading', false)
-        } catch (err) {
-          this.$store.commit('setLoading', false)
-        }
+        const res = await this.$store.dispatch('getEvent', {title})
+        this.$store.commit('setEventnav', title)
+        window.socialShare('.social-share-event')
       }
-    }
-  },
-  methods: {
-    handleClickShare() {
-      this.show = !this.show;
     }
   }
 }
