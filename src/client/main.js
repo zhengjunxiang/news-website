@@ -4,7 +4,7 @@ import store from './store';
 import iview from 'iview'
 import App from './app.vue';
 import VueStar from '@/libs/components/star/index.js'
-import langage from '@/lang/langage'
+import langage from '@/langs/langage'
 import VueI18n from 'vue-i18n'
 import util from '@/libs/util.js'
 import en from 'iview/dist/locale/en-US';
