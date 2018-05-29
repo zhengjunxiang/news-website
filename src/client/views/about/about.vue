@@ -2,7 +2,7 @@
 <div>
   <div class="main-body-header">
     <h2 class="header" style="text-align: center;">
-      <em class="page-title-link" data-url="home">{{$t('content.aboutUs')}}</em>
+      {{$t('content.aboutUs')}}
     </h2>
   </div>
   <div class="main-body-content">

@@ -61,7 +61,7 @@ export default {
 </script>
 
 <style lang='less'>
-@import './styles/resize.less';
+@import "./styles/resize.less";
 @import "./styles/common.less";
 @import "./styles/list.less";
 @import "./styles/content.less";
