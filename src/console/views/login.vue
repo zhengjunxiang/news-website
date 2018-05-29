@@ -28,7 +28,7 @@
           </FormItem>
           <FormItem>
             <Button @click="handleSubmit" type="primary" long :loading="isLoading">登录</Button>
-            <!-- <p class="login-tip" @click="register" v-show="!isLoading">注册超级管理员</p> -->
+            <p class="login-tip" @click="register" v-show="!isLoading">注册超级管理员</p>
           </FormItem>
         </Form>
       </div>

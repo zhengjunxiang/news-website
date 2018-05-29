@@ -20,6 +20,7 @@ instance.interceptors.response.use(response => {
   };
   return Promise.reject(response);
 }, error => {
+  vm.$store.commit('setLoading', false)
   if (error) return vm.$Message.error(error);
   else vm.$Message.error('出了点问题，暂时加载不出来，请联系技术支持。');
   return Promise.reject(error);
