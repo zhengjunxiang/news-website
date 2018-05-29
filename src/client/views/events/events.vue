@@ -8,9 +8,11 @@
   <div class="main-body-content">
     <section class="archives-wrap">
       <article class="article article-summary" v-for="(event, ind) in curEvents" :key="ind">
-        <router-link :to="`/event/${event.title}`" class="thumbnail">
-          <img :src="event.cover" class="thumbnail-image" v-if="event.cover" />
-          <Icon type="image" v-else></Icon>
+        <router-link :to="`/event/${event.title}`" class="thumbnail" v-if="event.cover">
+          <img :src="event.cover" class="thumbnail-image" />
+        </router-link>
+        <router-link :to="`/event/${event.title}`" class="thumbnail img-icon" v-else>
+          <Icon type="image"></Icon>
         </router-link>
         <div class="article-tro">
           <h2 class="article-title" itemprop="name">

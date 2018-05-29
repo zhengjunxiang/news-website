@@ -8,9 +8,11 @@
   <div class="main-body-content">
     <section class="archives-wrap">
       <article class="article article-summary" v-for="(ne, index) in curNews" :key="index">
-        <router-link :to="`/new/${ne.title}`" class="thumbnail">
-          <img :src="ne.cover" class="thumbnail-image" v-if="ne.cover" />
-          <Icon type="image" v-else></Icon>
+        <router-link :to="`/new/${ne.title}`" class="thumbnail" v-if="ne.cover">
+          <img :src="ne.cover" class="thumbnail-image" />
+        </router-link>
+        <router-link :to="`/new/${ne.title}`" class="thumbnail img-icon" v-else>
+          <Icon type="image"></Icon>
         </router-link>
         <div class="article-tro">
           <h2 class="article-title" itemprop="name">
