@@ -22,41 +22,51 @@ const RouterConfig = {
     {
       path: '/',
       name: 'home',
+      meta: { title: 'AntPool - News' },
       component: News
     }, {
       path: '/tags',
       name: 'tags',
+      meta: { title: 'AntPool - Tags' },
       component: Tags
     }, {
       path: '/partners',
       name: 'partners',
+      meta: { title: 'AntPool - Partners' },
       component: Partners
     }, {
       path: '/about',
+      meta: { title: 'AntPool - AboutUs' },
       name: 'about',
       component: About
     }, {
       path: '/tags/:tag',
+      meta: { title: 'AntPool - Tag' },
       name: 'tag',
       component: Tag
     }, {
       path: '/events',
+      meta: { title: 'AntPool - Events' },
       name: 'events',
       component: Events
     }, {
       path: '/event/:title',
+      meta: { title: 'AntPool - Event' },
       name: 'event',
       component: Event
     }, {
       path: '/new/:title',
+      meta: { title: 'AntPool - New' },
       name: 'new',
       component: New
     }, {
       path: '/:year',
+      meta: { title: 'AntPool - Year' },
       name: 'year',
       component: Year
     }, {
       path: '/:year/:month',
+      meta: { title: 'AntPool - Month' },
       name: 'month',
       component: Month
     }, {
