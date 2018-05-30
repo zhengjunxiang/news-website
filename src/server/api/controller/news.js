@@ -76,12 +76,12 @@ module.exports = {
     const _new = req.query, field = {};
     if (!_new.title) {
       field.content = 0;
-      News.find(_new, field).sort({'createAt': -1}).exec((err, news) => {
+      News.find(_new, field).sort({'updateAt': -1}).exec((err, news) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: news });
       });
     } else {
-      News.findOne(_new).sort({'createAt': -1}).exec((err, news) => {
+      News.findOne(_new).sort({'updateAt': -1}).exec((err, news) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: news });
       });

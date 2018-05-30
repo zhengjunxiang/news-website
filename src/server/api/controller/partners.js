@@ -45,7 +45,7 @@ module.exports = {
   get: (req, res) => {
     global.logger.info('partners/get.json');
     const _com = req.query;
-    Partners.find(_com).sort({'createAt': -1}).exec((err, partners) => {
+    Partners.find(_com).sort({'updateAt': -1}).exec((err, partners) => {
       if (err) global.logger.error(err);
       else res.json({ errno: 0, mse: '', data: partners });
     });

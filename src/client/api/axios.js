@@ -15,13 +15,13 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(response => {
   vm.$store.commit('setLoading', false)
   if (response.status === 200) {
-    if (response.data.errno !== 0) return vm.$Message.error(response.data.mes)
+    if (response.data.errno !== 0) response.data.mse && vm.$Message.error({content: response.data.mse})
     else return response
   };
   return Promise.reject(response);
 }, error => {
   vm.$store.commit('setLoading', false)
-  if (error) return vm.$Message.error(error);
+  if (error) vm.$Message.error({content: error});
   else vm.$Message.error('出了点问题，暂时加载不出来，请联系技术支持。');
   return Promise.reject(error);
 });

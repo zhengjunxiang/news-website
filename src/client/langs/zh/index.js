@@ -27,6 +27,10 @@ export default {
     tagsSort: '标签归类'
   },
   footer: {
+    links: '友情链接',
+    antpool: '蚂蚁矿池',
+    bitmain: '比特大陆',
+    minerBooking: 'MINER BOOKING',
     ant: '蚂蚁矿池'
   }
 }

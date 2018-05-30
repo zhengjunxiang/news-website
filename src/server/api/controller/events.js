@@ -42,7 +42,7 @@ module.exports = {
     const _event = req.query, field = {};
     if (!_event.title) {
       field.content = 0;
-      Events.find(_event, field).sort({'createAt': -1}).exec((err, events) => {
+      Events.find(_event, field).sort({'updateAt': -1}).exec((err, events) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: events });
       });

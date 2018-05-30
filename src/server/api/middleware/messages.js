@@ -145,5 +145,11 @@ module.exports = function(req, res, next) {
       $each: [{ mes: `删除关于我们 ${lan}` }],
       $sort: { createAt: -1 }
     } } }, err => { if (err) global.logger.error(err) });
+  } else if (path === '/api/posters/add.json') {
+    const { type } = req.body;
+    User.update({name}, { $push: { messages: {
+      $each: [{ mes: `更新广告 ${type}` }],
+      $sort: { createAt: -1 }
+    } } }, err => { if (err) global.logger.error(err) });
   }
 }

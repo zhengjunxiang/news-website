@@ -1,0 +1,43 @@
+.posters {
+  .ivu-card-body {
+    position: relative;
+    img {
+      max-width: 100%;
+    }
+    .mark {
+      transition: opacity ease .3s;
+      position: absolute;
+      opacity: 0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      text-align: center;
+      background: rgba(0,0,0,0.7);
+      font-size: 36px;
+      .ivu-icon {
+        cursor: pointer;
+        padding-top: 25%;
+        color: #fff;
+      }
+    }
+  }
+  .ivu-card-body:hover .mark {
+    opacity: 1;
+  }
+  .ivu-card-head {
+    overflow: hidden;
+    .com-title {
+      width: auto;
+      float: left;
+    }
+    .title-date {
+      float: right;
+      line-height: 22px;
+      font-size: 12px;
+    }
+    button {
+      float: right;
+    }
+  }
+}

@@ -5,6 +5,7 @@ var EventsSchema = new mongoose.Schema({
   content: { type: String },
   intro: { type: String },
   author: { type: String, default: 'Noname' },
+  userName: { type: String, default: '' },
   cover: { type: String },
   feature: { type: Boolean, default: false },
   lan: { type: String, default: 'zh' },

@@ -7,7 +7,10 @@ const GetTags = () => API.get('/api/tags/get.json');
 const GetPartners = () => API.get('/api/partners/get.json');
 const GetAbout = () => API.get('/api/about/get.json');
 const GetEvents = data => API.get('/api/events/get.json', {params: data});
+const GetPosters = data => API.get('/api/posters/get.json', {params: data});
+const GetUserAvatar = data => API.get('/api/user/getUserAvatar.json', {params: data});
 
 export {
-  GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents
+  GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents,
+  GetPosters, GetUserAvatar
 };

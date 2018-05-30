@@ -121,6 +121,7 @@ export default {
           cover: this.cover,
           lan: this.lan,
           feature: this.feature,
+          userName: this.userN,
           content: tinymce.activeEditor.getContent({format: 'raw'}),
           tags: this.$refs.tagsCard.onReturnTags()
         }

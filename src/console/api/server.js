@@ -35,7 +35,6 @@ const Mkdir = data => API.post('/api/resouce/mkdir.json', data);
 const DelDir = data => API.delete('/api/resouce/delDir.json', {params: data});
 // posters
 const AddPosters = data => API.post('/api/posters/add.json', data);
-const UpdatePosters = data => API.post('/api/posters/update.json', data);
 const GetPosters = data => API.get('/api/posters/get.json', {params: data});
 const DelPosters = data => API.delete('/api/posters/delete.json', {params: data});
 // 合作伙伴

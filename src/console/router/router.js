@@ -178,22 +178,22 @@ export const appRouter = [
       }
     ]
   },
-  // {
-  //   path: '/posters',
-  //   icon: 'android-add',
-  //   name: 'posters',
-  //   title: '添加广告',
-  //   component: Main,
-  //   children: [
-  //     {
-  //       path: 'posters-index',
-  //       title: '添加广告',
-  //       meta: { title: 'Posters - 添加广告' },
-  //       name: 'posters-index',
-  //       component: posters
-  //     }
-  //   ]
-  // },
+  {
+    path: '/posters',
+    icon: 'android-add',
+    name: 'posters',
+    title: '添加广告',
+    component: Main,
+    children: [
+      {
+        path: 'posters-index',
+        title: '添加广告',
+        meta: { title: 'Posters - 添加广告' },
+        name: 'posters-index',
+        component: posters
+      }
+    ]
+  },
   {
     path: '/about',
     icon: 'android-contacts',

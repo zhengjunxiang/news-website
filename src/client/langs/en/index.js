@@ -27,6 +27,10 @@ export default {
     tagsSort: 'Tags'
   },
   footer: {
+    links: 'Links',
+    antpool: 'AntPool',
+    bitmain: 'BITMAIN',
+    minerBooking: 'MINER BOOKING',
     ant: 'AntPool'
   }
 }

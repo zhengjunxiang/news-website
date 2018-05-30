@@ -1,5 +1,5 @@
 import {
-  AddPosters, UpdatePosters, GetPosters, DelPosters
+  AddPosters, GetPosters, DelPosters
 } from '@/api/server.js';
 
 export default {
@@ -8,10 +8,6 @@ export default {
   actions: {
     async addPosters({commit}, data) {
       const res = await AddPosters(data)
-      return res.data
-    },
-    async updatePosters({commit}, data) {
-      const res = await UpdatePosters(data)
       return res.data
     },
     async getPosters({commit}, data) {

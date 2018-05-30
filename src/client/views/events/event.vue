@@ -26,15 +26,21 @@
       </div>
       <div class="article-inner">
         <div class="article-meta">
-          <div class="article-author"><Icon type="android-person"></Icon> {{event.author}}</div>
-          <span>
-            <Icon type="ios-clock" />
-            <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
-          </span>
-          <span v-if="$U.fDate(event.createAt) !== $U.fDate(event.updateAt)" class="edit-date">
-            <Icon type="edit" />
-            <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
-          </span>
+          <div class="avatar-box">
+            <Avatar :src="avatar" size="large" v-if="avatar" />
+            <Avatar icon="person" size="large" v-else />
+          </div>
+          <div class="article-meta-box">
+            <div class="article-author"><Icon type="android-person"></Icon> {{event.author}}</div>
+            <span>
+              <Icon type="ios-clock" />
+              <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
+            </span>
+            <span v-if="$U.fDate(event.createAt) !== $U.fDate(event.updateAt)" class="edit-date">
+              <Icon type="edit" />
+              <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
+            </span>
+          </div>
         </div>
         <div class="article-entry" itemprop="articleBody" v-html="event.content" />
         <footer class="article-footer">
@@ -56,7 +62,8 @@ export default {
       isActive: false,
       disable: false,
       isActiveUn: false,
-      disableUn: false
+      disableUn: false,
+      avatar: ''
     }
   },
   components: {
@@ -69,27 +76,32 @@ export default {
       else return 'wechat,qq,weibo,twitter,facebook,google'
     }
   },
-  async mounted() {
+  mounted() {
     const title = this.$route.params.title
     if (title) {
-      this.title = title;
-      const res = await this.$store.dispatch('getEvent', {title})
-      this.$store.commit('setEventnav', title)
-      window.socialShare('.social-share-event')
+      this.initDate(title)
     }
   },
   watch: {
-    async '$route' (to, from) {
+    '$route' (to, from) {
       this.show = false
       const title = to.params.title;
       if (title) {
-        console.log('title', title)
-        console.log('this.title', this.title)
         if (title === this.title) return;
-        this.title = title;
-        const res = await this.$store.dispatch('getEvent', {title})
+        this.initDate(title)
+      }
+    }
+  },
+  methods: {
+    async initDate(title) {
+      this.title = title;
+      await this.$store.dispatch('getEvent', {title})
+      try {
         this.$store.commit('setEventnav', title)
+      } catch (err) {
         window.socialShare('.social-share-event')
+        const res = await this.$store.dispatch('getUserAvatar', {name: this.event.userName})
+        if (res.data.avatar) this.avatar = res.data.avatar;
       }
     }
   }

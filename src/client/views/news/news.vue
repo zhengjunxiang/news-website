@@ -52,7 +52,7 @@
         </article>
       </div>
     </section>
-    <Page :total="news.length" show-total @on-change="handlePage" :page-size="pageSize" />
+    <Page size="small" :total="news.length" show-total @on-change="handlePage" :page-size="pageSize" />
   </div>
 </div>
 </template>

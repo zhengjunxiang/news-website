@@ -116,6 +116,7 @@ export default {
           author: this.author,
           cover: this.cover,
           lan: this.lan,
+          userName: this.userN,
           feature: this.feature,
           content: tinymce.activeEditor.getContent({format: 'raw'}),
         }

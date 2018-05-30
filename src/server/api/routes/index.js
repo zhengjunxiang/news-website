@@ -38,6 +38,7 @@ module.exports = function(app) {
   router.get('/api/user/resetmes.json', user.resetmes);
   router.get('/api/user/delmes.json', user.delmes);
   router.get('/api/user/delallmes.json', user.delallmes);
+  router.get('/api/user/getUserAvatar.json', user.getUserAvatar);
   // news
   router.post('/api/news/add.json', news.add);
   router.post('/api/news/update.json', news.update);
@@ -62,7 +63,6 @@ module.exports = function(app) {
   router.delete('/api/resouce/delDir.json', upload.delDir);
   // posters
   router.post('/api/posters/add.json', posters.add);
-  router.post('/api/posters/update.json', posters.update);
   router.get('/api/posters/get.json', posters.get);
   router.delete('/api/posters/delete.json', posters.delete);
   // partners

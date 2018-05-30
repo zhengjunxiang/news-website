@@ -1,9 +1,8 @@
 var mongoose = require('mongoose');
 
 var PostersSchema = new mongoose.Schema({
-  title: { type: String, unique: false },
+  title: { type: String },
   cover: { type: String },
-  lan: { type: String, default: 'zh' },
   link: { type: String },
   type: { type: String },
   createAt: { type: Number, default: Date.now },

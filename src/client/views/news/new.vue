@@ -26,15 +26,21 @@
       </div>
       <div class="article-inner">
         <div class="article-meta">
-          <div class="article-author"><Icon type="android-person"></Icon> {{ne.author}}</div>
-          <span>
-            <Icon type="ios-clock" />
-            <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
-          </span>
-          <span v-if="$U.fDate(ne.createAt) !== $U.fDate(ne.updateAt)" class="edit-date">
-            <Icon type="edit" />
-            <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
-          </span>
+          <div class="avatar-box">
+            <Avatar :src="avatar" size="large" v-if="avatar" />
+            <Avatar icon="person" size="large" v-else />
+          </div>
+          <div class="article-meta-box">
+            <div class="article-author"><Icon type="android-person"></Icon> {{ne.author}}</div>
+            <span>
+              <Icon type="ios-clock" />
+              <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
+            </span>
+            <span v-if="$U.fDate(ne.createAt) !== $U.fDate(ne.updateAt)" class="edit-date">
+              <Icon type="edit" />
+              <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
+            </span>
+          </div>
         </div>
         <div class="article-entry" itemprop="articleBody" v-html="ne.content" />
         <footer class="article-footer">
@@ -68,7 +74,8 @@ export default {
     return {
       title: '',
       isActive: false,
-      disable: false
+      disable: false,
+      avatar: ''
     }
   },
   components: {
@@ -81,33 +88,37 @@ export default {
       else return 'wechat,qq,weibo,twitter,facebook,google'
     }
   },
-  async mounted() {
+  mounted() {
     const title = this.$route.params.title
     if (title) {
-      this.title = title;
-      const res = await this.$store.dispatch('getNew', {title})
-      this.$store.commit('setCurrentNewTitle', title)
-      this.$store.commit('setNewnav', title)
-      window.socialShare('.social-share-new')
+      this.initData(title)
     }
     this.initStar()
   },
   watch: {
-    async '$route' (to, from) {
+    '$route' (to, from) {
       this.show = false
       const title = to.params.title;
       if (title) {
         if (title === this.title) return;
-        this.title = title;
-        const res = await this.$store.dispatch('getNew', {title})
-        this.$store.commit('setCurrentNewTitle', title)
-        this.$store.commit('setNewnav', title)
-        window.socialShare('.social-share-new')
-        this.initStar()
+        this.initData(title)
       }
+      this.initStar()
     }
   },
   methods: {
+    async initData(title) {
+      this.title = title;
+      await this.$store.dispatch('getNew', {title})
+      try {
+        const res = await this.$store.dispatch('getUserAvatar', {name: this.ne.userName})
+        if (res.data.avatar) this.avatar = res.data.avatar;
+      } catch (err) {
+        this.$store.commit('setCurrentNewTitle', title)
+        this.$store.commit('setNewnav', title)
+        window.socialShare('.social-share-new')
+      }
+    },
     initStar() {
       const title = this.$route.params.title,
         storage = tLocalStorage.get('likeTitle'),

@@ -9,11 +9,11 @@
     <section class="archives-wrap">
       <div v-for="(event, ind) in curEvents" :key="ind">
         <article class="article-summary feature" v-if="event.feature">
-          <router-link :to="`/new/${event.title}`" class="thumbnail" v-if="event.cover">
+          <router-link :to="`/event/${event.title}`" class="thumbnail" v-if="event.cover">
             <img :src="event.cover" class="thumbnail-image" />
             <div class="mark">
               <h2 class="article-title" itemprop="name">
-                <router-link :to="`/new/${event.title}`">{{event.title}}</router-link>
+                <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
               </h2>
               <div class="article-meta">
                 <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
@@ -26,12 +26,12 @@
           </div>
         </article>
         <article class="article-summary" v-else>
-          <router-link :to="`/new/${event.title}`" class="thumbnail" v-if="event.cover">
+          <router-link :to="`/event/${event.title}`" class="thumbnail" v-if="event.cover">
             <img :src="event.cover" class="thumbnail-image" />
           </router-link>
           <div :class="['article-tro', !event.cover ? 'no-cover' : '']">
             <h2 class="article-title" itemprop="name">
-              <router-link :to="`/new/${event.title}`">{{event.title}}</router-link>
+              <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
             </h2>
             <div class="article-meta">
               <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
@@ -42,7 +42,7 @@
         </article>
       </div>
     </section>
-    <Page :total="events.length" show-total @on-change="handlePage" :page-size="pageSize" />
+    <Page size="small" :total="events.length" show-total @on-change="handlePage" :page-size="pageSize" />
   </div>
 </div>
 </template>

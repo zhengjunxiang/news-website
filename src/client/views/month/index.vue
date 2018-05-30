@@ -31,7 +31,7 @@
         </div>
       </article>
     </section>
-    <Page :total="news.length" show-total @on-change="onClickPage" :page-size="pageSize" />
+    <Page size="small" :total="news.length" show-total @on-change="onClickPage" :page-size="pageSize" />
   </div>
 </div>
 </template>

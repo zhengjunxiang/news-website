@@ -1,5 +1,6 @@
 import {
-  GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents
+  GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents,
+  GetPosters, GetUserAvatar
 } from '@/api/server.js';
 import vm from '@/main';
 import util from '@/libs/util.js'
@@ -144,8 +145,16 @@ export default {
       const res = await GetPartners()
       return res.data
     },
+    async getPosters({commit}) {
+      const res = await GetPosters()
+      return res.data
+    },
     async getAbout({commit}) {
       const res = await GetAbout()
+      return res.data
+    },
+    async getUserAvatar({commit}, data) {
+      const res = await GetUserAvatar(data)
       return res.data
     },
     async likeNew({commit}, data) {

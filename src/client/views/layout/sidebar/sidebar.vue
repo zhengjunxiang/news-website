@@ -6,6 +6,10 @@
   <div class="sidebar-inner">
     <div class="widgets-container">
       <RecentPost />
+      <div class="poster-box" v-for="(p, ind) in posters" :key="ind">
+        <a href="#" v-if="p.link"><img :src="p.cover" alt="" /></a>
+        <img :src="p.cover" alt="" v-else />
+      </div>
       <Archives />
       <Tags />
     </div>
@@ -24,12 +28,17 @@ export default {
     ...mapGetters(['tags'])
   },
   data: () => ({
-    showSb: false
+    showSb: false,
+    posters: []
   }),
   methods: {
     toggleSidebar() {
       this.showSb = !this.showSb
     }
+  },
+  async mounted() {
+    const posters = await this.$store.dispatch('getPosters');
+    this.posters = posters.data || []
   }
 }
 </script>

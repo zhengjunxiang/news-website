@@ -14,9 +14,10 @@
           <p>© 2018 {{$t('footer.ant')}}</p>
         </div>
         <div class="links-box">
-          <p>友情链接:</p>
-          <a href="https://www.antpool.com/index.htm" target="_black">AntPool</a>
-          <a href="https://www.Bitmain.com" target="_black">Bitmain</a>
+          <p>{{$t('footer.links')}}:</p>
+          <a href="https://www.antpool.com/index.htm" target="_black">{{$t('footer.antpool')}}</a>
+          <a href="https://www.Bitmain.com" target="_black">{{$t('footer.bitmain')}}</a>
+          <a href="https://minerbooking.com/en" target="_black">{{$t('footer.minerBooking')}}</a>
         </div>
       </div>
     </div>
