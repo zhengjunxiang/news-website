@@ -7,24 +7,40 @@
   </div>
   <div class="main-body-content">
     <section class="archives-wrap">
-      <article class="article article-summary" v-for="(event, ind) in curEvents" :key="ind">
-        <router-link :to="`/event/${event.title}`" class="thumbnail" v-if="event.cover">
-          <img :src="event.cover" class="thumbnail-image" />
-        </router-link>
-        <router-link :to="`/event/${event.title}`" class="thumbnail img-icon" v-else>
-          <Icon type="image"></Icon>
-        </router-link>
-        <div class="article-tro">
-          <h2 class="article-title" itemprop="name">
-            <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
-          </h2>
-          <div class="article-meta">
-            <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
-            <span>{{event.author}}</span>
+      <div v-for="(event, ind) in curEvents" :key="ind">
+        <article class="article-summary feature" v-if="event.feature">
+          <router-link :to="`/new/${event.title}`" class="thumbnail" v-if="event.cover">
+            <img :src="event.cover" class="thumbnail-image" />
+            <div class="mark">
+              <h2 class="article-title" itemprop="name">
+                <router-link :to="`/new/${event.title}`">{{event.title}}</router-link>
+              </h2>
+              <div class="article-meta">
+                <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
+                <span>{{event.author}}</span>
+              </div>
+            </div>
+          </router-link>
+          <div :class="['article-tro', !event.cover ? 'no-cover' : '']">
+            <p class="article-excerpt">{{event.intro}}</p>
           </div>
-          <p class="article-excerpt">{{event.intro}}</p>
-        </div>
-      </article>
+        </article>
+        <article class="article-summary" v-else>
+          <router-link :to="`/new/${event.title}`" class="thumbnail" v-if="event.cover">
+            <img :src="event.cover" class="thumbnail-image" />
+          </router-link>
+          <div :class="['article-tro', !event.cover ? 'no-cover' : '']">
+            <h2 class="article-title" itemprop="name">
+              <router-link :to="`/new/${event.title}`">{{event.title}}</router-link>
+            </h2>
+            <div class="article-meta">
+              <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
+              <span>{{event.author}}</span>
+            </div>
+            <p class="article-excerpt">{{event.intro}}</p>
+          </div>
+        </article>
+      </div>
     </section>
     <Page :total="events.length" show-total @on-change="handlePage" :page-size="pageSize" />
   </div>

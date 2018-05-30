@@ -6,6 +6,7 @@ var EventsSchema = new mongoose.Schema({
   intro: { type: String },
   author: { type: String, default: 'Noname' },
   cover: { type: String },
+  feature: { type: Boolean, default: false },
   lan: { type: String, default: 'zh' },
   createAt: { type: Number, default: Date.now },
   updateAt: { type: Number, default: Date.now }

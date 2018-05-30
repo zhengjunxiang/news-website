@@ -1,5 +1,4 @@
 <style lang="less">
-@import './preview.less';
 @import '../../my-components/tinymce/plugins/codesample/css/prism.css';
 </style>
 
@@ -13,6 +12,9 @@
             <h1>{{ articleTitle }}</h1>
             <p class="preview-publish-time">
               <Icon type="android-alarm-clock"></Icon>&nbsp;发布时间：{{ publishTime }}</p>
+              <div class="preview-tags-con" style="overflow: hidden;">
+                <Tag v-if="feature" style="float: right;" color="blue">置顶</Tag>
+              </div>
             <div class="preview-content-con" v-html="content"></div>
           </Card>
         </div>
@@ -30,7 +32,8 @@ export default {
       isShow: false,
       articleTitle: '',
       content: '',
-      publishTime: ''
+      publishTime: '',
+      feature: false
     };
   },
   methods: {
@@ -41,6 +44,7 @@ export default {
       this.articleTitle = localStorage.eventTitle;
       this.content = localStorage.eventContent;
       this.publishTime = localStorage.publishTime;
+      this.feature = localStorage.eventFeature === 'true' ? true : false;
     }
   }
 };

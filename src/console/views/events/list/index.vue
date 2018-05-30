@@ -152,6 +152,7 @@ export default {
         localStorage.eventAuthor = data.author
         localStorage.eventEdit = 'edit'
         localStorage.eventLan = data.lan
+        localStorage.eventFeature = data.feature
         this.$router.push({name: 'event-publish'})
       }
     }

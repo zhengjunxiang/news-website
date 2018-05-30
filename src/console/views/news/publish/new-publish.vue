@@ -28,6 +28,9 @@
         <FormItem label="作者">
           <Input v-model="author" @on-blur="handleAuthorBlur" icon="ios-person" />
         </FormItem>
+        <FormItem label="置顶">
+          <i-switch v-model="feature" @on-change="handleFeature" />
+        </FormItem>
       </Form>
       <div class="margin-top-20">
         <textarea id="newEditor" />
@@ -77,7 +80,7 @@ export default {
       newTitle: '', newIntro: '', author: '', cover: '', showLink: false,
       editPathButtonType: 'ghost', publishTime: '',
       publishLoading: false, isShowPreview: false, isEdit: false,
-      lans: conf.lans, lan: ''
+      lans: conf.lans, lan: '', feature: false
     };
   },
   mounted() {
@@ -107,6 +110,7 @@ export default {
       this.newIntro = localStorage.newIntro || '';
       this.cover = localStorage.newCover || '';
       this.lan = localStorage.newLan || '';
+      this.feature = localStorage.newFeature === 'true' ?  true : false;
     },
     async handlePublish() {
       if (this.canPublish()) {
@@ -116,13 +120,13 @@ export default {
           author: this.author,
           cover: this.cover,
           lan: this.lan,
+          feature: this.feature,
           content: tinymce.activeEditor.getContent({format: 'raw'}),
           tags: this.$refs.tagsCard.onReturnTags()
         }
         this.publishLoading = true;
-        const api = this.isEdit ? 'updateNews' : 'addNews';
         try {
-          const res = await this.$store.dispatch(api, data)
+          const res = await this.$store.dispatch(this.isEdit ? 'updateNews' : 'addNews', data)
           this.$Notice.success({
             title: '保存成功',
             desc: '文章《' + this.newTitle + '》保存成功',
@@ -138,6 +142,7 @@ export default {
     handleIntroBlur() { localStorage.newIntro = this.newIntro },
     handleAuthorBlur() { localStorage.newAuthor = this.author },
     handleCoverBlur() { localStorage.newCover = this.cover },
+    handleFeature() { localStorage.newFeature = this.feature },
     canPublish() {
       if (this.newTitle.length === 0) {
         this.$Message.error('请输入文章标题');

@@ -10,6 +10,7 @@ const upload = require('../controller/upload');
 const partners = require('../controller/partners');
 const about = require('../controller/about');
 const events = require('../controller/events');
+const posters = require('../controller/posters');
 var RateLimit = require('express-rate-limit');
 
 var limit = new RateLimit({
@@ -59,6 +60,11 @@ module.exports = function(app) {
   router.put('/api/resouce/rename.json', upload.rename);
   router.post('/api/resouce/mkdir.json', upload.mkdir);
   router.delete('/api/resouce/delDir.json', upload.delDir);
+  // posters
+  router.post('/api/posters/add.json', posters.add);
+  router.post('/api/posters/update.json', posters.update);
+  router.get('/api/posters/get.json', posters.get);
+  router.delete('/api/posters/delete.json', posters.delete);
   // partners
   router.post('/api/partners/add.json', partners.add);
   router.post('/api/partners/update.json', partners.update);

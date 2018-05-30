@@ -33,6 +33,11 @@ const DelImg = data => API.delete('/api/resouce/delImg.json', {params: data})
 const Rename = data => API.put('/api/resouce/rename.json', data);
 const Mkdir = data => API.post('/api/resouce/mkdir.json', data);
 const DelDir = data => API.delete('/api/resouce/delDir.json', {params: data});
+// posters
+const AddPosters = data => API.post('/api/posters/add.json', data);
+const UpdatePosters = data => API.post('/api/posters/update.json', data);
+const GetPosters = data => API.get('/api/posters/get.json', {params: data});
+const DelPosters = data => API.delete('/api/posters/delete.json', {params: data});
 // 合作伙伴
 const AddPartners = data => API.post('/api/partners/add.json', data);
 const UpdatePartners = data => API.post('/api/partners/update.json', data);
@@ -57,6 +62,7 @@ export {
   AddThings, GetThings, DelThings,
   AddTags, GetTags, DelTags,
   AddPartners, UpdatePartners, GetPartners, DelPartners,
+  AddPosters, UpdatePosters, GetPosters, DelPosters,
   UpdateAbout, GetAbout, AddAbout, DelAbout,
   UpdateEvents, GetEvents, AddEvents, DelEvents
 };

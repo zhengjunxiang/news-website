@@ -15,6 +15,7 @@ import partners from '@/views/partners/partners.vue'
 import about from '@/views/about/about.vue'
 import eventPublish from '@/views/events/publish/index.vue'
 import eventsList from '@/views/events/list/index.vue'
+import posters from '@/views/posters/index.vue'
 
 // 不作为Main组件的子页面展示的页面单独写，如下
 export const loginRouter = {
@@ -176,7 +177,24 @@ export const appRouter = [
         component: partners
       }
     ]
-  }, {
+  },
+  // {
+  //   path: '/posters',
+  //   icon: 'android-add',
+  //   name: 'posters',
+  //   title: '添加广告',
+  //   component: Main,
+  //   children: [
+  //     {
+  //       path: 'posters-index',
+  //       title: '添加广告',
+  //       meta: { title: 'Posters - 添加广告' },
+  //       name: 'posters-index',
+  //       component: posters
+  //     }
+  //   ]
+  // },
+  {
     path: '/about',
     icon: 'android-contacts',
     name: 'about',

@@ -7,29 +7,50 @@
   </div>
   <div class="main-body-content">
     <section class="archives-wrap">
-      <article class="article article-summary" v-for="(ne, index) in curNews" :key="index">
-        <router-link :to="`/new/${ne.title}`" class="thumbnail" v-if="ne.cover">
-          <img :src="ne.cover" class="thumbnail-image" />
-        </router-link>
-        <router-link :to="`/new/${ne.title}`" class="thumbnail img-icon" v-else>
-          <Icon type="image"></Icon>
-        </router-link>
-        <div class="article-tro">
-          <h2 class="article-title" itemprop="name">
-            <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
-          </h2>
-          <div class="article-meta">
-            <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
-            <span>{{ne.author}}</span>
-            <div class="tags-box">
-              <router-link class="article-tag-link" v-for="(tag, ind) in ne.tags" :to="`/tags/${tag}`" :key="ind">
-                {{tag}}
-              </router-link>
+      <div v-for="(ne, index) in curNews" :key="index">
+        <article class="article-summary feature" v-if="ne.feature">
+          <router-link :to="`/new/${ne.title}`" class="thumbnail" v-if="ne.cover">
+            <img :src="ne.cover" class="thumbnail-image" />
+            <div class="mark">
+              <h2 class="article-title" itemprop="name">
+                <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
+              </h2>
+              <div class="article-meta">
+                <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
+                <span>{{ne.author}}</span>
+                <div class="tags-box">
+                  <router-link class="article-tag-link" v-for="(tag, ind) in ne.tags" :to="`/tags/${tag}`" :key="ind">
+                    {{tag}}
+                  </router-link>
+                </div>
+              </div>
             </div>
+          </router-link>
+          <div :class="['article-tro', !ne.cover ? 'no-cover' : '']">
+            <p class="article-excerpt">{{ne.intro}}</p>
           </div>
-          <p class="article-excerpt">{{ne.intro}}</p>
-        </div>
-      </article>
+        </article>
+        <article class="article-summary" v-else>
+          <router-link :to="`/new/${ne.title}`" class="thumbnail" v-if="ne.cover">
+            <img :src="ne.cover" class="thumbnail-image" />
+          </router-link>
+          <div :class="['article-tro', !ne.cover ? 'no-cover' : '']">
+            <h2 class="article-title" itemprop="name">
+              <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
+            </h2>
+            <div class="article-meta">
+              <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
+              <span>{{ne.author}}</span>
+              <div class="tags-box">
+                <router-link class="article-tag-link" v-for="(tag, ind) in ne.tags" :to="`/tags/${tag}`" :key="ind">
+                  {{tag}}
+                </router-link>
+              </div>
+            </div>
+            <p class="article-excerpt">{{ne.intro}}</p>
+          </div>
+        </article>
+      </div>
     </section>
     <Page :total="news.length" show-total @on-change="handlePage" :page-size="pageSize" />
   </div>

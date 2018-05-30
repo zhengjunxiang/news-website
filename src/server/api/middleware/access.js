@@ -4,7 +4,7 @@ module.exports = function(req, res, next) {
     if (req.session.user.access !== 0) return res.json({ errno: 1, mes: '没有权限' })
     next()
   } else if (path === '/api/user/signup.json') {
-    if (req.body.access === 0) return next()
+    if (req.body.access === 0) next()
     else if (req.session.user.access !== 0) return res.json({ errno: 1, mes: '没有权限' })
   } else next()
 }

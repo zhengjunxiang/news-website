@@ -154,6 +154,7 @@ export default {
         localStorage.newTags = JSON.stringify(data.tags);
         localStorage.newEdit = 'edit'
         localStorage.newLan = data.lan
+        localStorage.newFeature = data.feature
         this.$router.push({name: 'new-publish'})
       }
     }

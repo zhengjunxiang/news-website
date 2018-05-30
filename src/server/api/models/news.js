@@ -6,6 +6,7 @@ var NewsSchema = new mongoose.Schema({
   intro: { type: String },
   author: { type: String, default: 'Noname' },
   cover: { type: String },
+  feature: { type: Boolean, default: false },
   lan: { type: String, default: 'zh' },
   tags: { type: Array },
   like: { type: Number, default: 0 },

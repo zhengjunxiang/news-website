@@ -9,11 +9,12 @@ import partners from './modules/partners';
 import fileUpload from './modules/file-upload';
 import about from './modules/about';
 import events from './modules/events';
+import posters from './modules/posters';
 
 Vue.use(Vuex);
 
 const store = new Vuex.Store({
-  modules: { app, user, news, things, partners, fileUpload, about, events }
+  modules: { app, user, news, things, partners, fileUpload, about, events, posters }
 });
 
 export default store;

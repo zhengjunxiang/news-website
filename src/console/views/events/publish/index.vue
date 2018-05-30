@@ -28,6 +28,9 @@
         <FormItem label="作者">
           <Input v-model="author" @on-blur="handleAuthorBlur" icon="ios-person" />
         </FormItem>
+        <FormItem label="置顶">
+          <i-switch v-model="feature" @on-change="handleFeature" />
+        </FormItem>
       </Form>
       <div class="margin-top-20">
         <textarea id="eventEditor" />
@@ -73,7 +76,7 @@ export default {
       title: '', eventIntro: '', author: '', cover: '', showLink: false,
       editPathButtonType: 'ghost', publishTime: '',
       publishLoading: false, isShowPreview: false, isEdit: false,
-      lans: conf.lans, lan: ''
+      lans: conf.lans, lan: '', feature: false
     };
   },
   mounted() {
@@ -103,6 +106,7 @@ export default {
       this.eventIntro = localStorage.eventIntro || '';
       this.cover = localStorage.eventCover || '';
       this.lan = localStorage.eventLan || '';
+      this.feature = localStorage.eventFeature === 'true' ?  true : false;
     },
     async handlePublish() {
       if (this.canPublish()) {
@@ -112,6 +116,7 @@ export default {
           author: this.author,
           cover: this.cover,
           lan: this.lan,
+          feature: this.feature,
           content: tinymce.activeEditor.getContent({format: 'raw'}),
         }
         this.publishLoading = true;
@@ -133,6 +138,7 @@ export default {
     handleIntroBlur() { localStorage.eventIntro = this.eventIntro },
     handleAuthorBlur() { localStorage.eventAuthor = this.author },
     handleCoverBlur() { localStorage.eventCover = this.cover },
+    handleFeature() { localStorage.eventFeature = this.feature },
     canPublish() {
       if (this.title.length === 0) {
         this.$Message.error('请输入标题');

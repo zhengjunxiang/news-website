@@ -29,7 +29,7 @@ export default {
     setCurrentNewTitle: (state, title) => { if (title) state.currentNewTitle = title },
     setEvents: (state, data) => {
       if (data) {
-        if (data.mes) vm.$Alert.error(data.mes)
+        if (data.mes) vm.$Message.error(data.mes)
         state.allEvents = data.data
         state.events = data.data.filter(d => d.lan === state.lan)
       } else {
@@ -38,11 +38,17 @@ export default {
     },
     setNews: (state, data) => {
       if (data) {
-        if (data.mes) vm.$Alert.error(data.mes)
-        state.allNews = data.data
-        state.news = data.data.filter(d => d.lan === state.lan)
+        if (data.mes) vm.$Message.error(data.mes)
+        state.allNews = data.data;
+        const newsLan = data.data.filter(d => d.lan === state.lan),
+          newsFeature = newsLan.filter(d => d.feature),
+          newsNoF = newsLan.filter(d => !d.feature);
+        state.news = [...newsFeature, ...newsNoF]
       } else {
-        state.news = state.allNews.filter(d => d.lan === state.lan)
+        const newsLan = state.allNews.filter(d => d.lan === state.lan),
+          newsFeature = newsLan.filter(d => d.feature),
+          newsNoF = newsLan.filter(d => !d.feature);
+        state.news = [...newsFeature, ...newsNoF]
       }
     },
     setNewnav: (state, title) => {

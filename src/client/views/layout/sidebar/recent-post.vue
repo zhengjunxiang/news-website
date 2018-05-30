@@ -3,11 +3,10 @@
     <div class="widget-title">{{$t('siderBar.recent')}}</div>
     <div class="widget-inner">
       <ul class="recent-post">
-        <li v-for="(ne, ind) in recentMews" :key="ind">
-          <div class="item-thumbnail">
+        <li v-for="(ne, ind) in recentMews" :key="ind" :class="[ne.cover ? '' : 'no-cover']">
+          <div class="item-thumbnail" v-if="ne.cover">
             <router-link :to="`/new/${ne.title}`" class="thumbnail">
-              <img :src="ne.cover" class="thumbnail-image" v-if="ne.cover" />
-              <Icon type="image" v-else></Icon>
+              <img :src="ne.cover" class="thumbnail-image" />
             </router-link>
           </div>
           <div class="item-inner">

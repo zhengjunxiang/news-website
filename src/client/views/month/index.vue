@@ -3,9 +3,7 @@
 <template>
 <div>
   <div class="main-body-header">
-    <h2 class="header">
-      <i class="icon fa fa-calendar-o"></i> <em class="page-title-link" data-url="home">{{$t('content.archive')}}</em>: {{$route.params.month}}/{{$route.params.year}}
-    </h2>
+    <h2 class="header">{{$route.params.month}} - {{$route.params.year}}</h2>
   </div>
   <div class="main-body-content">
     <section class="archives-wrap">
@@ -33,8 +31,8 @@
         </div>
       </article>
     </section>
+    <Page :total="news.length" show-total @on-change="onClickPage" :page-size="pageSize" />
   </div>
-  <page-nav :datas="news" :size="pageSize" @on-change="onClickPage" />
 </div>
 </template>
 <script>
