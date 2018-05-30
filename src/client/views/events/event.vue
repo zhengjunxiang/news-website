@@ -97,11 +97,13 @@ export default {
       this.title = title;
       await this.$store.dispatch('getEvent', {title})
       try {
-        this.$store.commit('setEventnav', title)
-      } catch (err) {
-        window.socialShare('.social-share-event')
         const res = await this.$store.dispatch('getUserAvatar', {name: this.event.userName})
         if (res.data.avatar) this.avatar = res.data.avatar;
+        this.$store.commit('setEventnav', title)
+        window.socialShare('.social-share-event')
+      } catch (err) {
+        window.socialShare('.social-share-event')
+        this.$store.commit('setEventnav', title)
       }
     }
   }

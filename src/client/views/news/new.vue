@@ -113,6 +113,9 @@ export default {
       try {
         const res = await this.$store.dispatch('getUserAvatar', {name: this.ne.userName})
         if (res.data.avatar) this.avatar = res.data.avatar;
+        this.$store.commit('setCurrentNewTitle', title)
+        this.$store.commit('setNewnav', title)
+        window.socialShare('.social-share-new')
       } catch (err) {
         this.$store.commit('setCurrentNewTitle', title)
         this.$store.commit('setNewnav', title)
