@@ -20,14 +20,14 @@
       </Form>
     </Card>
   </Row>
-  <Card style="width: 70%;" class="margin-top-10" v-for="(p, index) in postData" :key="index">
+  <Card style="width: 70%;" class="margin-top-10">
     <div slot="title">
       <p class="com-title">右侧广告 </p>
-      <span class="title-date">更新时间：{{$U.fDate(p.updateAt)}}</span>
+      <span class="title-date">更新时间：{{sidebarType.updateAt && $U.fDate(sidebarType.updateAt)}}</span>
     </div>
-    <h3 style="margin-bottom: 10px;">{{p.title}}</h3>
-    <a :href="p.link" v-if="p.link"><img :src="p.cover" alt="" /></a>
-    <img :src="p.cover" alt="" v-else />
+    <h3 style="margin-bottom: 10px;">{{sidebarType.title}}</h3>
+    <a :href="sidebarType.link" v-if="sidebarType.link"><img :src="sidebarType.cover" alt="" /></a>
+    <img :src="sidebarType.cover" alt="" v-else />
     <div class="mark">
       <span @click="handleClick('side-bar')"><Icon type="plus-round" /></span>
     </div>
@@ -47,6 +47,15 @@ export default {
       },
       postData: [],
       isShow: false
+    }
+  },
+  computed: {
+    sidebarType() {
+      let data = {};
+      this.postData.forEach(p => {
+        if (p.type === 'side-bar') data = p
+      })
+      return data;
     }
   },
   mounted() { this.getPosters() },
