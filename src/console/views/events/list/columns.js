@@ -2,22 +2,36 @@ export default that => [
   {
     title: '标题',
     key: 'title',
-    width: 160,
+    sortable: true,
     fixed: 'left'
   }, {
     title: '作者',
+    width: '130px',
+    sortable: true,
     key: 'author'
   }, {
+    title: '用户',
+    width: '110px',
+    sortable: true,
+    key: 'userName'
+  }, {
     title: '语言',
-    key: 'lan'
+    sortable: true,
+    width: '110px',
+    key: 'lan',
+    filters: [ { label: 'zh', value: 'zh' }, { label: 'en', value: 'en' } ],
+    filterMultiple: false,
+    filterMethod: (value, row) => row.lan === value
   }, {
     title: '创建时间',
+    sortable: true,
     key: 'createAt',
     render: (h, params) => {
       return h('div', that.$U.fDate(that.tableData[params.index].createAt));
     }
   }, {
     title: '更新时间',
+    sortable: true,
     key: 'updateAt',
     render: (h, params) => {
       return h('div', that.$U.fDate(that.tableData[params.index].updateAt));

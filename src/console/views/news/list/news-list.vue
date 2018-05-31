@@ -53,6 +53,9 @@
         </div>
       </Col>
       <Col span="24" class="table-con">
+        <div class="search-box margin-bottom-10">
+          <Input v-model="search" icon="search" placeholder="Search..." style="width: 300px"></Input>
+        </div>
         <span @click="refreshTable" class="refresh-box"><Icon type="refresh" /></span>
         <Table size='small' :data="currentData" :columns="columns" stripe ref="table" :loading="loading" />
         <div class="page-box">
@@ -73,13 +76,24 @@ export default {
     return {
       rowNum: 1, colNum: 1, selectMinRow: 1, selectMaxRow: 1, selectMinCol: 1,
       selectMaxCol: 1, csvFileName: '', excelFileName: '', tableData: [],
-      imageName: '', columns: columns(this), loading: false, pageSize: 10, curPage: 1
+      imageName: '', columns: columns(this), loading: false, pageSize: 10, curPage: 1,
+      search: ''
     };
   },
   mounted() { this.initData() },
   computed: {
     currentData() {
-      return this.tableData.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize) || []
+      const search = this.search.trim()
+      const tabData = this.tableData.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize) || [];
+      return tabData.filter(n => {
+        if (search) {
+          return new RegExp(search, 'gi').test(n.title) ||
+            new RegExp(search, 'gi').test(n.author) ||
+            new RegExp(search, 'gi').test(n.userName) ||
+            n.tags.some(it => new RegExp(search, 'gi').test(it))
+        }
+        return true
+      })
     }
   },
   methods: {

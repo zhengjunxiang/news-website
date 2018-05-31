@@ -45,6 +45,11 @@
       <p class="margin-top-10">
         <Icon type="ios-calendar-outline" />&nbsp;&nbsp;
         <span>立即发布</span>
+        <span class="clear-box" @click="handleClear">
+          <Tooltip content="清缓存" placement="left">
+            <Icon type="trash-b" />
+          </Tooltip>
+        </span>
       </p>
       <Row class="margin-top-20 publish-button-con">
         <span class="publish-button">
@@ -103,6 +108,18 @@ export default {
     closeEdit() {
       localStorage.newEdit = '';
       this.isEdit = false;
+    },
+    handleClear() {
+      this.newTitle = localStorage.newTitle = '';
+      this.newIntro = localStorage.newIntro = '';
+      this.cover = localStorage.newCover = '';
+      this.lan = localStorage.newLan = '';
+      this.feature = localStorage.newFeature = false;
+      this.isEdit = localStorage.newEdit = false;
+      localStorage.newContent = '';
+      this.$refs.tagsCard.newTagSelected = [];
+      localStorage.newTags = '';
+      tinymce.get('newEditor').setContent('');
     },
     initData() {
       this.newTitle = localStorage.newTitle || '';

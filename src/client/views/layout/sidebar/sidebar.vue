@@ -7,7 +7,7 @@
     <div class="widgets-container">
       <RecentPost />
       <div class="poster-box" v-for="(p, ind) in posters" :key="ind">
-        <a href="#" v-if="p.link"><img :src="p.cover" alt="" /></a>
+        <a :href="p.link" v-if="p.link"><img :src="p.cover" alt="" /></a>
         <img :src="p.cover" alt="" v-else />
       </div>
       <Archives />
