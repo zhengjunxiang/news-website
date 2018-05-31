@@ -31,10 +31,16 @@ export default {
     setEvents: (state, data) => {
       if (data) {
         if (data.mes) vm.$Message.error(data.mes)
-        state.allEvents = data.data
-        state.events = data.data.filter(d => d.lan === state.lan)
+        state.allEvents = data.data;
+        const eventsLan = data.data.filter(d => d.lan === state.lan),
+          eventsFeature = eventsLan.filter(d => d.feature),
+          eventsNoF = eventsLan.filter(d => !d.feature);
+        state.events = [...eventsFeature, ...eventsNoF]
       } else {
-        state.events = state.allEvents.filter(d => d.lan === state.lan)
+        const eventsLan = state.allEvents.filter(d => d.lan === state.lan),
+          eventsFeature = eventsLan.filter(d => d.feature),
+          eventsNoF = eventsLan.filter(d => !d.feature);
+        state.events = [...eventsFeature, ...eventsNoF]
       }
     },
     setNews: (state, data) => {

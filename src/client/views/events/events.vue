@@ -9,9 +9,25 @@
     <section class="archives-wrap">
       <div v-for="(event, ind) in curEvents" :key="ind">
         <article class="article-summary feature" v-if="event.feature">
-          <router-link :to="`/event/${event.title}`" class="thumbnail" v-if="event.cover">
-            <img :src="event.cover" class="thumbnail-image" />
-            <div class="mark">
+          <div v-if="event.cover">
+            <router-link :to="`/event/${event.title}`" class="thumbnail">
+              <img :src="event.cover" class="thumbnail-image" />
+              <div class="mark">
+                <h2 class="article-title" itemprop="name">
+                  <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
+                </h2>
+                <div class="article-meta">
+                  <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
+                  <span>{{event.author}}</span>
+                </div>
+              </div>
+            </router-link>
+            <div :class="['article-tro', !event.cover ? 'no-cover' : '']">
+              <p class="article-excerpt">{{event.intro}}</p>
+            </div>
+          </div>
+          <div v-else>
+            <div :class="['article-tro', !event.cover ? 'no-cover' : '']">
               <h2 class="article-title" itemprop="name">
                 <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
               </h2>
@@ -19,10 +35,8 @@
                 <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
                 <span>{{event.author}}</span>
               </div>
+              <p class="article-excerpt">{{event.intro}}</p>
             </div>
-          </router-link>
-          <div :class="['article-tro', !event.cover ? 'no-cover' : '']">
-            <p class="article-excerpt">{{event.intro}}</p>
           </div>
         </article>
         <article class="article-summary" v-else>

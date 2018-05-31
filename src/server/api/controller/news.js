@@ -24,10 +24,10 @@ module.exports = {
   },
   update: (req, res, next) => {
     global.logger.info('news/update.json');
-    const {title, content, intro, tags, author, cover, feature} = req.body;
+    const {title, content, intro, tags, author, cover, updateAt, feature} = req.body;
     News.update(
       {title: {$in: title}},
-      { content, intro, tags, author, updateAt: Date.now(), cover, feature },
+      { content, intro, tags, author, updateAt, cover, feature },
       (err, ne) => {
         if (err) global.logger.error(err);
         if (ne.ok === 1) {

@@ -4,15 +4,14 @@
 <div>
   <div class="main-body-content" v-for="tag in tags" :key="tag.value" v-show="tag.news.length">
     <div class="main-body-header">
-      <h2 class="header"><Icon type="pricetags" /> {{tag.value}}</h2>
+      <h2 class="header"><Icon type="ios-pricetag"></Icon> {{tag.value}}</h2>
     </div>
     <section class="archives-wrap">
       <article class="article article-summary" v-for="(ne, ind) in tag.news.slice(0, 5)" :key="ind">
-        <router-link :to="`/new/${ne.title}`" class="thumbnail">
-          <img :src="ne.cover" class="thumbnail-image" v-if="ne.cover" />
-          <Icon type="image" v-else></Icon>
+        <router-link :to="`/new/${ne.title}`" class="thumbnail" v-if="ne.cover">
+          <img :src="ne.cover" class="thumbnail-image" />
         </router-link>
-        <div class="article-tro">
+        <div :class="['article-tro', !ne.cover ? 'no-cover' : '']">
           <h2 class="article-title" itemprop="name">
             <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
           </h2>

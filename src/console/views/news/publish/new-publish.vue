@@ -50,6 +50,7 @@
             <Icon type="trash-b" />
           </Tooltip>
         </span>
+        <DatePicker v-model="datetime" type="datetime" placeholder="Select date and time" style="margin-top: 10px;" />
       </p>
       <Row class="margin-top-20 publish-button-con">
         <span class="publish-button">
@@ -85,7 +86,7 @@ export default {
       newTitle: '', newIntro: '', author: '', cover: '', showLink: false,
       editPathButtonType: 'ghost', publishTime: '',
       publishLoading: false, isShowPreview: false, isEdit: false,
-      lans: conf.lans, lan: '', feature: false
+      lans: conf.lans, lan: '', feature: false, datetime: new Date()
     };
   },
   mounted() {
@@ -142,6 +143,13 @@ export default {
           content: tinymce.activeEditor.getContent({format: 'raw'}),
           tags: this.$refs.tagsCard.onReturnTags()
         }
+        if (this.datetime) {
+           if (this.isEdit) data.updateAt = this.datetime.getTime();
+           else {
+             data.createAt = this.datetime.getTime();
+             data.updateAt = this.datetime.getTime();
+           }
+        }
         this.publishLoading = true;
         try {
           const res = await this.$store.dispatch(this.isEdit ? 'updateNews' : 'addNews', data)
@@ -167,6 +175,9 @@ export default {
         return false;
       } else if (this.lan === '') {
         this.$Message.error('请输选择语言');
+        return false;
+      } else if (this.datetime === '') {
+        this.$Message.error('请输选择时间');
         return false;
       } else return true;
     },

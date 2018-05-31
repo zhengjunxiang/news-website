@@ -9,9 +9,30 @@
     <section class="archives-wrap">
       <div v-for="(ne, index) in curNews" :key="index">
         <article class="article-summary feature" v-if="ne.feature">
-          <router-link :to="`/new/${ne.title}`" class="thumbnail" v-if="ne.cover">
-            <img :src="ne.cover" class="thumbnail-image" />
-            <div class="mark">
+          <div v-if="ne.cover">
+            <router-link :to="`/new/${ne.title}`" class="thumbnail">
+              <img :src="ne.cover" class="thumbnail-image" />
+              <div class="mark">
+                <h2 class="article-title" itemprop="name">
+                  <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
+                </h2>
+                <div class="article-meta">
+                  <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
+                  <span>{{ne.author}}</span>
+                  <div class="tags-box">
+                    <router-link class="article-tag-link" v-for="(tag, ind) in ne.tags" :to="`/tags/${tag}`" :key="ind">
+                      {{tag}}
+                    </router-link>
+                  </div>
+                </div>
+              </div>
+            </router-link>
+            <div :class="['article-tro', !ne.cover ? 'no-cover' : '']">
+              <p class="article-excerpt">{{ne.intro}}</p>
+            </div>
+          </div>
+          <div v-else>
+            <div :class="['article-tro', !ne.cover ? 'no-cover' : '']">
               <h2 class="article-title" itemprop="name">
                 <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
               </h2>
@@ -24,10 +45,8 @@
                   </router-link>
                 </div>
               </div>
+              <p class="article-excerpt">{{ne.intro}}</p>
             </div>
-          </router-link>
-          <div :class="['article-tro', !ne.cover ? 'no-cover' : '']">
-            <p class="article-excerpt">{{ne.intro}}</p>
           </div>
         </article>
         <article class="article-summary" v-else>
