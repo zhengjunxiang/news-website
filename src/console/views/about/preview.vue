@@ -4,7 +4,7 @@
 
 <template>
   <Modal v-model="isShow" title="博客预览" width="800">
-    <div class="preview-main">
+    <div class="preview-main render">
       <Row>
         <Col span="22" offset="1">
         <div>

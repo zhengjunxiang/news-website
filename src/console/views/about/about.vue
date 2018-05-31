@@ -27,7 +27,7 @@
         <div class="about-us-meta">
           <span>更新日期： {{$U.fDate(us.updateAt)}}</span>
         </div>
-        <div class="preview-content-con" v-html="us.content" />
+        <div class="preview-content-con render" v-html="us.content" />
       </div>
     </Card>
     <Card v-show="curType">
