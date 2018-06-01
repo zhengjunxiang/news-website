@@ -132,8 +132,9 @@ export default {
     saveEditPass() {
       this.$refs['editPasswordForm'].validate(async (valid) => {
         if (valid) {
-          this.savePassLoading = true;
           const { oldPass, newPass } = this.editPasswordForm;
+          if(this.$U.mapScript(newPass)) return this.$Message.error('含有非法字符');
+          this.savePassLoading = true;
           try {
             const re = await this.$store.dispatch('updatePassW', {oldPass, newPass, name: this.userN})
             if (re.mes) this.$Message.success(re.mes)

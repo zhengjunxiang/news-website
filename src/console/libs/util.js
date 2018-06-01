@@ -1,7 +1,7 @@
 /* eslint-disable */
 import moment from 'moment'
 let util = {};
-const pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\]<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
+const pattern = new RegExp("[`~!#$^&*()=|{}':;',\\[\\]<>/?~！#￥……&*（）——|{}【】‘；：”“'。，、？]");
 util.title = function(title) {
   if (title) window.document.title = title
 };
