@@ -17,7 +17,7 @@
                   <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
                 </h2>
                 <div class="article-meta">
-                  <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
+                  <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
                   <span>{{ne.author}}</span>
                   <div class="tags-box">
                     <router-link class="article-tag-link" v-for="(tag, ind) in ne.tags" :to="`/tags/${tag}`" :key="ind">
@@ -37,7 +37,7 @@
                 <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
               </h2>
               <div class="article-meta">
-                <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
+                <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
                 <span>{{ne.author}}</span>
                 <div class="tags-box">
                   <router-link class="article-tag-link" v-for="(tag, ind) in ne.tags" :to="`/tags/${tag}`" :key="ind">
@@ -58,7 +58,7 @@
               <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
             </h2>
             <div class="article-meta">
-              <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
+              <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
               <span>{{ne.author}}</span>
               <div class="tags-box">
                 <router-link class="article-tag-link" v-for="(tag, ind) in ne.tags" :to="`/tags/${tag}`" :key="ind">

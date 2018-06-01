@@ -17,7 +17,7 @@
                   <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
                 </h2>
                 <div class="article-meta">
-                  <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
+                  <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
                   <span>{{event.author}}</span>
                 </div>
               </div>
@@ -32,7 +32,7 @@
                 <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
               </h2>
               <div class="article-meta">
-                <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
+                <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
                 <span>{{event.author}}</span>
               </div>
               <p class="article-excerpt">{{event.intro}}</p>
@@ -48,7 +48,7 @@
               <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
             </h2>
             <div class="article-meta">
-              <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>
+              <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
               <span>{{event.author}}</span>
             </div>
             <p class="article-excerpt">{{event.intro}}</p>
