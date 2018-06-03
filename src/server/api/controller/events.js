@@ -40,14 +40,14 @@ module.exports = {
   get: (req, res) => {
     global.logger.info('events/get.json');
     const _event = req.query, field = {};
-    if (!_event.title) {
+    if (!_event.id) {
       field.content = 0;
       Events.find(_event, field).sort({'updateAt': -1}).exec((err, events) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: events });
       });
     } else {
-      Events.findOne(_event).exec((err, events) => {
+      Events.findOne({_id: _event.id}).exec((err, events) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: events });
       });

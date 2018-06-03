@@ -1,0 +1,95 @@
+@media only screen and (max-width: 959px) and (min-width: 480px) {
+  body {
+    font-size: 12px;
+  }
+  #header {
+    padding-bottom: 50px !important;
+  }
+  .container .sidebar {
+    position: absolute;
+    right: 0px;
+    width: 50px;
+    z-index: 9;
+    margin-right: 0px;
+    transition: width 0.2s ease-in 0.2s;
+    .widgets-container {
+      opacity: 0;
+      transition: opacity 0.2s ease-in;
+    }
+  }
+  .widgets-container {
+    padding-bottom: 250px !important;
+  }
+  .container .sidebar.show {
+    width: 330px;
+    overflow: auto;
+    .sidebar-toggle .toggle:before {
+      content: '\F100';
+    }
+    .widgets-container {
+      opacity: 1;
+    }
+  }
+  .main-body-header {
+    padding: 12px 30px !important;
+  }
+  .main-body-inner {
+    padding-right: 50px !important;
+    transition: padding-left 0.2s ease-in;
+    background-position: -290px 0 !important;
+    .content-header {
+      position: relative;
+      .mark {
+        padding: 90px 20px 15px !important;
+      }
+      .article-title {
+        font-size: 30px !important;
+      }
+    }
+    .article-summary.feature {
+      .thumbnail {
+        height: auto;
+        width: 100%;
+        display: block;
+        .mark {
+          padding: 90px 20px 15px !important;
+        }
+        .article-title {
+          font-size: 30px !important;
+          a {
+            color: #fff;
+          }
+        }
+        .article-meta {
+          color: #fff;
+          font-size: 14px !important;
+        }
+        .tags-box {
+          line-height: 20px !important;
+          a {
+            font-size: 14px !important;
+          }
+        }
+      }
+    }
+    .sidebar .sidebar-toggle {
+      display: block;
+      padding: 6px;
+      color: rgba(255,255,255,0.7);
+      text-align: center;
+      height: 50px;
+      background: #006bde;
+      transition: all 0.2s ease-in;
+      box-sizing: border-box;
+      .toggle {
+        line-height: 36px;
+        font-size: 38px;
+        width: 38px;
+        font-family: fontawesome;
+        &:before {
+          content: '\f101';
+        }
+      }
+    }
+  }
+}

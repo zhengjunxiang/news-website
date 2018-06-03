@@ -71,8 +71,7 @@ export default that => [
                 cancelText: '取消',
                 onOk: async () => {
                   const res = await that.$store.dispatch('delNews', {title})
-                  if (res.mes)
-                    that.$Message.success(res.mes)
+                  if (res.mes) that.$Message.success(res.mes)
                   that.initData()
                 }
               });
@@ -86,11 +85,10 @@ export default that => [
           },
           on: {
             click: async () => {
-              const {title} = params.row;
-              const res = await that.$store.dispatch('getNews', {title})
+              const {_id} = params.row;
+              const res = await that.$store.dispatch('getNews', {id: _id})
               that.editNew(res.data)
-              if (res.mes)
-                that.$Message.success(res.mes)
+              if (res.mes) that.$Message.success(res.mes)
             }
           }
         }, '编辑')

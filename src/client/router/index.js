@@ -50,12 +50,12 @@ const RouterConfig = {
       name: 'events',
       component: Events
     }, {
-      path: '/event/:title',
+      path: '/event/:id',
       meta: { title: 'AntPool - Event' },
       name: 'event',
       component: Event
     }, {
-      path: '/new/:title',
+      path: '/new/:id',
       meta: { title: 'AntPool - New' },
       name: 'new',
       component: New

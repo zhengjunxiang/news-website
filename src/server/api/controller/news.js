@@ -39,16 +39,16 @@ module.exports = {
   },
   like(req, res) {
     global.logger.info('news/like.json');
-    var {title} = req.body;
+    var {id} = req.body;
     if (!req.session.like) req.session.like = [];
-    if (req.session.like.indexOf(title) !== -1) return res.json({ errno: 1, mes: '已经点过' })
+    if (req.session.like.indexOf(id) !== -1) return res.json({ errno: 1, mes: '已经点过' })
     News.update(
-      {title: {$in: title}},
+      {_id: {$in: id}},
       {$inc: { like: 1 }},
       (err, ne) => {
         if (err) global.logger.error(err);
         if (ne.ok === 1) {
-          req.session.like.push(title)
+          req.session.like.push(id)
           res.json({ errno: 0, mes: '' })
         } else res.json({ errno: 1, mes: '点赞失败' })
       }
@@ -74,14 +74,14 @@ module.exports = {
   get: (req, res) => {
     global.logger.info('news/get.json');
     const _new = req.query, field = {};
-    if (!_new.title) {
+    if (!_new.id) {
       field.content = 0;
       News.find(_new, field).sort({'updateAt': -1}).exec((err, news) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: news });
       });
     } else {
-      News.findOne(_new).sort({'updateAt': -1}).exec((err, news) => {
+      News.findOne({_id: _new.id}).sort({'updateAt': -1}).exec((err, news) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: news });
       });

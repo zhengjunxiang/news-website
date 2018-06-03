@@ -2,19 +2,16 @@
 </style>
 <template>
 <div>
-  <div class="main-body-header">
-    <h2 class="header"><em class="page-title-link" data-url="home">{{$t('content.events')}}</em></h2>
-  </div>
   <div class="main-body-content">
     <section class="archives-wrap">
       <div v-for="(event, ind) in curEvents" :key="ind">
         <article class="article-summary feature" v-if="event.feature">
           <div v-if="event.cover">
-            <router-link :to="`/event/${event.title}`" class="thumbnail">
+            <router-link :to="`/event/${event._id}`" class="thumbnail">
               <img :src="event.cover" class="thumbnail-image" />
               <div class="mark">
                 <h2 class="article-title" itemprop="name">
-                  <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
+                  <router-link :to="`/event/${event._id}`">{{event.title}}</router-link>
                 </h2>
                 <div class="article-meta">
                   <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
@@ -29,7 +26,7 @@
           <div v-else>
             <div :class="['article-tro', !event.cover ? 'no-cover' : '']">
               <h2 class="article-title" itemprop="name">
-                <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
+                <router-link :to="`/event/${event._id}`">{{event.title}}</router-link>
               </h2>
               <div class="article-meta">
                 <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
@@ -40,12 +37,12 @@
           </div>
         </article>
         <article class="article-summary" v-else>
-          <router-link :to="`/event/${event.title}`" class="thumbnail" v-if="event.cover">
+          <router-link :to="`/event/${event._id}`" class="thumbnail" v-if="event.cover">
             <img :src="event.cover" class="thumbnail-image" />
           </router-link>
           <div :class="['article-tro', !event.cover ? 'no-cover' : '']">
             <h2 class="article-title" itemprop="name">
-              <router-link :to="`/event/${event.title}`">{{event.title}}</router-link>
+              <router-link :to="`/event/${event._id}`">{{event.title}}</router-link>
             </h2>
             <div class="article-meta">
               <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>

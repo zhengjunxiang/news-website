@@ -1,7 +1,5 @@
 export default {
   header: {
-    tro: '欢迎来到蚂蚁矿池新世界',
-    home: '首页',
     news: '新闻',
     partners: '合作伙伴',
     events: '活动',
@@ -13,16 +11,11 @@ export default {
     archive: '档案',
     recent: '最新发布',
     follow: '关注 :',
-    tagCloud: '标签云',
     links: '链接',
     tags: '标签'
   },
   content: {
-    home: '首页',
-    news: '新闻',
     aboutUs: '关于蚂蚁矿池',
-    partners: '合作伙伴',
-    events: '活动',
     archive: '档案',
     tagsSort: '标签归类'
   },

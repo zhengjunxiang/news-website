@@ -6,17 +6,13 @@
       <img :src="event.cover" />
       <div class="mark">
         <header class="article-header">
-          <h2 class="article-title" itemprop="name">
-            {{event.title}}
-          </h2>
+          <h2 class="article-title" itemprop="name">{{event.title}}</h2>
         </header>
       </div>
     </div>
     <div class="content-header no-cover" v-else>
       <header class="article-header">
-        <h2 class="article-title" itemprop="name">
-          {{event.title}}
-        </h2>
+        <h2 class="article-title" itemprop="name">{{event.title}}</h2>
       </header>
     </div>
 
@@ -58,7 +54,7 @@ export default {
   name: "event",
   data() {
     return {
-      title: '',
+      id: '',
       isActive: false,
       disable: false,
       isActiveUn: false,
@@ -77,33 +73,33 @@ export default {
     }
   },
   mounted() {
-    const title = this.$route.params.title
-    if (title) {
-      this.initDate(title)
+    const id = this.$route.params.id
+    if (id) {
+      this.initDate(id)
     }
   },
   watch: {
     '$route' (to, from) {
       this.show = false
-      const title = to.params.title;
-      if (title) {
-        if (title === this.title) return;
-        this.initDate(title)
+      const id = to.params.id;
+      if (id) {
+        if (id === this.id) return;
+        this.initDate(id)
       }
     }
   },
   methods: {
-    async initDate(title) {
-      this.title = title;
-      await this.$store.dispatch('getEvent', {title})
+    async initDate(id) {
+      this.id = id;
+      await this.$store.dispatch('getEvent', {id})
       try {
         const res = await this.$store.dispatch('getUserAvatar', {name: this.event.userName})
         if (res.data.avatar) this.avatar = res.data.avatar;
-        this.$store.commit('setEventnav', title)
+        this.$store.commit('setEventnav', id)
         window.socialShare('.social-share-event')
       } catch (err) {
         window.socialShare('.social-share-event')
-        this.$store.commit('setEventnav', title)
+        this.$store.commit('setEventnav', id)
       }
     }
   }

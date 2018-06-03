@@ -2,19 +2,16 @@
 </style>
 <template>
 <div>
-  <div class="main-body-header">
-    <h2 class="header"><em class="page-title-link" data-url="home">{{$t('content.news')}}</em></h2>
-  </div>
   <div class="main-body-content">
     <section class="archives-wrap">
       <div v-for="(ne, index) in curNews" :key="index">
         <article class="article-summary feature" v-if="ne.feature">
           <div v-if="ne.cover">
-            <router-link :to="`/new/${ne.title}`" class="thumbnail">
+            <router-link :to="`/new/${ne._id}`" class="thumbnail">
               <img :src="ne.cover" class="thumbnail-image" />
               <div class="mark">
                 <h2 class="article-title" itemprop="name">
-                  <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
+                  <router-link :to="`/new/${ne._id}`">{{ne.title}}</router-link>
                 </h2>
                 <div class="article-meta">
                   <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
@@ -34,7 +31,7 @@
           <div v-else>
             <div :class="['article-tro', !ne.cover ? 'no-cover' : '']">
               <h2 class="article-title" itemprop="name">
-                <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
+                <router-link :to="`/new/${ne._id}`">{{ne.title}}</router-link>
               </h2>
               <div class="article-meta">
                 <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
@@ -50,12 +47,12 @@
           </div>
         </article>
         <article class="article-summary" v-else>
-          <router-link :to="`/new/${ne.title}`" class="thumbnail" v-if="ne.cover">
+          <router-link :to="`/new/${ne._id}`" class="thumbnail" v-if="ne.cover">
             <img :src="ne.cover" class="thumbnail-image" />
           </router-link>
           <div :class="['article-tro', !ne.cover ? 'no-cover' : '']">
             <h2 class="article-title" itemprop="name">
-              <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
+              <router-link :to="`/new/${ne._id}`">{{ne.title}}</router-link>
             </h2>
             <div class="article-meta">
               <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>

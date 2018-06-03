@@ -6,17 +6,13 @@
       <img :src="ne.cover" />
       <div class="mark">
         <header class="article-header">
-          <h2 class="article-title" itemprop="name">
-            {{ne.title}}
-          </h2>
+          <h2 class="article-title" itemprop="name">{{ne.title}}</h2>
         </header>
       </div>
     </div>
     <div class="content-header no-cover" v-else>
       <header class="article-header">
-        <h2 class="article-title" itemprop="name">
-          {{ne.title}}
-        </h2>
+        <h2 class="article-title" itemprop="name">{{ne.title}}</h2>
       </header>
     </div>
 
@@ -72,7 +68,7 @@ export default {
   name: "new",
   data() {
     return {
-      title: '',
+      id: '',
       isActive: false,
       disable: false,
       avatar: ''
@@ -89,53 +85,51 @@ export default {
     }
   },
   mounted() {
-    const title = this.$route.params.title
-    if (title) {
-      this.initData(title)
-    }
+    const id = this.$route.params.id
+    if (id) this.initData(id)
     this.initStar()
   },
   watch: {
     '$route' (to, from) {
       this.show = false
-      const title = to.params.title;
-      if (title) {
-        if (title === this.title) return;
-        this.initData(title)
+      const id = to.params.id;
+      if (id) {
+        if (id === this.id) return;
+        this.initData(id)
       }
       this.initStar()
     }
   },
   methods: {
-    async initData(title) {
-      this.title = title;
-      await this.$store.dispatch('getNew', {title})
+    async initData(id) {
+      this.id = id;
+      await this.$store.dispatch('getNew', {id})
       try {
         const res = await this.$store.dispatch('getUserAvatar', {name: this.ne.userName})
         if (res.data.avatar) this.avatar = res.data.avatar;
-        this.$store.commit('setCurrentNewTitle', title)
-        this.$store.commit('setNewnav', title)
+        this.$store.commit('setCurrentNewTitle', id)
+        this.$store.commit('setNewnav', id)
         window.socialShare('.social-share-new')
       } catch (err) {
-        this.$store.commit('setCurrentNewTitle', title)
-        this.$store.commit('setNewnav', title)
+        this.$store.commit('setCurrentNewTitle', id)
+        this.$store.commit('setNewnav', id)
         window.socialShare('.social-share-new')
       }
     },
     initStar() {
-      const title = this.$route.params.title,
+      const id = this.$route.params.id,
         storage = tLocalStorage.get('likeTitle'),
         storageUn = tLocalStorage.get('unlikeTitle');
       let isExist = false,
        isExistUn = false;
       if (storage) {
         storage.forEach(s => {
-          if (s === title) return isExist = true;
+          if (s === id) return isExist = true;
         })
       }
       if (storageUn) {
         storageUn.forEach(s => {
-          if (s === title) return isExistUn = true;
+          if (s === id) return isExistUn = true;
         })
       }
       this.isActive = isExist;
@@ -145,17 +139,14 @@ export default {
       if (this.disable) {
         this.$Message.warning('已经点过了')
       } else {
-        const title = this.$route.params.title
+        const id = this.$route.params.id
         const LocalS = tLocalStorage.get('likeTitle');
         this.disable = true
         this.isActive = true
-        await this.$store.dispatch('likeNew', {title});
-        this.$store.dispatch('getNew', {title})
-        if (LocalS) {
-          tLocalStorage.set('likeTitle', [...LocalS, title], 60*60*12)
-        } else {
-          tLocalStorage.set('likeTitle', [title], 60*60*12)
-        }
+        await this.$store.dispatch('likeNew', {id});
+        this.$store.dispatch('getNew', {id})
+        if (LocalS) tLocalStorage.set('likeTitle', [...LocalS, id], 60*60*12)
+        else tLocalStorage.set('likeTitle', [id], 60*60*12)
       }
     }
   }

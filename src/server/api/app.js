@@ -41,7 +41,7 @@ app.use(session({
     url: DB_URL // mongodb 地址
   }),
   cookie: {
-    maxAge: 60 * 1000 * 60 * 8
+    maxAge: 60 * 1000 * 60 * 6
   }
 }));
 

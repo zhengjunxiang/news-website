@@ -8,12 +8,12 @@
     </div>
     <section class="archives-wrap">
       <article class="article article-summary" v-for="(ne, ind) in tag.news.slice(0, 5)" :key="ind">
-        <router-link :to="`/new/${ne.title}`" class="thumbnail" v-if="ne.cover">
+        <router-link :to="`/new/${ne._id}`" class="thumbnail" v-if="ne.cover">
           <img :src="ne.cover" class="thumbnail-image" />
         </router-link>
         <div :class="['article-tro', !ne.cover ? 'no-cover' : '']">
           <h2 class="article-title" itemprop="name">
-            <router-link :to="`/new/${ne.title}`">{{ne.title}}</router-link>
+            <router-link :to="`/new/${ne._id}`">{{ne.title}}</router-link>
           </h2>
           <div class="article-meta">
             <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>

@@ -6,11 +6,11 @@
       <div class="main-body-inner">
         <section class="main">
           <div class="selected-box">
-            <div v-for="(news, ind) in selected" class="selected-item" :key="ind" @click="handleSelec">
-              <router-link :to="`/new/${news.title}`">
-                <span>{{news.title}}</span>
-                <span>{{$U.fDate(news.createAt)}}</span>
-                <span>{{news.author}}</span>
+            <div v-for="(select, ind) in selected" class="selected-item" :key="ind" @click="handleSelec">
+              <router-link :to="`/${type === 'news' ? 'new' : 'event'}/${select._id}`">
+                <span>{{select.title}}</span>
+                <span>{{$U.fDate(select.createAt)}}</span>
+                <span>{{select.author}}</span>
               </router-link>
             </div>
           </div>
@@ -42,7 +42,10 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['isLoading'])
+    ...mapGetters(['isLoading']),
+    type() {
+      return this.$refs.header.selectedType
+    }
   },
   methods: {
     getEelected(selected) {
@@ -65,5 +68,6 @@ export default {
 @import "./styles/common.less";
 @import "./styles/list.less";
 @import "./styles/content.less";
-@import './app.less';
+@import "./styles/style-d.less";
+@import "./styles/style-m.less";
 </style>

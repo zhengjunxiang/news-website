@@ -64,8 +64,8 @@ export default that => [
           props: { type: 'primary', size: 'small' },
           on: {
             click: async () => {
-              const {title} = params.row;
-              const res = await that.$store.dispatch('getEvents', {title})
+              const {_id} = params.row;
+              const res = await that.$store.dispatch('getEvents', {id: _id})
               that.edit(res.data)
               if (res.mes) that.$Message.success(res.mes)
             }

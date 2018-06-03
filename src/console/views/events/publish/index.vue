@@ -46,11 +46,9 @@
         <Icon type="ios-calendar-outline" />&nbsp;&nbsp;
         <span>立即发布</span>
         <span class="clear-box" @click="handleClear">
-          <Tooltip content="清缓存" placement="left">
-            <Icon type="trash-b" />
-          </Tooltip>
+          <Tooltip content="清缓存" placement="left"><Icon type="trash-b" /></Tooltip>
         </span>
-        <DatePicker v-model="datetime" type="datetime" placeholder="Select date and time" style="margin-top: 10px;" />
+        <DatePicker :clearable="false" :editable="false" v-model="datetime" type="datetime" placeholder="Select date and time" style="margin-top: 10px;" />
       </p>
       <Row class="margin-top-20 publish-button-con">
         <span class="publish-button">
