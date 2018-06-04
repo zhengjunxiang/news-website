@@ -78,8 +78,8 @@ export default {
     return {
       formCustom: { title: '', cover: '', link: '', type: '' },
       ruleCustom: {
-        title: [{ required: true, message: '不能为空', trigger: 'blur' }],
-        cover: [{ required: true, message: '不能为空', trigger: 'blur' }]
+        title: [{ message: '不能为空', trigger: 'blur' }],
+        cover: [{ message: '不能为空', trigger: 'blur' }]
       },
       postData: [],
       isShow: false
