@@ -59,6 +59,7 @@ export default {
   mounted() {
     this.$store.dispatch('getEvents');
     this.$store.dispatch('getTagsAndNews');
+    this.$store.dispatch('getPosters');
   }
 };
 </script>

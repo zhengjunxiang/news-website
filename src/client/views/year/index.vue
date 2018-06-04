@@ -2,6 +2,14 @@
 </style>
 <template>
 <div id="year">
+  <div class="main-body-content">
+    <section class="archives-wrap">
+      <div class="poster-box" v-if="lists.cover">
+        <a :href="lists.link" v-if="lists.link" target="_blank"><img :src="lists.cover" alt="" /></a>
+        <img :src="lists.cover" alt="" v-else />
+      </div>
+    </section>
+  </div>
   <div v-for="(year, ind) in newsM" :key="ind">
     <div class="main-body-content" v-for="(mon, ind) in year.news.slice(0, 5)" :key="ind">
       <div class="main-body-header">
@@ -45,7 +53,10 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'year',
   computed: {
-    ...mapGetters(['newsM']),
+    ...mapGetters(['newsM', 'posters']),
+    lists() {
+      return this.posters.filter(p => p.type === 'lists')[0] || {}
+    }
   }
 };
 </script>

@@ -4,6 +4,10 @@
 <div>
   <div class="main-body-content">
     <section class="archives-wrap">
+      <div class="poster-box" v-if="lists.cover">
+        <a :href="lists.link" v-if="lists.link" target="_blank"><img :src="lists.cover" alt="" /></a>
+        <img :src="lists.cover" alt="" v-else />
+      </div>
       <div v-for="(ne, index) in curNews" :key="index">
         <article class="article-summary feature" v-if="ne.feature">
           <div v-if="ne.cover">
@@ -77,15 +81,15 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'news',
   data() {
-    return {
-      pageSize: 10,
-      curP: 1
-    }
+    return { pageSize: 10, curP: 1 }
   },
   computed: {
-    ...mapGetters([ 'news', 'lan']),
+    ...mapGetters([ 'news', 'posters']),
     curNews() {
       return this.news.slice((this.curP-1)*this.pageSize, this.curP*this.pageSize)
+    },
+    lists() {
+      return this.posters.filter(p => p.type === 'lists')[0] || {}
     }
   },
   methods: {

@@ -16,6 +16,11 @@
       </header>
     </div>
 
+    <div class="poster-box" v-if="details.cover">
+      <a :href="details.link" v-if="details.link" target="_blank"><img :src="details.cover" alt="" /></a>
+      <img :src="details.cover" alt="" v-else />
+    </div>
+
     <article class="article article-single article-type-post" itemprop="nePost">
       <div class="social-share-box">
         <div class="social-share backg social-share-event show" data-mode="prepend" :data-sites="setSites" />
@@ -66,10 +71,13 @@ export default {
     EventsNav
   },
   computed: {
-    ...mapGetters(['event', 'lan']),
+    ...mapGetters(['event', 'lan', 'posters']),
     setSites() {
       if (this.lan === 'en') return 'twitter,facebook,google'
       else return 'wechat,qq,weibo,twitter,facebook,google'
+    },
+    details() {
+      return this.posters.filter(p => p.type === 'details')[0] || {}
     }
   },
   mounted() {

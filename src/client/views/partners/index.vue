@@ -5,14 +5,10 @@
         <div class="partners-box" v-for="(par, ind) in curPars" :key="ind">
           <h3 class="partners-title">{{par.title}}</h3>
           <div class="logo-box">
-            <a :href="par.link" target="_black" v-if="par.link">
-              <img :src="par.cover">
-            </a>
+            <a :href="par.link" target="_black" v-if="par.link"><img :src="par.cover"></a>
             <img :src="par.cover" v-else>
           </div>
-          <div class="content-box">
-            {{par.content}}
-          </div>
+          <div class="content-box">{{par.content}}</div>
         </div>
       </div>
     </div>

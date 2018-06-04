@@ -22,7 +22,8 @@ export default {
     lan: util.checkLan(),
     currentNewTitle: '',
     newsSortByYear: [],
-    newsSortByMonth: []
+    newsSortByMonth: [],
+    posters: []
   },
   mutations: {
     setLoading(state, bool) { state.isLoading = bool },
@@ -124,7 +125,8 @@ export default {
           }
         })
       })
-    }
+    },
+    setPosters: (state, data) => { state.posters = data }
   },
   actions: {
     async getEvents({commit}, data) {
@@ -153,7 +155,7 @@ export default {
     },
     async getPosters({commit}) {
       const res = await GetPosters()
-      return res.data
+      if (res.data.data) commit('setPosters', res.data.data)
     },
     async getAbout({commit}) {
       const res = await GetAbout()
@@ -195,6 +197,7 @@ export default {
     events: state => state.events,
     event: state => state.event,
     lan: state => state.lan,
-    isLoading: state => state.isLoading
+    isLoading: state => state.isLoading,
+    posters: state => state.posters
   }
 };

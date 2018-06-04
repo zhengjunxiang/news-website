@@ -2,6 +2,14 @@
 </style>
 <template>
 <div>
+  <div class="main-body-content">
+    <section class="archives-wrap">
+      <div class="poster-box" v-if="lists.cover">
+        <a :href="lists.link" v-if="lists.link" target="_blank"><img :src="lists.cover" alt="" /></a>
+        <img :src="lists.cover" alt="" v-else />
+      </div>
+    </section>
+  </div>
   <div class="main-body-header">
     <h2 class="header"><Icon type="calendar"></Icon> {{$route.params.month}} - {{$route.params.year}}</h2>
   </div>
@@ -43,7 +51,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['newsM']),
+    ...mapGetters(['newsM', 'posters']),
     news() {
       const y = this.newsM.filter(y => y.year === this.$route.params.year);
       let m = [];
@@ -52,6 +60,9 @@ export default {
     },
     curNews() {
       return this.news.slice((this.curP-1)*this.pageSize, this.curP*this.pageSize)
+    },
+    lists() {
+      return this.posters.filter(p => p.type === 'lists')[0] || {}
     }
   },
   methods: {

@@ -4,6 +4,10 @@
 <div>
   <div class="main-body-content">
     <section class="archives-wrap">
+      <div class="poster-box" v-if="lists.cover">
+        <a :href="lists.link" v-if="lists.link" target="_blank"><img :src="lists.cover" alt="" /></a>
+        <img :src="lists.cover" alt="" v-else />
+      </div>
       <div v-for="(event, ind) in curEvents" :key="ind">
         <article class="article-summary feature" v-if="event.feature">
           <div v-if="event.cover">
@@ -68,9 +72,12 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['events']),
+    ...mapGetters(['events', 'posters']),
     curEvents() {
       return this.events.slice((this.curP-1)*this.pageSize, this.curP*this.pageSize)
+    },
+    lists() {
+      return this.posters.filter(p => p.type === 'lists')[0] || {}
     }
   },
   methods: {

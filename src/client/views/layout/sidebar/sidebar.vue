@@ -6,9 +6,13 @@
   <div class="sidebar-inner">
     <div class="widgets-container">
       <RecentPost />
-      <div class="poster-box" v-for="(p, ind) in posters" :key="ind">
-        <a :href="p.link" v-if="p.link" target="_blank"><img :src="p.cover" alt="" /></a>
-        <img :src="p.cover" alt="" v-else />
+      <div class="poster-box" v-if="posterTop.cover">
+        <a :href="posterTop.link" v-if="posterTop.link" target="_blank"><img :src="posterTop.cover" alt="" /></a>
+        <img :src="posterTop.cover" alt="" v-else />
+      </div>
+      <div class="poster-box" v-if="posterBottom.cover">
+        <a :href="posterBottom.link" v-if="posterBottom.link" target="_blank"><img :src="posterBottom.cover" alt="" /></a>
+        <img :src="posterBottom.cover" alt="" v-else />
       </div>
       <Archives />
       <Tags />
@@ -25,20 +29,21 @@ export default {
   name: "sidebar",
   components: { RecentPost, Tags, Archives },
   computed: {
-    ...mapGetters(['tags'])
+    ...mapGetters(['tags', 'posters']),
+    posterTop() {
+      return this.posters.filter(p => p.type === 'side-bar')[0] || {}
+    },
+    posterBottom() {
+      return this.posters.filter(p => p.type === 'side-bar-b')[0] || {}
+    }
   },
   data: () => ({
-    showSb: false,
-    posters: []
+    showSb: false
   }),
   methods: {
     toggleSidebar() {
       this.showSb = !this.showSb
     }
-  },
-  async mounted() {
-    const posters = await this.$store.dispatch('getPosters');
-    this.posters = posters.data || []
   }
 }
 </script>

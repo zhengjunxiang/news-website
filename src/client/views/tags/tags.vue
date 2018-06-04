@@ -2,6 +2,14 @@
 </style>
 <template>
 <div>
+  <div class="main-body-content">
+    <section class="archives-wrap">
+      <div class="poster-box" v-if="lists.cover">
+        <a :href="lists.link" v-if="lists.link" target="_blank"><img :src="lists.cover" alt="" /></a>
+        <img :src="lists.cover" alt="" v-else />
+      </div>
+    </section>
+  </div>
   <div class="main-body-content" v-for="tag in tags" :key="tag.value" v-show="tag.news.length">
     <div class="main-body-header">
       <h2 class="header"><Icon type="ios-pricetag"></Icon> {{tag.value}}</h2>
@@ -41,7 +49,10 @@ import {mapGetters} from 'vuex'
 export default {
   name: 'tags',
   computed: {
-    ...mapGetters(['tags'])
+    ...mapGetters(['tags', 'posters']),
+    lists() {
+      return this.posters.filter(p => p.type === 'lists')[0] || {}
+    }
   }
 };
 </script>
