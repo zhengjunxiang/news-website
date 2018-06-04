@@ -9,6 +9,8 @@ var EventsSchema = new mongoose.Schema({
   cover: { type: String },
   feature: { type: Boolean, default: false },
   lan: { type: String, default: 'zh' },
+  like: { type: Number, default: 0 },
+  unlike: { type: Number, default: 0 },
   createAt: { type: Number, default: Date.now },
   updateAt: { type: Number, default: Date.now }
 });

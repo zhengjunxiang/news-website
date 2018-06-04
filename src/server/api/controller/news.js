@@ -40,15 +40,15 @@ module.exports = {
   like(req, res) {
     global.logger.info('news/like.json');
     var {id} = req.body;
-    if (!req.session.like) req.session.like = [];
-    if (req.session.like.indexOf(id) !== -1) return res.json({ errno: 1, mes: '已经点过' })
+    if (!req.session.likeNews) req.session.likeNews = [];
+    if (req.session.likeNews.indexOf(id) !== -1) return res.json({ errno: 1, mes: '已经点过' })
     News.update(
       {_id: {$in: id}},
       {$inc: { like: 1 }},
       (err, ne) => {
         if (err) global.logger.error(err);
         if (ne.ok === 1) {
-          req.session.like.push(id)
+          req.session.likeNews.push(id)
           res.json({ errno: 0, mes: '' })
         } else res.json({ errno: 1, mes: '点赞失败' })
       }
@@ -57,15 +57,15 @@ module.exports = {
   unlike(req, res) {
     global.logger.info('news/unlike.json');
     var {title} = req.body;
-    if (!req.session.unlike) req.session.unlike = [];
-    if (req.session.unlike.indexOf(title) !== -1) return res.json({ errno: 1, mes: '已经点过' })
+    if (!req.session.unlikeNews) req.session.unlikeNews = [];
+    if (req.session.unlikeNews.indexOf(title) !== -1) return res.json({ errno: 1, mes: '已经点过' })
     News.update(
       {title: {$in: title}},
       {$inc: { unlike: 1 }},
       (err, ne) => {
         if (err) global.logger.error(err);
         if (ne.ok === 1) {
-          req.session.unlike.push(title)
+          req.session.unlikeNews.push(title)
           res.json({ errno: 0, mes: '' })
         } else res.json({ errno: 1, mes: '点赞失败' })
       }

@@ -45,6 +45,14 @@
         </div>
         <div class="article-entry" itemprop="articleBody" v-html="event.content" />
         <footer class="article-footer">
+          <div class="vue-star-box">
+            <vue-star ref="like" animate="animated rubberBand" color="#F05654" :isActive="isActive" :disable="disable">
+              <span slot="icon" @click="handleStar"><Icon type="heart" /></span>
+            </vue-star>
+          </div>
+          <div class="star-number-box">
+            <span class="star-number like">{{event.like}}</span>
+          </div>
           <EventsNav />
         </footer>
       </div>
@@ -55,6 +63,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import EventsNav from './events-nav.vue'
+import tLocalStorage from 'time-localstorage'
 export default {
   name: "event",
   data() {
@@ -62,8 +71,6 @@ export default {
       id: '',
       isActive: false,
       disable: false,
-      isActiveUn: false,
-      disableUn: false,
       avatar: ''
     }
   },
@@ -82,9 +89,8 @@ export default {
   },
   mounted() {
     const id = this.$route.params.id
-    if (id) {
-      this.initDate(id)
-    }
+    if (id) this.initDate(id)
+    this.initStar()
   },
   watch: {
     '$route' (to, from) {
@@ -94,6 +100,7 @@ export default {
         if (id === this.id) return;
         this.initDate(id)
       }
+      this.initStar()
     }
   },
   methods: {
@@ -108,6 +115,33 @@ export default {
       } catch (err) {
         window.socialShare('.social-share-event')
         this.$store.commit('setEventnav', id)
+      }
+    },
+    initStar() {
+      const id = this.$route.params.id,
+        storage = tLocalStorage.get('likeEventId');
+      let isExist = false,
+       isExistUn = false;
+      if (storage) {
+        storage.forEach(s => {
+          if (s === id) return isExist = true;
+        })
+      }
+      this.isActive = isExist;
+      this.disable = isExist;
+    },
+    async handleStar() {
+      if (this.disable) {
+        this.$Message.warning('已经点过了')
+      } else {
+        const id = this.$route.params.id
+        const LocalS = tLocalStorage.get('likeEventId');
+        this.disable = true
+        this.isActive = true
+        await this.$store.dispatch('likeEvent', {id});
+        this.$store.dispatch('getEvent', {id})
+        if (LocalS) tLocalStorage.set('likeEventId', [...LocalS, id], 60*60*12)
+        else tLocalStorage.set('likeEventId', [id], 60*60*12)
       }
     }
   }

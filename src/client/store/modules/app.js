@@ -1,6 +1,6 @@
 import {
   GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents,
-  GetPosters, GetUserAvatar
+  GetPosters, GetUserAvatar, LikeEvent, UnlikeEvent
 } from '@/api/server.js';
 import vm from '@/main';
 import util from '@/libs/util.js'
@@ -20,7 +20,6 @@ export default {
     oldEvent: {},
     tags: [],
     lan: util.checkLan(),
-    currentNewTitle: '',
     newsSortByYear: [],
     newsSortByMonth: [],
     posters: []
@@ -28,7 +27,6 @@ export default {
   mutations: {
     setLoading(state, bool) { state.isLoading = bool },
     setLan(state, lan) { if (lan) state.lan = lan },
-    setCurrentNewTitle: (state, title) => { if (title) state.currentNewTitle = title },
     setEvents: (state, data) => {
       if (data) {
         if (data.mes) vm.$Message.error(data.mes)
@@ -59,17 +57,17 @@ export default {
         state.news = [...newsFeature, ...newsNoF]
       }
     },
-    setNewnav: (state, title) => {
+    setNewnav: (state, _id) => {
       state.news.map((ne, ind) => {
-        if (title === ne.title) {
+        if (_id === ne._id) {
           state.news[ind + 1] ? state.newNew = state.news[ind + 1] : state.newNew = {}
           state.news[ind - 1] ? state.oldNew = state.news[ind - 1] : state.oldNew = {}
         }
       })
     },
-    setEventnav: (state, title) => {
+    setEventnav: (state, _id) => {
       state.events.map((ne, ind) => {
-        if (title === ne.title) {
+        if (_id === ne._id) {
           state.events[ind + 1] ? state.newEvent = state.events[ind + 1] : state.newEvent = {}
           state.events[ind - 1] ? state.oldEvent = state.events[ind - 1] : state.oldEvent = {}
         }
@@ -173,6 +171,14 @@ export default {
       const res = await UnlikeNew(data)
       return res.data
     },
+    async likeEvent({commit}, data) {
+      const res = await LikeEvent(data)
+      return res.data
+    },
+    async unlikeEvent({commit}, data) {
+      const res = await UnlikeEvent(data)
+      return res.data
+    },
     getTagsAndNews({commit, dispatch, state}, data) {
       Promise.all([dispatch('getNews'), dispatch('getTags')])
         .then(data => {
@@ -180,7 +186,6 @@ export default {
           commit('setTagsNews', data[1])
           commit('setSortNewsByDate')
           commit('setSortNewsByMonth')
-          if (state.currentNewTitle) commit('setNewnav', state.currentNewTitle)
         })
     }
   },

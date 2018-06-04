@@ -11,6 +11,8 @@ module.exports = function(req, res, next) {
       path === '/api/tags/get.json' ||
       path === '/api/partners/get.json' ||
       path === '/api/events/get.json' ||
+      path === '/api/events/like.json' ||
+      path === '/api/events/unlike.json' ||
       path === '/api/about/get.json' ||
       path === '/api/posters/get.json' ||
       path === '/api/user/getUserAvatar.json'

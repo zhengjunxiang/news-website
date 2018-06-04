@@ -1,18 +1,18 @@
 <template>
 <div class="nav-box" v-show="isShow">
-  <router-link :to="`/new/${newNew.title}`" class="nav-link-wrap left" v-show="newNew.title">
+  <router-link :to="`/new/${newNew._id}`" class="nav-link-wrap left" v-show="newNew.title">
     <strong class="nav-caption">{{$t('siderBar.older')}}</strong>
     <div class="nav-img-box">
       <img :src="newNew.cover" alt="" class="nav-img" v-if="newNew.cover">
-      <Icon type="image" v-else></Icon>
+      <Icon type="image" v-else />
       <p class="nav-title">{{newNew.title}}</p>
     </div>
   </router-link>
-  <router-link :to="`/new/${oldNew.title}`" class="nav-link-wrap right" v-show="oldNew.title">
+  <router-link :to="`/new/${oldNew._id}`" class="nav-link-wrap right" v-show="oldNew.title">
     <strong class="nav-caption">{{$t('siderBar.newer')}}</strong>
     <div class="nav-img-box">
       <img :src="oldNew.cover" alt="" class="nav-img" v-if="oldNew.cover">
-      <Icon type="image" v-else></Icon>
+      <Icon type="image" v-else />
       <p class="nav-title">{{oldNew.title}}</p>
     </div>
   </router-link>

@@ -80,6 +80,8 @@ module.exports = function(app) {
   router.get('/api/events/get.json', events.get);
   router.post('/api/events/add.json', events.add);
   router.delete('/api/events/delete.json', events.delete);
+  router.put('/api/events/like.json', events.like);
+  router.put('/api/events/unlike.json', events.unlike);
 
   app.use('/api/user/signin.json', limit)
   app.use(router);

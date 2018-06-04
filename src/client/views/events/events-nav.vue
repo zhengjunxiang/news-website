@@ -1,6 +1,6 @@
 <template>
 <div class="nav-box" v-show="isShow">
-  <router-link :to="`/event/${newEvent.title}`" class="nav-link-wrap left" v-show="newEvent.title">
+  <router-link :to="`/event/${newEvent._id}`" class="nav-link-wrap left" v-show="newEvent.title">
     <strong class="nav-caption">{{$t('siderBar.older')}}</strong>
     <div class="nav-img-box">
       <img :src="newEvent.cover" alt="" class="nav-img" v-if="newEvent.cover">
@@ -8,7 +8,7 @@
       <p class="nav-title">{{newEvent.title}}</p>
     </div>
   </router-link>
-  <router-link :to="`/event/${oldEvent.title}`" class="nav-link-wrap right" v-show="oldEvent.title">
+  <router-link :to="`/event/${oldEvent._id}`" class="nav-link-wrap right" v-show="oldEvent.title">
     <strong class="nav-caption">{{$t('siderBar.newer')}}</strong>
     <div class="nav-img-box">
       <img :src="oldEvent.cover" alt="" class="nav-img" v-if="oldEvent.cover">
