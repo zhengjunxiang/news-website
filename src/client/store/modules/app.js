@@ -1,6 +1,6 @@
 import {
   GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents,
-  GetPosters, GetUserAvatar, LikeEvent, UnlikeEvent
+  GetPosters, GetUserAvatar, LikeEvent, UnlikeEvent, AccountSignin
 } from '@/api/server.js';
 import vm from '@/main';
 import util from '@/libs/util.js'
@@ -187,6 +187,10 @@ export default {
           commit('setSortNewsByDate')
           commit('setSortNewsByMonth')
         })
+    },
+    async accountSignin({commit}, data) {
+      const res = await AccountSignin(data)
+      return res.data
     }
   },
   getters: {

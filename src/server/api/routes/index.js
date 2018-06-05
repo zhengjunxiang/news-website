@@ -83,6 +83,8 @@ module.exports = function(app) {
   router.put('/api/events/like.json', events.like);
   router.put('/api/events/unlike.json', events.unlike);
 
+  router.post('/api/account/signin.json', user.accountSignin);
+
   app.use('/api/user/signin.json', limit)
   app.use(router);
   app.use(messages);

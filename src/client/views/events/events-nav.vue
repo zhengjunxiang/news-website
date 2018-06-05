@@ -67,7 +67,7 @@ export default {
       }
       .nav-img,.ivu-icon {
         font-size: 55px;
-        margin-right: 20px;
+        margin-right: 10px;
         float: left;
         width: 60px;
         height: 50px;
@@ -84,6 +84,7 @@ export default {
           text-transform: uppercase;
       }
       .nav-title {
+          word-break: break-all;
           float: left;
           font-weight: 500;
           font-size: 16px;

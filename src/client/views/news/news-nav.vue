@@ -3,16 +3,14 @@
   <router-link :to="`/new/${newNew._id}`" class="nav-link-wrap left" v-show="newNew.title">
     <strong class="nav-caption">{{$t('siderBar.older')}}</strong>
     <div class="nav-img-box">
-      <img :src="newNew.cover" alt="" class="nav-img" v-if="newNew.cover">
-      <Icon type="image" v-else />
+      <span v-if="newNew.cover" class="img-box"><img :src="newNew.cover" alt="" class="nav-img"></span>
       <p class="nav-title">{{newNew.title}}</p>
     </div>
   </router-link>
   <router-link :to="`/new/${oldNew._id}`" class="nav-link-wrap right" v-show="oldNew.title">
     <strong class="nav-caption">{{$t('siderBar.newer')}}</strong>
     <div class="nav-img-box">
-      <img :src="oldNew.cover" alt="" class="nav-img" v-if="oldNew.cover">
-      <Icon type="image" v-else />
+      <span v-if="oldNew.cover" class="img-box"><img :src="oldNew.cover" alt="" class="nav-img"></span>
       <p class="nav-title">{{oldNew.title}}</p>
     </div>
   </router-link>
@@ -65,10 +63,13 @@ export default {
       .nav-img-box {
         padding: 10px 0;
       }
-      .nav-img,.ivu-icon {
-        font-size: 55px;
-        margin-right: 20px;
-        float: left;
+      .img-box {
+        padding-right: 10px;
+        text-align: center;
+        display: table-cell;
+        vertical-align: middle;
+      }
+      .nav-img {
         width: 60px;
         height: 50px;
       }
@@ -84,7 +85,8 @@ export default {
           text-transform: uppercase;
       }
       .nav-title {
-          float: left;
+          word-break: break-all;
+          display: table-cell;
           font-weight: 500;
           font-size: 16px;
           color: #666;

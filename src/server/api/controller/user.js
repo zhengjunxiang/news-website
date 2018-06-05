@@ -1,6 +1,7 @@
 var User = require('../models/user');
 var conf = require('../config');
 var bcrypt = require('bcryptjs');
+const axios = require('axios');
 var SALT_WORK_FACTOR = 10;
 
 module.exports = {
@@ -241,5 +242,27 @@ module.exports = {
         res.json({ errno: 0, mes: '登出成功' })
       }
     })
+  },
+  accountSignin(req, res) {
+    global.logger.info('account/signin.json');
+    const { identify, password } = req.body;
+    axios.post('https://account.bitmain.com/api/v1/login', {identify, password})
+      .then(response => {
+        if (response.data) {
+          if (response.data.code === '2000') {
+            res.json({ errno: 0, mes: '' })
+          } else if (response.data.code === '2011') {
+            res.json({ errno: 1, mes: '密码不匹配' })
+          } else if (response.data.code === '2403') {
+            res.json({ errno: 1, mes: '账户被锁定' })
+          } else if (response.data.code === '2404') {
+            res.json({ errno: 1, mes: '账户未确认' })
+          } else {
+            res.json({ errno: 1, mes: '登录失败' })
+          }
+        }
+      }).catch(error => {
+        global.logger.error('error', error);
+      });
   }
 }

@@ -2,6 +2,7 @@ module.exports = function(req, res, next) {
   if (!req.session.user) {
     const path = req.path;
     if (path === '/api/user/signin.json' ||
+      path === '/api/account/signin.json' ||
       path === '/api/user/signup.json' ||
       path === '/api/user/loginOut.json' ||
       /^\/api\/news\/get.json/g.test(path) ||
