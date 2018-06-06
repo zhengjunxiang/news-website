@@ -16,6 +16,7 @@ import about from '@/views/about/about.vue'
 import eventPublish from '@/views/events/publish/index.vue'
 import eventsList from '@/views/events/list/index.vue'
 import posters from '@/views/posters/index.vue'
+import contact from '@/views/contact/index.vue'
 
 // 不作为Main组件的子页面展示的页面单独写，如下
 export const loginRouter = {
@@ -193,20 +194,27 @@ export const appRouter = [
         component: posters
       }
     ]
-  },
-  {
-    path: '/about',
+  }, {
+    path: '/us',
     icon: 'android-contacts',
-    name: 'about',
-    title: '关于我们',
+    name: 'us',
+    title: '我们',
     component: Main,
     children: [
       {
-        path: 'index',
+        path: 'about',
         title: '关于我们',
         meta: { title: 'About - 关于我们' },
-        name: 'about-index',
+        name: 'about',
+        icon: 'person-stalker',
         component: about
+      }, {
+        path: 'contact',
+        title: '联系我们',
+        meta: { title: 'Contact - 联系我们' },
+        name: 'contact',
+        icon: 'ios-list',
+        component: contact
       }
     ]
   }

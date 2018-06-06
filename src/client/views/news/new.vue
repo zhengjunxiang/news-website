@@ -33,6 +33,7 @@
           </div>
           <div class="article-meta-box">
             <div class="article-author"><Icon type="android-person"></Icon> {{ne.author}}</div>
+            <span class="view-box"><Icon type="eye" /> {{ne.view}}</span>
             <span>
               <Icon type="ios-clock" />
               <time :datetime="ne.createAt" itemprop="datePublished">{{$U.fDate(ne.createAt)}}</time>
@@ -41,6 +42,7 @@
               <Icon type="edit" />
               <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
             </span>
+            <span v-if="ne.feature" style="float: right;"><Tag>Feature</Tag></span>
           </div>
         </div>
         <div class="article-entry" itemprop="articleBody" v-html="ne.content" />

@@ -57,7 +57,7 @@
           <Button @click="handlePreview">预览</Button>
         </span>
         <span class="publish-button">
-          <Button @click="handlePublish" :loading="publishLoading" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button>
+          <Button @click="handlePublish" :loading="isload" icon="ios-checkmark" style="width:90px;" type="primary">发布</Button>
         </span>
         <preview ref="preview" />
       </Row>
@@ -79,13 +79,13 @@ export default {
   name: 'new-publish',
   components: { preview, tagsCard },
   computed: {
-    ...mapGetters(['userN', 'artName'])
+    ...mapGetters(['userN', 'artName', 'isload'])
   },
   data() {
     return {
       newTitle: '', newIntro: '', author: '', cover: '', showLink: false,
       editPathButtonType: 'ghost', publishTime: '',
-      publishLoading: false, isShowPreview: false, isEdit: false,
+      isShowPreview: false, isEdit: false,
       lans: conf.lans, lan: '', feature: false, datetime: new Date()
     };
   },
@@ -150,17 +150,13 @@ export default {
              data.updateAt = this.datetime.getTime();
            }
         }
-        this.publishLoading = true;
-        try {
-          const res = await this.$store.dispatch(this.isEdit ? 'updateNews' : 'addNews', data)
-          this.$Notice.success({
-            title: '保存成功',
-            desc: '文章《' + this.newTitle + '》保存成功',
-            duration: 3
-          });
-          this.publishLoading = false;
-        } catch (e) { this.publishLoading = false }
-      }
+        const res = await this.$store.dispatch(this.isEdit ? 'updateNews' : 'addNews', data)
+        this.$Notice.success({
+          title: '保存成功',
+          desc: '文章《' + this.newTitle + '》保存成功',
+          duration: 3
+        });
+    }
     },
     handleTitleBlur() {
       if (this.newTitle.length !== 0) localStorage.newTitle = this.newTitle;

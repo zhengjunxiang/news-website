@@ -26,7 +26,7 @@ module.exports = {
     global.logger.info('news/update.json');
     const {title, content, intro, tags, author, cover, updateAt, feature} = req.body;
     News.update(
-      {title: {$in: title}},
+      { title: { $in: title } },
       { content, intro, tags, author, updateAt, cover, feature },
       (err, ne) => {
         if (err) global.logger.error(err);
@@ -73,17 +73,23 @@ module.exports = {
   },
   get: (req, res) => {
     global.logger.info('news/get.json');
-    const _new = req.query, field = {};
-    if (!_new.id) {
+    const {id} = req.query, field = {};
+    if (!id) {
       field.content = 0;
-      News.find(_new, field).sort({'updateAt': -1}).exec((err, news) => {
+      News.find({}, field).sort({'updateAt': -1}).exec((err, news) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: news });
       });
     } else {
-      News.findOne({_id: _new.id}).sort({'updateAt': -1}).exec((err, news) => {
+      News.findOne({_id: id}).sort({'updateAt': -1}).exec((err, news) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: news });
+      });
+      if (!req.session.view) req.session.view = [];
+      if (req.session.view.indexOf(id) !== -1) return;
+      req.session.view.push(id)
+      News.update({_id: id}, {$inc: { view: 1 }}, (err, ne) => {
+        if (err) global.logger.error(err);
       });
     }
   },

@@ -10,6 +10,7 @@ const initRoute = {
 
 export default {
   state: {
+    isload: false,
     isFullScreen: false,
     openedSubmenuArr: [], // 要展开的菜单数组
     menuTheme: 'dark', // 主题
@@ -22,6 +23,7 @@ export default {
     tagsList: [ ...otherRouter.children ]
   },
   mutations: {
+    setLoad(state, bool) { state.isload = bool },
     setTagsList(state, list) { state.tagsList.push(...list); },
     updateMenulist(state) {
       let accessCode = parseInt(Cookies.get('access'));
@@ -118,5 +120,8 @@ export default {
       state.pageOpenedList.push(tagObj);
       localStorage.pageOpenedList = JSON.stringify(state.pageOpenedList);
     }
+  },
+  getters: {
+    isload: state => state.isload
   }
 };

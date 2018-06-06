@@ -85,5 +85,7 @@ module.exports = function(req, res, next) {
   } else if (path === '/api/posters/add.json') {
     const { type } = req.body;
     addMes(name, `更新广告 ${type}`)
+  } else if (path === '/api/contact/delete.json') {
+    addMes(name, '删除了留言')
   }
 }

@@ -57,7 +57,7 @@
           <Input v-model="search" icon="search" placeholder="Search..." style="width: 300px"></Input>
         </div>
         <span @click="refreshTable" class="refresh-box"><Icon type="refresh" /></span>
-        <Table size="small" :data="currentData" :columns="columns" stripe ref="table" :loading="loading" />
+        <Table size="small" :data="currentData" :columns="columns" stripe ref="table" :loading="isload" />
         <div class="page-box">
           <Page :total="tableData.length" show-total @on-change="onPageChange" :current="curPage" :page-size="pageSize"  />
         </div>
@@ -69,6 +69,7 @@
 <script>
 import html2canvas from 'html2canvas';
 import table2excel from '@/libs/table2excel.js';
+import {mapGetters} from 'vuex';
 import columns from './columns.js';
 export default {
   name: 'events-list',
@@ -76,12 +77,13 @@ export default {
     return {
       rowNum: 1, colNum: 1, selectMinRow: 1, selectMaxRow: 1, selectMinCol: 1,
       selectMaxCol: 1, csvFileName: '', excelFileName: '', tableData: [],
-      imageName: '', columns: columns(this), loading: false, pageSize: 10, curPage: 1,
+      imageName: '', columns: columns(this), pageSize: 10, curPage: 1,
       search: ''
     };
   },
   mounted() { this.initData() },
   computed: {
+    ...mapGetters(['isload']),
     currentData() {
       const search = this.search.trim()
       const tabData = this.tableData.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize) || [];
@@ -116,17 +118,10 @@ export default {
     },
     exportExcel() { table2excel.transform(this.$refs.table, 'hrefToExportTableEvent', this.excelFileName) },
     async initData() {
-      this.loading = true;
       this.colNum = this.selectMaxCol = this.columns.length;
-      try {
-        const res = await this.$store.dispatch('getEvents');
-        this.loading = false;
-        this.total = res.data.length;
-        this.tableData = res.data;
-        this.rowNum = this.selectMaxRow = res.data.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize).length;
-      } catch (err) {
-        this.loading = false;
-      }
+      const res = await this.$store.dispatch('getEvents');
+      this.tableData = res.data;
+      this.rowNum = this.selectMaxRow = res.data.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize).length;
     },
     exportImage() {
       let vm = this;

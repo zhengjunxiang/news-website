@@ -11,6 +11,7 @@ const partners = require('../controller/partners');
 const about = require('../controller/about');
 const events = require('../controller/events');
 const posters = require('../controller/posters');
+const contact = require('../controller/contact');
 var RateLimit = require('express-rate-limit');
 
 var limit = new RateLimit({
@@ -82,6 +83,11 @@ module.exports = function(app) {
   router.delete('/api/events/delete.json', events.delete);
   router.put('/api/events/like.json', events.like);
   router.put('/api/events/unlike.json', events.unlike);
+  // contact
+  router.get('/api/contact/get.json', contact.get);
+  router.post('/api/contact/add.json', contact.add);
+  router.delete('/api/contact/delete.json', contact.delete);
+  router.put('/api/contact/update.json', contact.update);
 
   router.post('/api/account/signin.json', user.accountSignin);
 

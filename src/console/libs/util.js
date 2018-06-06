@@ -197,4 +197,22 @@ util.fDate = (date, f) => {
   else return moment().format(f || 'YYYY-MM-DD HH:mm:ss')
 }
 
+util.deepCopy = source => {
+  if (!source || typeof source !== 'object') {
+     throw new Error('error arguments', 'shallowClone');
+   }
+   var targetObj = source.constructor === Array ? [] : {};
+   for (var keys in source) {
+      if (source.hasOwnProperty(keys)) {
+         if (source[keys] && typeof source[keys] === 'object') {
+           targetObj[keys] = source[keys].constructor === Array ? [] : {};
+           targetObj[keys] = util.deepCopy(source[keys]);
+         } else {
+           targetObj[keys] = source[keys];
+         }
+      }
+   }
+   return targetObj;
+}
+
 export default util;

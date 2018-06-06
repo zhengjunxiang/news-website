@@ -21,6 +21,9 @@
           <li class="main-nav-list-item">
             <router-link :to="{ name: 'about'}">{{ $t("header.about") }}</router-link>
           </li>
+          <li class="main-nav-list-item">
+            <router-link :to="{ name: 'contact'}">{{ $t("header.contact") }}</router-link>
+          </li>
         </ul>
         <nav class="sub-nav">
           <Dropdown trigger="click" @on-click="toggleType" placement="bottom-start">

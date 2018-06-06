@@ -52,6 +52,10 @@ const UpdateEvents = data => API.post('/api/events/update.json', data);
 const GetEvents = data => API.get('/api/events/get.json', {params: data});
 const AddEvents = data => API.post('/api/events/add.json', data);
 const DelEvents = data => API.delete('/api/events/delete.json', {params: data});
+// contact
+const UpdateContact = data => API.put('/api/contact/update.json', data);
+const GetContact = data => API.get('/api/contact/get.json', {params: data});
+const DelContact = data => API.delete('/api/contact/delete.json', {params: data});
 
 export {
   GetImgs, DelImg, Rename, Mkdir, DelDir,
@@ -61,7 +65,8 @@ export {
   AddThings, GetThings, DelThings,
   AddTags, GetTags, DelTags,
   AddPartners, UpdatePartners, GetPartners, DelPartners,
-  AddPosters, UpdatePosters, GetPosters, DelPosters,
+  AddPosters, GetPosters, DelPosters,
   UpdateAbout, GetAbout, AddAbout, DelAbout,
-  UpdateEvents, GetEvents, AddEvents, DelEvents
+  UpdateEvents, GetEvents, AddEvents, DelEvents,
+  UpdateContact, GetContact, DelContact
 };

@@ -4,7 +4,8 @@ import Util from '../libs/util';
 import VueRouter from 'vue-router';
 import Tags from '@/views/tags/tags.vue';
 import Tag from '@/views/tag/tag.vue';
-import About from '@/views/about/about.vue';
+import Contact from '@/views/contact/index.vue';
+import About from '@/views/about/index.vue';
 import New from '@/views/news/new.vue';
 import News from '@/views/news/news.vue';
 import Month from '@/views/month/index.vue';
@@ -35,8 +36,13 @@ const RouterConfig = {
       meta: { title: 'AntPool - Partners' },
       component: Partners
     }, {
+      path: '/contact',
+      meta: { title: 'AntPool - Contact Us' },
+      name: 'contact',
+      component: Contact
+    }, {
       path: '/about',
-      meta: { title: 'AntPool - AboutUs' },
+      meta: { title: 'AntPool - About Us' },
       name: 'about',
       component: About
     }, {

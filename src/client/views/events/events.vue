@@ -18,6 +18,7 @@
                   <router-link :to="`/event/${event._id}`">{{event.title}}</router-link>
                 </h2>
                 <div class="article-meta">
+                  <span class="view-box"><Icon type="eye" /> {{event.view}}</span>
                   <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
                   <span>{{event.author}}</span>
                 </div>
@@ -33,6 +34,7 @@
                 <router-link :to="`/event/${event._id}`">{{event.title}}</router-link>
               </h2>
               <div class="article-meta">
+                <span class="view-box"><Icon type="eye" /> {{event.view}}</span>
                 <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
                 <span>{{event.author}}</span>
               </div>
@@ -49,6 +51,7 @@
               <router-link :to="`/event/${event._id}`">{{event.title}}</router-link>
             </h2>
             <div class="article-meta">
+              <span class="view-box"><Icon type="eye" /> {{event.view}}</span>
               <time :datetime="event.updateAt" itemprop="datePublished">{{$U.fDate(event.updateAt)}}</time>
               <span>{{event.author}}</span>
             </div>

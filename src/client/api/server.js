@@ -11,10 +11,11 @@ const LikeEvent = data => API.put('/api/events/like.json', data);
 const UnlikeEvent = data => API.put('/api/events/unlike.json', data);
 const GetPosters = data => API.get('/api/posters/get.json', {params: data});
 const GetUserAvatar = data => API.get('/api/user/getUserAvatar.json', {params: data});
+const AddContact = data => API.post('/api/contact/add.json', data);
 
 const AccountSignin = data => API.post('/api/account/signin.json', data);
 
 export {
   GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents,
-  GetPosters, GetUserAvatar, LikeEvent, UnlikeEvent, AccountSignin
+  GetPosters, GetUserAvatar, LikeEvent, UnlikeEvent, AccountSignin, AddContact
 };

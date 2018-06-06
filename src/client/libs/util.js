@@ -1,5 +1,6 @@
 import moment from 'moment'
 let util = {};
+const pattern = new RegExp("[`~#^&*()=|{}\\[\\]<>/……&*（）——|{}]");
 util.title = function(title) {
   if (title) window.document.title = title
 };
@@ -13,5 +14,6 @@ util.fDate = (date, f) => {
   if (date) return moment(date - 0).format(f || 'YYYY-MM-DD HH:mm:ss')
   else return moment().format(f || 'YYYY-MM-DD HH:mm:ss')
 }
+util.mapScript = str => pattern.test(str)
 
 export default util;

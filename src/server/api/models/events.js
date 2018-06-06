@@ -11,6 +11,7 @@ var EventsSchema = new mongoose.Schema({
   lan: { type: String, default: 'zh' },
   like: { type: Number, default: 0 },
   unlike: { type: Number, default: 0 },
+  view: { type: Number, default: 0 },
   createAt: { type: Number, default: Date.now },
   updateAt: { type: Number, default: Date.now }
 });

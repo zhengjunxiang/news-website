@@ -3,42 +3,40 @@ export default that => [
     title: '标题',
     key: 'title',
     sortable: true,
-    fixed: 'left'
+    fixed: 'left',
+    width: 200
   }, {
     title: '标签',
     key: 'tags',
-    render: (h, params) => {
-      const tags = params.row.tags;
-      return h('div', tags.map(tag => {
-        return h('Tag', {
-          props: {
-            type: 'border'
-          }
-        }, tag)
-      }));
-    }
+    width: 160
   }, {
     title: '作者',
     sortable: true,
-    width: '130px',
+    width: 130,
     key: 'author'
   }, {
     title: '用户',
     sortable: true,
-    width: '110px',
+    width: 110,
     key: 'userName'
   }, {
     title: '语言',
     sortable: true,
-    width: '110px',
+    width: 110,
     key: 'lan',
     filters: [ { label: 'zh', value: 'zh' }, { label: 'en', value: 'en' } ],
     filterMultiple: false,
     filterMethod: (value, row) => row.lan === value
   }, {
+    title: '浏览',
+    sortable: true,
+    key: 'view',
+    width: 90
+  }, {
     title: '创建时间',
     sortable: true,
     key: 'createAt',
+    width: 160,
     render: (h, params) => {
       return h('div', that.$U.fDate(that.tableData[params.index].createAt));
     }
@@ -46,12 +44,13 @@ export default that => [
     title: '更新时间',
     sortable: true,
     key: 'updateAt',
+    width: 160,
     render: (h, params) => {
       return h('div', that.$U.fDate(that.tableData[params.index].updateAt));
     }
   }, {
     title: '操作',
-    width: '160',
+    width: 160,
     render: (h, params) => {
       return h('div', [
         h('Button', {

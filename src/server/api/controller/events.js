@@ -73,17 +73,23 @@ module.exports = {
   },
   get: (req, res) => {
     global.logger.info('events/get.json');
-    const _event = req.query, field = {};
-    if (!_event.id) {
+    const {id} = req.query, field = {};
+    if (!id) {
       field.content = 0;
-      Events.find(_event, field).sort({'updateAt': -1}).exec((err, events) => {
+      Events.find({}, field).sort({'updateAt': -1}).exec((err, events) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: events });
       });
     } else {
-      Events.findOne({_id: _event.id}).exec((err, events) => {
+      Events.findOne({_id: id}).exec((err, events) => {
         if (err) global.logger.error(err);
         else res.json({ errno: 0, mse: '', data: events });
+      });
+      if (!req.session.view) req.session.view = [];
+      if (req.session.view.indexOf(id) !== -1) return;
+      req.session.view.push(id)
+      Events.update({_id: id}, {$inc: { view: 1 }}, (err, ne) => {
+        if (err) global.logger.error(err);
       });
     }
   },

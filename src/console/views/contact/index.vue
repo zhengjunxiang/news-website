@@ -18,16 +18,16 @@
 
 <template>
   <Card>
-    <p slot="title">新闻列表</p>
+    <p slot="title">联系列表</p>
     <Row>
       <Col :span="7">
         <div class="margin-bottom-10">
           <Input v-model="imageName" icon="document" placeholder="请输入图片名" style="width: 190px" />
           <Button type="primary" @click="exportImage">导出为图片</Button>
-          <div style="display: none"><img id="exportedImage" /></div>
+          <div style="display: none"><img id="exportedImageContact" /></div>
         </div>
         <Input v-model="excelFileName" icon="document" placeholder="请输入文件名" style="width: 190px" />
-        <a id="hrefToExportTable" style="postion: absolute;left: -10px;top: -10px;width: 0px;height: 0px;"></a>
+        <a id="hrefToExportTableContact" style="postion: absolute;left: -10px;top: -10px;width: 0px;height: 0px;"></a>
         <Button type="primary" @click="exportExcel">表格数据</Button>
       </Col>
       <Col :span="6">
@@ -57,7 +57,7 @@
           <Input v-model="search" icon="search" placeholder="Search..." style="width: 300px"></Input>
         </div>
         <span @click="refreshTable" class="refresh-box"><Icon type="refresh" /></span>
-        <Table size='small' :data="currentData" :columns="columns" stripe ref="table" :loading="isload" />
+        <Table size="small" :data="currentData" :columns="columns" stripe ref="table" :loading="isload" />
         <div class="page-box">
           <Page :total="tableData.length" show-total @on-change="onPageChange" :current="curPage" :page-size="pageSize"  />
         </div>
@@ -69,60 +69,63 @@
 <script>
 import html2canvas from 'html2canvas';
 import table2excel from '@/libs/table2excel.js';
-import {mapGetters} from 'vuex'
 import columns from './columns.js';
+import {mapGetters} from 'vuex'
 export default {
-  name: 'news-list',
+  name: 'contact',
   data() {
     return {
-      rowNum: 1, colNum: 1, selectMinRow: 1, selectMaxRow: 1, selectMinCol: 1,
-      selectMaxCol: 1, csvFileName: '', excelFileName: '', tableData: [],
+      colNum: 1, selectMinRow: 1, selectMinCol: 1,
+      selectMaxCol: 1, csvFileName: '', excelFileName: '',
       imageName: '', columns: columns(this), pageSize: 10, curPage: 1,
       search: ''
     };
   },
-  mounted() { this.initData() },
   computed: {
-    ...mapGetters(['isload']),
+    ...mapGetters(['isload', 'contact']),
+    tableData() { return this.contact },
+    rowNum() {
+      return this.contact.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize).length;
+    },
+    selectMaxRow() { return this.rowNum },
     currentData() {
       const search = this.search.trim()
       const tabData = this.tableData.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize) || [];
       const data = this.$U.deepCopy(tabData).map(d => {
-        d.tags = d.tags.join(' - ');
+        d.interest = d.interest.join(' - ');
         return d;
       })
       return data.filter(n => {
-        if (search) {
-          return new RegExp(search, 'gi').test(n.title) ||
-            new RegExp(search, 'gi').test(n.author) ||
-            new RegExp(search, 'gi').test(n.userName) ||
-            n.tags.indexOf(search) > -1
+        if (search.trim()) {
+          return new RegExp(search, 'gi').test(n.name) ||
+            new RegExp(search, 'gi').test(n.mail) ||
+            new RegExp(search, 'gi').test(n.country) ||
+            new RegExp(search, 'gi').test(n.city) ||
+            new RegExp(search, 'gi').test(n.message) ||
+            n.interest.indexOf(search) > -1
         }
         return true
       })
     }
   },
+  mounted() { this.colNum = this.selectMaxCol = this.columns.length - 1 },
   methods: {
     onPageChange(page) { this.curPage = page },
-    refreshTable() { this.initData() },
+    refreshTable() {
+      this.$store.dispatch('getContact');
+    },
     exportData(type) {
       if (type === 1) this.$refs.table.exportCsv({ filename: '原始数据' })
       else if (type === 2) this.$refs.table.exportCsv({ filename: '排序和过滤后的数据', original: false })
       else if (type === 3) {
         this.$refs.table.exportCsv({
           filename: this.csvFileName,
-          columns: this.columns.filter((col, index) => index >= this.selectMinCol - 1 && index <= this.selectMaxCol - 1),
+          columns: this.columns.filter((col, index) => index >= this.selectMinCol - 1 && index <= this.selectMaxCol - 2),
           data: this.currentData.filter((data, index) => index >= this.selectMinRow - 1 && index <= this.selectMaxRow - 1)
         });
       }
     },
-    exportExcel() { table2excel.transform(this.$refs.table, 'hrefToExportTable', this.excelFileName) },
-    async initData() {
-      this.colNum = this.selectMaxCol = this.columns.length - 1;
-      const res = await this.$store.dispatch('getNews');
-      this.tableData = res.data;
-      this.rowNum = this.selectMaxRow = res.data.slice((this.curPage - 1) * this.pageSize, this.curPage * this.pageSize).length;
-    },
+    exportExcel() { table2excel.transform(this.$refs.table, 'hrefToExportTableContact', this.excelFileName) },
     exportImage() {
       let vm = this;
       let table = this.$refs.table.$el;
@@ -142,7 +145,7 @@ export default {
         // canvas: canvas,
         onrendered(image) {
           var url = image.toDataURL();
-          document.getElementById('exportedImage').src = url;
+          document.getElementById('exportedImageContact').src = url;
           let a = document.createElement('a');
           a.href = url;
           a.download = vm.imageName ? vm.imageName : '未命名';
@@ -152,20 +155,6 @@ export default {
           // document.body.removeChild(canvas);
         }
       });
-    },
-    editNew(data) {
-      if (data) {
-        localStorage.newIntro = data.intro;
-        localStorage.newTitle = data.title;
-        localStorage.newContent = data.content;
-        localStorage.newCover = data.cover;
-        localStorage.newAuthor = data.author
-        localStorage.newTags = JSON.stringify(data.tags);
-        localStorage.newEdit = 'edit'
-        localStorage.newLan = data.lan
-        localStorage.newFeature = data.feature
-        this.$router.push({name: 'new-publish'})
-      }
     }
   }
 };

@@ -12,6 +12,7 @@ var NewsSchema = new mongoose.Schema({
   tags: { type: Array },
   like: { type: Number, default: 0 },
   unlike: { type: Number, default: 0 },
+  view: { type: Number, default: 0 },
   createAt: { type: Number, default: Date.now },
   updateAt: { type: Number, default: Date.now }
 });

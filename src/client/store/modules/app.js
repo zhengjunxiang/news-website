@@ -1,6 +1,6 @@
 import {
   GetNews, GetTags, GetPartners, GetAbout, LikeNew, UnlikeNew, GetEvents,
-  GetPosters, GetUserAvatar, LikeEvent, UnlikeEvent, AccountSignin
+  GetPosters, GetUserAvatar, LikeEvent, UnlikeEvent, AccountSignin, AddContact
 } from '@/api/server.js';
 import vm from '@/main';
 import util from '@/libs/util.js'
@@ -190,6 +190,10 @@ export default {
     },
     async accountSignin({commit}, data) {
       const res = await AccountSignin(data)
+      return res.data
+    },
+    async addContact({commit}, data) {
+      const res = await AddContact(data)
       return res.data
     }
   },

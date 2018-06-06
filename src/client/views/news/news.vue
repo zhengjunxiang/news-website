@@ -18,6 +18,7 @@
                   <router-link :to="`/new/${ne._id}`">{{ne.title}}</router-link>
                 </h2>
                 <div class="article-meta">
+                  <span class="view-box"><Icon type="eye" /> {{ne.view}}</span>
                   <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
                   <span>{{ne.author}}</span>
                   <div class="tags-box">
@@ -38,6 +39,7 @@
                 <router-link :to="`/new/${ne._id}`">{{ne.title}}</router-link>
               </h2>
               <div class="article-meta">
+                <span class="view-box"><Icon type="eye" /> {{ne.view}}</span>
                 <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
                 <span>{{ne.author}}</span>
                 <div class="tags-box">
@@ -59,6 +61,7 @@
               <router-link :to="`/new/${ne._id}`">{{ne.title}}</router-link>
             </h2>
             <div class="article-meta">
+              <span class="view-box"><Icon type="eye" /> {{ne.view}}</span>
               <time :datetime="ne.updateAt" itemprop="datePublished">{{$U.fDate(ne.updateAt)}}</time>
               <span>{{ne.author}}</span>
               <div class="tags-box">

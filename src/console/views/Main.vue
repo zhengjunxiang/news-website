@@ -87,22 +87,12 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([ 'userN' ]),
-    menuList() {
-      return this.$store.state.app.menuList;
-    },
-    pageTagsList() {
-      return this.$store.state.app.pageOpenedList; // 打开的页面的页面对象
-    },
-    currentPath() {
-      return this.$store.state.app.currentPath; // 当前面包屑数组
-    },
-    avatorPath() {
-      return localStorage.avatorImgPath;
-    },
-    menuTheme() {
-      return this.$store.state.app.menuTheme;
-    }
+    ...mapGetters([ 'userN', 'contact' ]),
+    menuList() { return this.$store.state.app.menuList },
+    pageTagsList() { return this.$store.state.app.pageOpenedList },  // 打开的页面的页面对象
+    currentPath() { return this.$store.state.app.currentPath }, // 当前面包屑数组
+    avatorPath() { return localStorage.avatorImgPath },
+    menuTheme() { return this.$store.state.app.menuTheme }
   },
   methods: {
      init() {
@@ -112,6 +102,7 @@ export default {
       if (pathArr.length >= 2) this.$store.commit('addOpenSubmenu', pathArr[1].name);
       this.checkTag(this.$route.name);
       this.handleFetchMes()
+      this.fetchGetContact()
     },
     async handleFetchMes() {
       const res = await this.$store.dispatch('getUserOne', {name: this.userN});
@@ -119,8 +110,9 @@ export default {
       const unreadMes = res.data.messages.filter(m => !m.isReaded)
       this.$store.commit('setMesCount', unreadMes.length)
     },
-    toggleClick() {
-      this.shrink = !this.shrink;
+    toggleClick() { this.shrink = !this.shrink },
+    fetchGetContact() {
+      this.$store.dispatch('getContact')
     },
     async handleClickUserDropdown(name) {
       if (name === 'ownSpace') {
