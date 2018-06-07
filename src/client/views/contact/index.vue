@@ -41,7 +41,7 @@
               <Input v-model="formValidate.message" type="textarea" :autosize="{minRows: 2,maxRows: 5}" placeholder="Enter something..."></Input>
             </FormItem>
             <FormItem>
-              <Button type="primary" @click="handleSubmit('formValidate')">Submit</Button>
+              <Button type="primary" @click="handleSubmit('formValidate')">{{$t('contact.submit')}}</Button>
             </FormItem>
           </Form>
         </footer>

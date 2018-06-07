@@ -40,7 +40,7 @@ module.exports = {
     const _com = req.query;
     Posters.find(_com).sort({'updateAt': -1}).exec((err, posters) => {
       if (err) global.logger.error(err);
-      else res.json({ errno: 0, mse: '', data: posters });
+      else res.json({ errno: 0, mes: '', data: posters });
     });
   },
   delete: (req, res, next) => {

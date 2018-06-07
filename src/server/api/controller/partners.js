@@ -47,7 +47,7 @@ module.exports = {
     const _com = req.query;
     Partners.find(_com).sort({'updateAt': -1}).exec((err, partners) => {
       if (err) global.logger.error(err);
-      else res.json({ errno: 0, mse: '', data: partners });
+      else res.json({ errno: 0, mes: '', data: partners });
     });
   },
   delete: (req, res, next) => {

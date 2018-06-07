@@ -25,7 +25,7 @@ module.exports = {
     global.logger.info('tags/get.json');
     Tags.find({}, function(err, tags) {
       if (err) global.logger.error(err);
-      else res.json({ errno: 0, mse: '', data: tags });
+      else res.json({ errno: 0, mes: '', data: tags });
     });
   },
   delete: (req, res, next) => {

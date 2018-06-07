@@ -32,7 +32,8 @@ export default {
     advert: '广告合作',
     consult: '挖矿咨询',
     others: '其他',
-    message: '留言'
+    message: '留言',
+    submit: '提交'
   },
   footer: {
     links: '友情链接',

@@ -12,7 +12,7 @@ module.exports = {
       filter = access === 0 ? { password: 0 } : { password: 0, messages: 0 };
     User.find(cond, filter, (err, user) => {
       if (err) global.logger.error(err);
-      else res.json({ errno: 0, mse: '', data: user });
+      else res.json({ errno: 0, mes: '', data: user });
     });
   },
   getUser(req, res) {
@@ -22,8 +22,8 @@ module.exports = {
       if (err) global.logger.error(err)
       if (user) {
         user.messages = user.messages.filter(mes => !mes.isRemove)
-        res.json({ errno: 0, mse: '', data: user })
-      } else res.json({ errno: 1, mse: '没有该用户' })
+        res.json({ errno: 0, mes: '', data: user })
+      } else res.json({ errno: 1, mes: '没有该用户' })
     });
   },
   getUserAvatar(req, res) {
@@ -32,8 +32,8 @@ module.exports = {
     User.findOne({ name }, { avatar: 1 }, (err, user) => {
       if (err) global.logger.error(err)
       if (user) {
-        res.json({ errno: 0, mse: '', data: user })
-      } else res.json({ errno: 1, mse: '', data: {} })
+        res.json({ errno: 0, mes: '', data: user })
+      } else res.json({ errno: 1, mes: '', data: {} })
     });
   },
   delete: (req, res, next) => {

@@ -6,11 +6,10 @@ module.exports = {
     const body = req.body;
     let contact = new Contact(body);
     contact.save((err, contact) => {
-      if (err) global.logger.error(err);
-      else {
-        res.json({ errno: 0, mes: 'Thinks' })
-        next()
-      }
+      if (err) {
+        global.logger.error(err);
+        res.json({ errno: 1, mes: 'Fail' });
+      } else res.json({ errno: 0, mes: 'Thinks' })
     });
   },
   get: (req, res) => {
@@ -36,8 +35,10 @@ module.exports = {
     var query = req.query;
     Contact.remove({_id: {$in: query.id}}, function(err, contact) {
       if (err) global.logger.error(err);
-      if (contact.ok === 1) res.json({ errno: 0, mes: '删除成功' })
-      else res.json({ errno: 1, mes: '删除失败' })
+      if (contact.ok === 1) {
+        res.json({ errno: 0, mes: '删除成功' })
+        next()
+      } else res.json({ errno: 1, mes: '删除失败' })
     });
   }
 }

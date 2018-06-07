@@ -78,12 +78,12 @@ module.exports = {
       field.content = 0;
       News.find({}, field).sort({'updateAt': -1}).exec((err, news) => {
         if (err) global.logger.error(err);
-        else res.json({ errno: 0, mse: '', data: news });
+        else res.json({ errno: 0, mes: '', data: news });
       });
     } else {
       News.findOne({_id: id}).sort({'updateAt': -1}).exec((err, news) => {
         if (err) global.logger.error(err);
-        else res.json({ errno: 0, mse: '', data: news });
+        else res.json({ errno: 0, mes: '', data: news });
       });
       if (!req.session.view) req.session.view = [];
       if (req.session.view.indexOf(id) !== -1) return;

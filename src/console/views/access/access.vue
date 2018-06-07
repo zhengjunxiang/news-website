@@ -148,7 +148,6 @@ export default {
       this.form.userName = '';
       this.form.password = '';
       this.form.passwdCheck = '';
-      this.form.access = '';
     },
     exportData() {
       this.$refs.table.exportCsv({ filename: this.csvFileName || 'none', original: false })

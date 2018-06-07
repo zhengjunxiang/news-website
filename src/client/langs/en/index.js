@@ -13,7 +13,8 @@ export default {
     recent: 'Recent',
     follow: 'Follow :',
     links: 'Links',
-    tags: 'Tags'
+    tags: 'Tags',
+    submit: 'Submit'
   },
   content: {
     aboutUs: 'About AntPool',

@@ -78,12 +78,12 @@ module.exports = {
       field.content = 0;
       Events.find({}, field).sort({'updateAt': -1}).exec((err, events) => {
         if (err) global.logger.error(err);
-        else res.json({ errno: 0, mse: '', data: events });
+        else res.json({ errno: 0, mes: '', data: events });
       });
     } else {
       Events.findOne({_id: id}).exec((err, events) => {
         if (err) global.logger.error(err);
-        else res.json({ errno: 0, mse: '', data: events });
+        else res.json({ errno: 0, mes: '', data: events });
       });
       if (!req.session.view) req.session.view = [];
       if (req.session.view.indexOf(id) !== -1) return;

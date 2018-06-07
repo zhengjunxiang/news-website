@@ -15,7 +15,7 @@ instance.interceptors.request.use(config => {
 instance.interceptors.response.use(response => {
   vm.$store.commit('setLoading', false)
   if (response.status === 200) {
-    if (response.data.errno !== 0) response.data.mse && vm.$Message.error({content: response.data.mse})
+    if (response.data.errno !== 0) response.data.mes && vm.$Message.error({content: response.data.mes})
     else return response
   };
   return Promise.reject(response);

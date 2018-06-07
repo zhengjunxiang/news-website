@@ -42,7 +42,7 @@ module.exports = {
     global.logger.info('about/get.json');
     About.find().exec((err, about) => {
       if (err) global.logger.error(err);
-      else res.json({ errno: 0, mse: '', data: about });
+      else res.json({ errno: 0, mes: '', data: about });
     });
   },
   delete: (req, res) => {
