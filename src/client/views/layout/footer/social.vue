@@ -17,7 +17,7 @@
       </li>
     </ul>
     <div class="lang-box">
-      <Dropdown trigger="click" @on-click="toggleLan" placement="bottom-end">
+      <Dropdown trigger="click" @on-click="toggleLan" placement="top-end">
         <Button type="primary" style="text-transform: Uppercase;">{{lang}}<Icon type="arrow-down-b" /></Button>
         <DropdownMenu slot="list">
           <DropdownItem v-for="lan in langs" :name="lan.value" :key="lan.value">{{lan.label}}</DropdownItem>

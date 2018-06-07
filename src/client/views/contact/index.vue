@@ -65,7 +65,7 @@ export default {
           { required: true, message: 'Mailbox cannot be empty', trigger: 'blur' },
           { type: 'email', message: 'Incorrect email format', trigger: 'blur' }
         ],
-        industry: [ { required: true, message: 'industry cannot be empty', trigger: 'blur' } ],
+        industry: [ { required: true, message: 'Industry cannot be empty', trigger: 'blur' } ],
         country: [ { required: true, message: 'Please select the country', trigger: 'blur' } ],
         city: [ { required: true, message: 'Please select the city', trigger: 'blur' } ],
         interest: [ { required: true, type: 'array', min: 1, message: 'Choose at least one interest', trigger: 'change' } ],
@@ -94,7 +94,7 @@ export default {
           let verify = true
           Object.keys(this.formValidate).forEach(key => {
             if (this.$U.mapScript(this.formValidate[key])) {
-              if (lan === 'zh') this.$Message.warning('有敏感字符')
+              if (this.lan === 'zh') this.$Message.warning('有敏感字符')
               else this.$Message.warning('Sensitive character')
               verify = false
             }
@@ -103,7 +103,10 @@ export default {
           const res = await this.$store.dispatch('addContact', this.formValidate)
           this.$refs[name].resetFields()
           if (res.mes) this.$Message.success(res.mes)
-        } else this.$Message.error('Fail!');
+        } else {
+          if (this.lan === 'zh') this.$Message.error('校验失败！');
+          else this.$Message.error('Check failure!');
+        }
       })
     }
   }

@@ -33,7 +33,8 @@ export default {
     advert: 'Advertising',
     consult: 'Mining Consult',
     others: 'Others',
-    message: 'Message'
+    message: 'Message',
+    submit: 'Submit'
   },
   footer: {
     links: 'Links',
