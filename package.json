@@ -13,7 +13,7 @@
     "server:pub": "cross-env ENV_TYPE=publish node ./src/server/api/app.js",
     "server:con": "nodemon ./src/server/server-console.js -w ./src/server/server-console.js",
     "server:cli": "nodemon ./src/server/server-client.js -w ./src/server/server-client.js",
-    "publish:con": "node ./src/server/publish-con.js",
+    "publish:con": "node cross-env ENV_TYPE=publish ./src/server/publish-con.js",
     "publish:cli": "node ./src/server/publish-cli.js",
     "lint": "eslint --fix --ext .js,.vue src",
     "test": "npm run lint"

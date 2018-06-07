@@ -167,22 +167,6 @@ util.openNewPage = function(vm, name, argu, query) {
   vm.$store.commit('setCurrentPageName', name);
 };
 
-util.toDefaultPage = function(routers, name, route, next) {
-  let len = routers.length;
-  let i = 0;
-  let notHandle = true;
-  while (i < len) {
-    if (routers[i].name === name && routers[i].children && routers[i].redirect === undefined) {
-      route.replace({name: routers[i].children[0].name});
-      notHandle = false;
-      next();
-      break;
-    }
-    i++;
-  }
-  if (notHandle) next();
-};
-
 util.mapScript = str => pattern.test(str)
 
 util.fullscreenEvent = function(vm) {

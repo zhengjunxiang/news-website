@@ -35,14 +35,16 @@ module.exports = merge(webpackBaseConfig, {
   output: {
     path: path.resolve(__dirname, `../dist/${isConsole ? 'console/src' : 'client/src'}`),
     publicPath: config.build.assetsPublicPath,
-    filename: '[name].[hash].js',
-    chunkFilename: '[name].[hash].chunk.js'
+    filename: '[name].[chunkhash:8].js',
+    chunkFilename: '[name].[chunkhash:8].chunk.js'
   },
   plugins: [
     new cleanWebpackPlugin([`dist/${isConsole ? 'console' : 'client'}/*`], {
       root: path.resolve(__dirname, '../')
     }),
-    new ExtractTextPlugin({filename: '[name].[hash].css', allChunks: true}),
+    new ExtractTextPlugin({filename: '[name].[contenthash:8].css', allChunks: true}),
+    new webpack.HashedModuleIdsPlugin(),
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
       name: [ 'vender-exten', 'vender-base' ],
       minChunks (module) {
@@ -54,6 +56,16 @@ module.exports = merge(webpackBaseConfig, {
           ) === 0
         )
       }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'main',
+      async: 'vendor-async',
+      children: true,
+      minChunks: Infinity
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -74,7 +86,7 @@ module.exports = merge(webpackBaseConfig, {
       title: 'Antpool News',
       filename: path.resolve(__dirname, `../dist/${isConsole ? 'console' : 'client'}/index.html`),
       template: `!!ejs-loader!./src/${isConsole ? 'console' : 'client'}/template/index.ejs`,
-      inject: false
+      inject: true
     })
   ]
 });

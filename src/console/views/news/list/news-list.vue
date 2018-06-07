@@ -96,6 +96,7 @@ export default {
           return new RegExp(search, 'gi').test(n.title) ||
             new RegExp(search, 'gi').test(n.author) ||
             new RegExp(search, 'gi').test(n.userName) ||
+            new RegExp(search, 'gi').test(n.lan) ||
             n.tags.indexOf(search) > -1
         }
         return true

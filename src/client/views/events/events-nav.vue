@@ -3,16 +3,14 @@
   <router-link :to="`/event/${newEvent._id}`" class="nav-link-wrap left" v-show="newEvent.title">
     <strong class="nav-caption">{{$t('siderBar.older')}}</strong>
     <div class="nav-img-box">
-      <img :src="newEvent.cover" alt="" class="nav-img" v-if="newEvent.cover">
-      <Icon type="image" v-else></Icon>
+      <span v-if="newEvent.cover" class="img-box"><img :src="newEvent.cover" alt="" class="nav-img"></span>
       <p class="nav-title">{{newEvent.title}}</p>
     </div>
   </router-link>
   <router-link :to="`/event/${oldEvent._id}`" class="nav-link-wrap right" v-show="oldEvent.title">
     <strong class="nav-caption">{{$t('siderBar.newer')}}</strong>
     <div class="nav-img-box">
-      <img :src="oldEvent.cover" alt="" class="nav-img" v-if="oldEvent.cover">
-      <Icon type="image" v-else></Icon>
+      <span v-if="oldEvent.cover" class="img-box"><img :src="oldEvent.cover" alt="" class="nav-img"></span>
       <p class="nav-title">{{oldEvent.title}}</p>
     </div>
   </router-link>

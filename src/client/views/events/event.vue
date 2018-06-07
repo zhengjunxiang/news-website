@@ -33,6 +33,7 @@
           </div>
           <div class="article-meta-box">
             <div class="article-author"><Icon type="android-person"></Icon> {{event.author}}</div>
+            <span class="view-box"><Icon type="eye" /> {{event.view}}</span>
             <span>
               <Icon type="ios-clock" />
               <time :datetime="event.createAt" itemprop="datePublished">{{$U.fDate(event.createAt)}}</time>

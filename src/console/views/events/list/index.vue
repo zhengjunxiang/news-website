@@ -92,7 +92,7 @@ export default {
           return new RegExp(search, 'gi').test(n.title) ||
             new RegExp(search, 'gi').test(n.author) ||
             new RegExp(search, 'gi').test(n.userName) ||
-            n.tags.some(it => new RegExp(search, 'gi').test(it))
+            new RegExp(search, 'gi').test(n.lan)
         }
         return true
       })
