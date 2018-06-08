@@ -197,13 +197,11 @@ export default {
         menubar: 'edit insert view format table tools',
         theme: 'modern',
         plugins: [
-          'wordcount',
-          'advlist autolink lists link image charmap print hr anchor pagebreak imagetools',
-          'searchreplace visualblocks visualchars codesample',
-          'insertdatetime media nonbreaking save table contextmenu directionality',
-          'paste textcolor textpattern imagetools'
+          'advlist autolink lists link image charmap anchor textcolor',
+          'searchreplace visualblocks code print codesample',
+          'insertdatetime table contextmenu paste code directionality colorpicker textpattern'
         ],
-        toolbar: 'styleselect | forecolor backcolor bold italic | fontsizeselect | bullist numlist outdent indent | link image media codesample | newnote print | undo redo',
+        toolbar: 'undo redo | styleselect bold italic strikethrough | forecolor backcolor | image link | codesample | bullist numlist | removeformat print',
         autosave_interval: '20s',
         image_advtab: true,
         table_default_styles: {

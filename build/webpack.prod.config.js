@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const cleanWebpackPlugin = require('clean-webpack-plugin');
-const UglifyJsParallelPlugin = require('webpack-uglify-parallel');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const merge = require('webpack-merge');
 const webpackBaseConfig = require('./webpack.base.config.js');
 const os = require('os');
@@ -31,7 +31,10 @@ new CopyWebpackPlugin([{
   to: '../'
 }])
 
-module.exports = merge(webpackBaseConfig, {
+const webpackConfig = merge(webpackBaseConfig, {
+  entry: {
+    main: '@/main'
+  },
   output: {
     path: path.resolve(__dirname, `../dist/${isConsole ? 'console/src' : 'client/src'}`),
     publicPath: config.build.assetsPublicPath,
@@ -46,13 +49,25 @@ module.exports = merge(webpackBaseConfig, {
     new webpack.HashedModuleIdsPlugin(),
     new webpack.optimize.ModuleConcatenationPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      name: [ 'vender-exten', 'vender-base' ],
+      name: 'vender-base',
       minChunks (module) {
-        // any required modules inside node_modules are extracted to vendor
+        return (
+          module.resource &&
+          (module.resource.indexOf(
+            path.join(__dirname, '../node_modules')
+          ) === 0 || module.resource.indexOf(
+            path.join(__dirname, `../src/${isConsole ? 'console' : 'client'}/libs/components`)
+          ) === 0)
+        )
+      }
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vender-exten',
+      minChunks (module) {
         return (
           module.resource &&
           module.resource.indexOf(
-            path.join(__dirname, '../node_modules')
+            path.join(__dirname, `../src/${isConsole ? 'console' : 'client'}/libs/components`)
           ) === 0
         )
       }
@@ -72,21 +87,25 @@ module.exports = merge(webpackBaseConfig, {
         NODE_ENV: '"production"'
       }
     }),
-    new UglifyJsParallelPlugin({
-      workers: os.cpus().length,
-      mangle: true,
-      compressor: {
-        warnings: false,
-        drop_console: true,
-        drop_debugger: true
-      }
+    new UglifyJsPlugin({
+      uglifyOptions: {
+        compress: { warnings: false }
+      },
+      parallel: true
     }),
     copyPlugin,
     new HtmlWebpackPlugin({
       title: 'Antpool News',
       filename: path.resolve(__dirname, `../dist/${isConsole ? 'console' : 'client'}/index.html`),
-      template: `!!ejs-loader!./src/${isConsole ? 'console' : 'client'}/template/index.ejs`,
+      template: `./src/${isConsole ? 'console' : 'client'}/index-sk.html`,
       inject: true
     })
   ]
 });
+
+if (config.build.bundleAnalyzerReport) {
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  webpackConfig.plugins.push(new BundleAnalyzerPlugin())
+}
+
+module.exports = webpackConfig

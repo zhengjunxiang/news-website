@@ -12,11 +12,6 @@ function resolve(dir) {
 }
 
 module.exports = {
-  entry: {
-    main: '@/main',
-    'vender-base': '@/vendors/vendors.base.js',
-    'vender-exten': '@/vendors/vendors.exten.js'
-  },
   module: {
     rules: [
       {

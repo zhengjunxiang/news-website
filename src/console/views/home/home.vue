@@ -107,14 +107,14 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import dataSourcePie from './components/dataSourcePie.vue';
-import visiteVolume from './components/visiteVolume.vue';
-import inforCard from './components/inforCard.vue';
+// import dataSourcePie from './components/dataSourcePie.vue';
+// import visiteVolume from './components/visiteVolume.vue';
+// import inforCard from './components/inforCard.vue';
 import toDoListItem from './components/toDoListItem.vue';
 
 export default {
   name: 'home',
-  components: { dataSourcePie, visiteVolume, inforCard, toDoListItem },
+  components: { toDoListItem },
   data() {
     return {
       userName: '',
@@ -139,10 +139,7 @@ export default {
   mounted() {
     this.userName = this.userN;
     this.getThings();
-    let date = new Date(), year = date.getFullYear(), month = date.getMonth() + 1,
-      day = date.getDate(), h = date.getHours(), m = date.getMinutes().length > 1 ? date.getMinutes() : `0${date.getMinutes()}`,
-      s = date.getSeconds().length > 1 ? date.getSeconds() : `0${date.getSeconds()}`;
-    this.time = `${year}.${month}.${day}-${h}:${m}:${s}`
+    this.time = this.$U.fDate()
   },
   methods: {
     addNewToDoItem() { this.showAddNewTodo = true },

@@ -1,4 +1,4 @@
-import moment from 'moment'
+import miment from 'miment'
 let util = {};
 const pattern = new RegExp("[`~#^&*()=|{}\\[\\]<>/……&*（）——|{}]");
 util.title = function(title) {
@@ -11,8 +11,8 @@ util.checkLan = () => {
   else return 'zh';
 }
 util.fDate = (date, f) => {
-  if (date) return moment(date - 0).format(f || 'YYYY-MM-DD HH:mm:ss')
-  else return moment().format(f || 'YYYY-MM-DD HH:mm:ss')
+  if (date) return miment(date - 0).format(f || 'YYYY-MM-DD hh:mm:ss')
+  else return miment().format(f || 'YYYY-MM-DD hh:mm:ss')
 }
 util.mapScript = str => pattern.test(str)
 

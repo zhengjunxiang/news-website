@@ -15,12 +15,15 @@ const copyPlugin = isConsole ? new CopyWebpackPlugin([
     from: 'src/console/views/main-components/theme-switch/theme',
     to: 'src'
   }, {
-    from: 'src/console/views/my-components/tinymce'
+    from: 'src/console/views/my-components/tinymce',
   }
 ], {ignore: ['text-editor.vue']}) :
 new CopyWebpackPlugin([])
 
 module.exports = merge(webpackBaseConfig, {
+  entry: {
+    main: '@/main'
+  },
   devtool: config.dev.devtool,
   output: {
     // publicPath: config.dev.assetsPublicPath,
@@ -42,15 +45,18 @@ module.exports = merge(webpackBaseConfig, {
     }
   },
   plugins: [
-    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: [ 'vender-exten', 'vender-base' ],
-      minChunks: Infinity
+    new webpack.DefinePlugin({
+      'process.env': {
+        NODE_ENV: '"development"'
+      }
     }),
+    new ExtractTextPlugin({filename: '[name].css', allChunks: true}),
+    new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
+    new webpack.NoEmitOnErrorsPlugin(),
     new HtmlWebpackPlugin({
       title: 'Antpool New',
       filename: 'index.html',
-      template: isConsole ? 'src/console/index.html' : 'src/client/index.html',
+      template: isConsole ? 'src/console/index-sk.html' : 'src/client/index-sk.html',
       inject: true
     }),
     copyPlugin
