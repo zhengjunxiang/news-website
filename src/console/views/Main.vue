@@ -6,8 +6,8 @@
   <div class="sidebar-menu-con" :style="{width: shrink?'60px':'200px', overflow: shrink ? 'visible' : 'auto'}">
     <shrinkable-menu :shrink="shrink" :theme="menuTheme" :before-push="beforePush" :open-names="openedSubmenuArr" :menu-list="menuList">
       <div slot="top" class="logo-con">
-        <img v-show="!shrink" src="../images/logo.png" key="max-logo" style="width: 100%;" />
-        <img v-show="shrink" src="../images/logo-min.png" key="min-logo" />
+        <img v-show="!shrink" src="../styles/images/logo.png" key="max-logo" style="width: 100%;" />
+        <img v-show="shrink" src="../styles/images/logo-min.png" key="min-logo" />
       </div>
     </shrinkable-menu>
   </div>
@@ -26,7 +26,6 @@
       <div class="header-avator-con">
         <full-screen v-model="isFullScreen" />
         <message-tip />
-        <theme-switch />
         <div class="user-dropdown-menu-con">
           <Row type="flex" justify="end" align="middle" class="user-dropdown-innercon">
             <Dropdown transfer @on-click="handleClickUserDropdown">
@@ -65,7 +64,6 @@ import tagsPageOpened from './main-components/tags-page-opened.vue';
 import breadcrumbNav from './main-components/breadcrumb-nav.vue';
 import fullScreen from './main-components/fullscreen.vue';
 import messageTip from './main-components/message-tip.vue';
-import themeSwitch from './main-components/theme-switch/theme-switch.vue';
 import { mapGetters } from 'vuex'
 import util from '@/libs/util.js';
 
@@ -75,8 +73,7 @@ export default {
     tagsPageOpened,
     breadcrumbNav,
     fullScreen,
-    messageTip,
-    themeSwitch
+    messageTip
   },
   data() {
     return {

@@ -12,10 +12,7 @@ const isConsole = process.env.ENV_TYPE === 'console'
 
 const copyPlugin = isConsole ? new CopyWebpackPlugin([
   {
-    from: 'src/console/views/main-components/theme-switch/theme',
-    to: 'src'
-  }, {
-    from: 'src/console/views/my-components/tinymce',
+    from: 'src/console/views/my-components/tinymce'
   }
 ], {ignore: ['text-editor.vue']}) :
 new CopyWebpackPlugin([])

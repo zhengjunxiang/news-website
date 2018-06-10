@@ -18,11 +18,6 @@ const copyPlugin = isConsole ? new CopyWebpackPlugin([
     from: 'ant_icon.ico',
     to: '../'
   }, {
-    from: 'src/console/styles/fonts',
-    to: 'fonts'
-  }, {
-    from: 'src/console/views/main-components/theme-switch/theme'
-  }, {
     from: 'src/console/views/my-components/tinymce'
   }
 ], {ignore: ['text-editor.vue']}) :

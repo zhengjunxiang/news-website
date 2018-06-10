@@ -19,8 +19,6 @@ export default {
 </script>
 
 <style>
-/* @import './styles/common.less'; */
-
 .app-main {
   width: 100%;
   height: 100%;

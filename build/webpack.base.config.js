@@ -66,9 +66,7 @@ module.exports = {
   },
   plugins: [new HappyPack({id: 'happybabel', loaders: ['babel-loader'], threadPool: happyThreadPool, verbose: true})],
   resolve: {
-    extensions: [
-      '.js', '.vue'
-    ],
+    extensions: [ '.js', '.vue' ],
     alias: {
       'vue': 'vue/dist/vue.esm.js',
       '@': isConsole ? resolve('../src/console') : resolve('../src/client'),
