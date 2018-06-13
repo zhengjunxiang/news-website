@@ -1,17 +1,17 @@
 const path = require('path');
-const os = require('os');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-const HappyPack = require('happypack');
-var happyThreadPool = HappyPack.ThreadPool({size: os.cpus().length});
 
 const isConsole = process.env.ENV_TYPE === 'console';
 
 function resolve(dir) {
-  return path.join(__dirname, dir);
+  return path.join(__dirname, '..', dir);
 }
 
 module.exports = {
+  entry: {
+    main: ['@/main']
+  },
   module: {
     rules: [
       {
@@ -21,24 +21,16 @@ module.exports = {
           loaders: {
             css: 'vue-style-loader!css-loader',
             less: 'vue-style-loader!css-loader!less-loader'
-          },
-          postLoaders: {
-            html: 'babel-loader'
           }
         }
       }, {
-        test: /iview\/.*?js$/,
-        loader: 'happypack/loader?id=happybabel',
-        exclude: /node_modules/
+        test: /iview.src.*?js$/,
+        loader: 'babel-loader',
+        include: [resolve('node_modules')]
       }, {
         test: /\.js$/,
-        loader: 'happypack/loader?id=happybabel',
-        exclude: /node_modules/
-      }, {
-        test: /\.js[x]?$/,
-        include: [resolve('src')],
-        exclude: /node_modules/,
-        loader: 'happypack/loader?id=happybabel'
+        loader: 'babel-loader',
+        include: [resolve('src'), resolve('node_modules/webpack-dev-server/client')]
       }, {
         test: /\.css$/,
         use: ExtractTextPlugin.extract({
@@ -58,20 +50,28 @@ module.exports = {
       }, {
         test: /\.(gif|jpg|png|woff|svg|eot|ttf)\??.*$/,
         loader: 'url-loader?limit=1024'
-      }, {
-        test: /\.(html|tpl)$/,
-        loader: 'html-loader'
       }
     ]
   },
-  plugins: [new HappyPack({id: 'happybabel', loaders: ['babel-loader'], threadPool: happyThreadPool, verbose: true})],
   resolve: {
     extensions: [ '.js', '.vue' ],
     alias: {
       'vue': 'vue/dist/vue.esm.js',
-      '@': isConsole ? resolve('../src/console') : resolve('../src/client'),
-      '#': resolve('../config'),
-      '~': resolve('../')
+      '@': isConsole ? resolve('src/console') : resolve('src/client'),
+      '#': resolve('config'),
+      '~': resolve('')
     }
+  },
+  node: {
+    // prevent webpack from injecting useless setImmediate polyfill because Vue
+    // source contains it (although only uses it if it's native).
+    setImmediate: false,
+    // prevent webpack from injecting mocks to Node native modules
+    // that does not make sense for the client
+    dgram: 'empty',
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty',
+    child_process: 'empty'
   }
 };

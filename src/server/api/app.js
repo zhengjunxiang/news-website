@@ -10,7 +10,8 @@ var { host, port, identityKey, mongodb, hostPub } = require('./config');
 var routes = require('./routes');
 var app = express();
 
-const h = process.env.ENV_TYPE === 'publish' ? hostPub : host;
+const isPub = process.env.ENV_TYPE === 'publish';
+const h = isPub ? hostPub : host;
 
 require('./middleware/log')
 require('./mongodb')
@@ -34,13 +35,14 @@ app.use(helmet());
 app.set('trust proxy', 1)
 app.use(session({
   name: identityKey,
-  secret: Math.floor(Math.random() * 9999) + '',
+  secret: isPub ? Math.floor(Math.random() * 9999) + '' : 'news',
   resave: true,
   saveUninitialized: false,
   store: new MongoStore({ // 将 session 存储到 mongodb
     url: DB_URL // mongodb 地址
   }),
   cookie: {
+    httpOnly: true,
     maxAge: 60 * 1000 * 60 * 6
   }
 }));

@@ -18,10 +18,7 @@ const copyPlugin = isConsole ? new CopyWebpackPlugin([
 new CopyWebpackPlugin([])
 
 module.exports = merge(webpackBaseConfig, {
-  entry: {
-    main: '@/main'
-  },
-  devtool: config.dev.devtool,
+  devtool: 'cheap-source-map',
   output: {
     // publicPath: config.dev.assetsPublicPath,
     filename: '[name].js'

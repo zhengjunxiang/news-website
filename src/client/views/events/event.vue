@@ -113,21 +113,14 @@ export default {
         if (res.data.avatar) this.avatar = res.data.avatar;
         this.$store.commit('setEventnav', id)
         window.socialShare('.social-share-event')
-      } catch (err) {
-        window.socialShare('.social-share-event')
-        this.$store.commit('setEventnav', id)
-      }
+      } catch (err) {}
     },
     initStar() {
       const id = this.$route.params.id,
-        storage = tLocalStorage.get('likeEventId');
+        storage = tLocalStorage.get('likeId');
       let isExist = false,
        isExistUn = false;
-      if (storage) {
-        storage.forEach(s => {
-          if (s === id) return isExist = true;
-        })
-      }
+      if (storage) storage.indexOf(id) !== -1 ? isExist = true : '';
       this.isActive = isExist;
       this.disable = isExist;
     },
@@ -135,14 +128,14 @@ export default {
       if (this.disable) {
         this.$Message.warning('已经点过了')
       } else {
-        const id = this.$route.params.id
-        const LocalS = tLocalStorage.get('likeEventId');
-        this.disable = true
-        this.isActive = true
+        const id = this.$route.params.id;
+        const LocalS = tLocalStorage.get('likeId');
+        this.disable = true;
+        this.isActive = true;
         await this.$store.dispatch('likeEvent', {id});
-        this.$store.dispatch('getEvent', {id})
-        if (LocalS) tLocalStorage.set('likeEventId', [...LocalS, id], 60*60*12)
-        else tLocalStorage.set('likeEventId', [id], 60*60*12)
+        this.$store.dispatch('getEvent', {id});
+        if (LocalS) tLocalStorage.set('likeId', [...LocalS, id], 60*60*12);
+        else tLocalStorage.set('likeId', [id], 60*60*12);
       }
     }
   }

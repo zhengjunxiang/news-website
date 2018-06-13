@@ -5,11 +5,13 @@ const baseURL = '';
 const instance = axios.create({timeout: 15000});
 
 // 请求统一处理
-instance.interceptors.request.use(config => {
+instance.interceptors.request.use(function (config) {
   vm.$store.commit('setLoading', true)
   if (config.url && config.url.charAt(0) === '/') config.url = `${baseURL}${config.url}`;
   return config;
-}, error => Promise.reject(error));
+}, function (error) {
+  return Promise.reject(error)
+});
 
 // 对返回的内容做统一处理
 instance.interceptors.response.use(response => {

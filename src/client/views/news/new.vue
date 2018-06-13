@@ -96,6 +96,7 @@ export default {
   },
   mounted() {
     const id = this.$route.params.id
+    console.log('mounted')
     if (id) this.initData(id)
     this.initStar()
   },
@@ -115,25 +116,21 @@ export default {
       this.id = id;
       await this.$store.dispatch('getNew', {id})
       try {
+        console.log(11)
         const res = await this.$store.dispatch('getUserAvatar', {name: this.ne.userName})
         if (res.data.avatar) this.avatar = res.data.avatar;
         this.$store.commit('setNewnav', id)
         window.socialShare('.social-share-new')
       } catch (err) {
-        this.$store.commit('setNewnav', id)
-        window.socialShare('.social-share-new')
+        console.log(12)
       }
     },
     initStar() {
       const id = this.$route.params.id,
-        storage = tLocalStorage.get('likeNewId');
+        storage = tLocalStorage.get('likeId');
       let isExist = false,
        isExistUn = false;
-      if (storage) {
-        storage.forEach(s => {
-          if (s === id) return isExist = true;
-        })
-      }
+      if (storage) storage.indexOf(id) !== -1 ? isExist = true : '';
       this.isActive = isExist;
       this.disable = isExist;
     },
@@ -141,14 +138,14 @@ export default {
       if (this.disable) {
         this.$Message.warning('已经点过了')
       } else {
-        const id = this.$route.params.id
-        const LocalS = tLocalStorage.get('likeNewId');
+        const id = this.$route.params.id;
+        const LocalS = tLocalStorage.get('likeId');
         this.disable = true
         this.isActive = true
         await this.$store.dispatch('likeNew', {id});
         this.$store.dispatch('getNew', {id})
-        if (LocalS) tLocalStorage.set('likeNewId', [...LocalS, id], 60*60*12)
-        else tLocalStorage.set('likeNewId', [id], 60*60*12)
+        if (LocalS) tLocalStorage.set('likeId', [...LocalS, id], 60*60*12);
+        else tLocalStorage.set('likeId', [id], 60*60*12);
       }
     }
   }

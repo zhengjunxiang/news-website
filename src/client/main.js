@@ -1,8 +1,9 @@
+import 'es6-promise/auto'
 import Vue from 'vue';
 import router from './router/index';
 import store from './store';
 import { Row, Col, Dropdown, Button, Icon, Message, Spin, BackTop, DropdownMenu, Input,
-  DropdownItem, Page, Tag, Avatar, i18n } from 'iview'
+  DropdownItem, Page, Tag, Avatar, i18n, FormItem, CheckboxGroup, Checkbox, Form } from 'iview'
 import App from './app.vue';
 import VueStar from '@/libs/components/star/index.js'
 import langage from '@/langs/langage'
@@ -20,6 +21,10 @@ Vue.config.productionTip = false
 Vue.component('VueStar', VueStar)
 Vue.prototype.$U = util
 
+Vue.component('Form', Form)
+Vue.component('FormItem', FormItem)
+Vue.component('CheckboxGroup', CheckboxGroup)
+Vue.component('Checkbox', Checkbox)
 Vue.component('Avatar', Avatar)
 Vue.component('Button', Button)
 Vue.component('Input', Input)

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import iView from 'iview';
+import { LoadingBar } from 'iview';
 import Util from '../libs/util';
 import VueRouter from 'vue-router';
 import Tags from '@/views/tags/tags.vue';
@@ -85,13 +85,13 @@ const RouterConfig = {
 const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-  iView.LoadingBar.start();
-  Util.title(to.meta.title);
+  LoadingBar.start();
   next();
+  if (to.meta.title) Util.title(to.meta.title);
 });
 
 router.afterEach((to) => {
-  iView.LoadingBar.finish();
+  LoadingBar.finish();
   window.scrollTo(0, 0);
 });
 

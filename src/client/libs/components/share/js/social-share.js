@@ -60,7 +60,6 @@
         if (elem.length === undefined) {
             elem = [elem];
         }
-
         each(elem, function (el) {
             share(el, options);
         });
@@ -167,7 +166,6 @@
 
         var elems = createElementByString('<div class="wechat-qrcode"><h4>' + data.wechatQrcodeTitle + '</h4><div class="qrcode"></div><div class="help">' + data.wechatQrcodeHelper + '</div></div>');
         var qrcode = getElementsByClassName(elems[0], 'qrcode', 'div');
-
         wechat[0].appendChild(elems[0]);
         new QRCode(qrcode[0], {text: data.url, width: data.wechatQrcodeSize, height: data.wechatQrcodeSize});
     }

@@ -27,9 +27,6 @@ new CopyWebpackPlugin([{
 }])
 
 const webpackConfig = merge(webpackBaseConfig, {
-  entry: {
-    main: '@/main'
-  },
   output: {
     path: path.resolve(__dirname, `../dist/${isConsole ? 'console/src' : 'client/src'}`),
     publicPath: config.build.assetsPublicPath,
