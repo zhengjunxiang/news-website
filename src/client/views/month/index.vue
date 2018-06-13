@@ -53,9 +53,9 @@ export default {
   computed: {
     ...mapGetters(['newsM', 'posters']),
     news() {
-      const y = this.newsM.filter(y => y.year === this.$route.params.year);
+      const y = this.newsM.filter(y => y.year == this.$route.params.year);
       let m = [];
-      if (y[0]) m = y[0].news.filter(m => m.month === this.$route.params.month);
+      if (y[0]) m = y[0].news.filter(m => m.month == this.$route.params.month);
       return m[0] ? [...m[0].news] : [];
     },
     curNews() {

@@ -10,7 +10,9 @@ function formatDate(datetime, fm) {
   min = data.getMinutes() < 10 ? '0' + data.getMinutes() : data.getMinutes(),
   sec = data.getSeconds() < 10 ? '0' + data.getSeconds() : data.getSeconds();
   if (fm === 'YYYY-MM-DD hh:mm:ss') return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
-  else if (fm === 'YYYY-MM-DD') return year + '-' + month + '-' + day
+  else if (fm === 'YYYY-MM-DD') return year + '-' + month + '-' + day;
+  else if (fm === 'YYYY') return year;
+  else if (fm === 'MM') return month;
   else return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
 }
 const pattern = new RegExp("[`~#^&*()=|{}\\[\\]<>/……&*（）——|{}]");

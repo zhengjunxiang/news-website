@@ -96,7 +96,6 @@ export default {
   },
   mounted() {
     const id = this.$route.params.id
-    console.log('mounted')
     if (id) this.initData(id)
     this.initStar()
   },
@@ -116,14 +115,11 @@ export default {
       this.id = id;
       await this.$store.dispatch('getNew', {id})
       try {
-        console.log(11)
         const res = await this.$store.dispatch('getUserAvatar', {name: this.ne.userName})
         if (res.data.avatar) this.avatar = res.data.avatar;
         this.$store.commit('setNewnav', id)
         window.socialShare('.social-share-new')
-      } catch (err) {
-        console.log(12)
-      }
+      } catch (err) {}
     },
     initStar() {
       const id = this.$route.params.id,

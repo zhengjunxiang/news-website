@@ -96,8 +96,9 @@ export default {
     },
     setSortNewsByDate: state => {
       state.newsSortByYear = [];
-      let year = '', newsDate = state.newsSortByYear, len = newsDate.length;
-      state.news.map(ne => {
+      let year = '', newsDate = state.newsSortByYear, len = '';
+      const newsLan = state.allNews.filter(d => d.lan === state.lan);
+      newsLan.map(ne => {
         if (year !== util.fDate(ne.createAt, 'YYYY')) {
           year = util.fDate(ne.createAt, 'YYYY')
           newsDate.push({year, news: []});
@@ -118,9 +119,7 @@ export default {
             newsM[index].news.push({month, news: []})
             len = newsM[index].news.length;
             newsM[index].news[len - 1].news.push(monthC)
-          } else {
-            newsM[index].news[len - 1].news.push(monthC)
-          }
+          } else newsM[index].news[len - 1].news.push(monthC);
         })
       })
     },
