@@ -1,0 +1,24 @@
+
+FROM node:9.11.1-alpine as build
+
+ENV APP_NAME=antnews-api
+
+ENV PORT=9000 \
+    WORKDIR="/opt/ant-news" \
+    UPLOAD="${WORKDIR}/src/server/api/resouce"
+
+COPY . ${WORKDIR}
+
+WORKDIR ${WORKDIR}
+
+VOLUME ${UPLOAD}
+
+RUN set -xue; \
+        yarn config set registry 'https://registry.npm.taobao.org' && \
+        yarn
+
+EXPOSE ${PORT}
+
+CMD ["sh", "-c", "node /opt/ant-news/src/server/api/app.js"]
+
+# sudo docker run --name antnews-api --hostname antnews-api -d -p 9000:9000 -v /opt/ant-news/src/server/api/resouce:/opt/ant-news/src/server/api/resouce --restart always  registry.cn-hongkong.aliyuncs.com/ap-hk/ant-news

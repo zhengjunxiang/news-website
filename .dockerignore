@@ -1,0 +1,14 @@
+.DS_Store
+
+.git/
+.idea/
+.vscode/
+.project/
+.settings/
+
+dist/
+node_modules/
+src/server/api/resouce/
+logs/
+
+*.log
