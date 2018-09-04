@@ -25,8 +25,16 @@ fs.stat(path.join(__dirname, 'resouce'), (err, stats) => {
   }
 });
 
-// const DB_URL = `mongodb://${mongodb.address}/${mongodb.db}`
-const DB_URL = `mongodb://${mongodb.username}:${mongodb.pwd}@${mongodb.address}/${mongodb.db}`; // 账号登陆
+const options = {
+  db: { native_parser: true },
+  auth: {
+    user: mongodb.username,
+    password: mongodb.pwd
+  }
+}
+
+const DB_URL = `mongodb://${mongodb.address}/${mongodb.db}`
+// const DB_URL = `mongodb://${mongodb.username}:${mongodb.pwd}@${mongodb.address}/${mongodb.db}?auth=${mongodb.db}`; // 账号登陆
 
 app.use('/resouce', express.static(path.join(__dirname, 'resouce')))
 app.use(bodyParser.json());
@@ -39,7 +47,8 @@ app.use(session({
   resave: true,
   saveUninitialized: false,
   store: new MongoStore({ // 将 session 存储到 mongodb
-    url: DB_URL // mongodb 地址
+    url: DB_URL, // mongodb 地址
+    mongoOptions: options
   }),
   cookie: {
     httpOnly: true,

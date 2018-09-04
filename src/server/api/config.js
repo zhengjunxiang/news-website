@@ -7,10 +7,11 @@ module.exports = {
   host,
   hostPub,
   mongodb: {
-    username: 'zhengjx',
-    pwd: 'z8820228',
-    //address: 'localhost:27017',
-    address: '172.16.41.37:27017',
+    // username: 'zhengjx',
+    // pwd: 'z8820228',
+    username: 'antpool',
+    pwd: 'antpool',
+    address: '127.0.0.1:27017',
     db: 'admin'
   }
 }
