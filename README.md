@@ -1,3 +1,3 @@
 ## 前后台新闻社区网站
 
-#### Vue + nodejs + moogodb 的全栈项目
+#### Vue + nodejs + mongodb 的全栈项目
