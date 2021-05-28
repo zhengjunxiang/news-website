@@ -39,7 +39,7 @@
     "miment": "^0.0.8",
     "simplemde": "^1.11.2",
     "time-localstorage": "^1.0.2",
-    "tinymce": "^4.7.4",
+    "tinymce": "^5.7.1",
     "vue": "^2.5.13",
     "vue-i18n": "^7.6.0",
     "vue-router": "^3.0.1",
